@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans text-gray-800 antialiased;
+}
+
+h1, h2, h3, h4 {
+  @apply font-sans;
+}
+
+/* Slim, on-brand scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #dcb98c;
+  border-radius: 999px;
+}
+
+/* Ant Design primary-color alignment with the brand palette */
+.ant-btn-primary {
+  background-color: #8a4019 !important;
+}
+.ant-btn-primary:hover {
+  background-color: #6f3419 !important;
+}
+.ant-tabs-ink-bar,
+.ant-radio-checked .ant-radio-inner,
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #8a4019 !important;
+  border-color: #8a4019 !important;
+}
