@@ -1,141 +1,3 @@
-// import { Link } from "react-router-dom";
-// import {
-//   AppstoreOutlined,
-//   TagsOutlined,
-//   WarningOutlined,
-//   PlusOutlined,
-// } from "@ant-design/icons";
-
-// import Seo from "../../components/common/Seo";
-// import Loader from "../../components/common/Loader";
-// import AdminHeader from "../../components/admin/AdminHeader";
-// import StatCard from "../../components/admin/StatCard";
-
-// import { useDashboardStats } from "../../hooks/useDashboardStats";
-// import { useProducts } from "../../hooks/useProducts";
-
-// import { ROUTES } from "../../config/routes";
-// import { formatCurrency } from "../../utils/format";
-
-// const IMAGE_BASE_URL = "http://localhost:5000/uploads/";
-
-// export default function Dashboard() {
-//   const { data: stats, isLoading } = useDashboardStats();
-
-//   const { data: recentData, isLoading: productLoading } = useProducts({
-//     limit: 5,
-//   });
-
-//   const recentProducts =
-//     recentData?.products || recentData?.data || recentData || [];
-
-//   return (
-//     <>
-//       <Seo title="Admin Dashboard" />
-
-//       <AdminHeader
-//         title="Dashboard"
-//         description="A quick overview of your catalogue."
-//         actions={
-//           <Link
-//             to={ROUTES.adminProducts}
-//             className="inline-flex items-center gap-2 rounded-full bg-brand-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-800 transition"
-//           >
-//             <PlusOutlined />
-//             Add Product
-//           </Link>
-//         }
-//       />
-
-//       {isLoading ? (
-//         <Loader />
-//       ) : (
-//         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-//           <StatCard
-//             icon={<AppstoreOutlined />}
-//             label="Total Products"
-//             value={stats?.totalProducts ?? 0}
-//           />
-
-//           <StatCard
-//             icon={<TagsOutlined />}
-//             label="Total Categories"
-//             value={stats?.totalCategories ?? 0}
-//             accent="bg-yellow-100 text-yellow-700"
-//           />
-
-//           <StatCard
-//             icon={<WarningOutlined />}
-//             label="Out of Stock"
-//             value={stats?.outOfStock ?? 0}
-//             accent="bg-red-100 text-red-600"
-//           />
-//         </div>
-//       )}
-
-//       <div className="mt-10 rounded-2xl border border-gray-100 bg-white p-6 shadow">
-//         <div className="mb-5 flex items-center justify-between">
-//           <h2 className="text-lg font-semibold">Recently Added Products</h2>
-
-//           <Link
-//             to={ROUTES.adminProducts}
-//             className="text-sm text-brand-700 hover:underline"
-//           >
-//             View All
-//           </Link>
-//         </div>
-
-//         {productLoading ? (
-//           <Loader />
-//         ) : recentProducts.length === 0 ? (
-//           <div className="py-10 text-center text-gray-500">
-//             No products found.
-//           </div>
-//         ) : (
-//           <div className="divide-y">
-//             {recentProducts.map((product) => (
-//               <div key={product.id} className="flex items-center gap-4 py-4">
-//                 <img
-//                   src={
-//                     product.image
-//                       ? IMAGE_BASE_URL + product.image
-//                       : "https://placehold.co/80x80"
-//                   }
-//                   alt={product.name}
-//                   className="h-14 w-14 rounded-lg border object-cover"
-//                 />
-
-//                 <div className="flex-1">
-//                   <h3 className="font-medium">{product.name}</h3>
-
-//                   <p className="text-sm text-gray-500">{product.category}</p>
-//                 </div>
-
-//                 <div className="text-right">
-//                   <p className="font-semibold text-brand-700">
-//                     {formatCurrency(product.price)}
-//                   </p>
-
-//                   <p
-//                     className={`text-xs ${
-//                       product.stock > 0 ? "text-green-600" : "text-red-600"
-//                     }`}
-//                   >
-//                     {product.stock > 0
-//                       ? `${product.stock} In Stock`
-//                       : "Out of Stock"}
-//                   </p>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-//     </>
-//   );
-// }
-
-
 import { Link } from "react-router-dom";
 import { Card, Progress, Button, Avatar } from "antd";
 import { motion } from "framer-motion";
@@ -148,10 +10,7 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 
-import {
-  AppstoreOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Seo from "../../components/common/Seo";
 import Loader from "../../components/common/Loader";
@@ -163,8 +22,7 @@ import { useProducts } from "../../hooks/useProducts";
 
 import { ROUTES } from "../../config/routes";
 import { formatCurrency } from "../../utils/format";
-
-const IMAGE_URL = "http://localhost:5000/uploads/";
+import { FILE_BASE_URL } from "../../config/api";
 
 const statCards = (stats) => [
   {
@@ -228,9 +86,7 @@ export default function Dashboard() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold">
-              Welcome Back 👋
-            </h2>
+            <h2 className="text-3xl font-bold">Welcome Back 👋</h2>
 
             <p className="mt-2 opacity-90">
               Manage products, categories and inventory easily.
@@ -273,7 +129,6 @@ export default function Dashboard() {
       {/* Grid */}
 
       <div className="mt-8 grid gap-6 xl:grid-cols-3">
-
         {/* Products */}
 
         <Card
@@ -306,7 +161,7 @@ export default function Dashboard() {
                   <img
                     src={
                       item.image
-                        ? IMAGE_URL + item.image
+                        ? `${FILE_BASE_URL}/uploads/${item.image}`
                         : "https://placehold.co/80"
                     }
                     className="h-16 w-16 rounded-xl object-cover"
@@ -314,13 +169,9 @@ export default function Dashboard() {
                   />
 
                   <div className="ml-4 flex-1">
-                    <h4 className="font-semibold">
-                      {item.name}
-                    </h4>
+                    <h4 className="font-semibold">{item.name}</h4>
 
-                    <p className="text-sm text-gray-500">
-                      {item.category}
-                    </p>
+                    <p className="text-sm text-gray-500">{item.category}</p>
                   </div>
 
                   <div className="text-right">
@@ -335,9 +186,7 @@ export default function Dashboard() {
                           : "bg-red-100 text-red-600"
                       }`}
                     >
-                      {item.stock > 0
-                        ? `${item.stock} Stock`
-                        : "Out of Stock"}
+                      {item.stock > 0 ? `${item.stock} Stock` : "Out of Stock"}
                     </span>
                   </div>
                 </motion.div>
@@ -349,62 +198,39 @@ export default function Dashboard() {
         {/* Right Side */}
 
         <div className="space-y-6">
-
-          <Card
-            title="Inventory Health"
-            className="rounded-3xl"
-          >
+          <Card title="Inventory Health" className="rounded-3xl">
             <Progress
               percent={
                 stats?.totalProducts
                   ? Math.round(
-                      ((stats.totalProducts -
-                        stats.outOfStock) /
+                      ((stats.totalProducts - stats.outOfStock) /
                         stats.totalProducts) *
-                        100
+                        100,
                     )
                   : 0
               }
               strokeColor="#16a34a"
             />
 
-            <p className="mt-4 text-gray-500">
-              Stock Availability
-            </p>
+            <p className="mt-4 text-gray-500">Stock Availability</p>
           </Card>
 
-          <Card
-            title="Quick Actions"
-            className="rounded-3xl"
-          >
-            <div className="space-y-3">
-
+          <Card title="Quick Actions" className="rounded-3xl">
+            <div className="flex flex-col gap-4">
               <Link to={ROUTES.adminProducts}>
-                <Button
-                  icon={<FiPlus />}
-                  block
-                  size="large"
-                  type="primary"
-                >
+                <Button icon={<FiPlus />} block size="large" type="primary">
                   Add Product
                 </Button>
               </Link>
 
               <Link to={ROUTES.adminProducts}>
-                <Button
-                  icon={<FiPackage />}
-                  block
-                  size="large"
-                >
+                <Button icon={<FiPackage />} block size="large">
                   Manage Products
                 </Button>
               </Link>
-
             </div>
           </Card>
-
         </div>
-
       </div>
     </>
   );

@@ -1,19 +1,28 @@
 import { Button } from "antd";
 import { motion } from "framer-motion";
 import { ArrowRightOutlined, WhatsAppOutlined } from "@ant-design/icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
 
+import "swiper/css";
+import "swiper/css/pagination";
 import Container from "./Container";
+import { useRandomProducts } from "../../hooks/useProducts";
+import { FILE_BASE_URL } from "../../config/api";
+import bgImage from "/background.png"; // adjust the path
 
 export default function Hero() {
+  const { data, isLoading } = useRandomProducts(6);
+  console.log("API Response:", data);
+  const slides = data?.products || [];
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 pt-12">
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-black to-slate-900 pt-14">
       {/* Background */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-40">
         <div
           className="w-full h-full bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1800&auto=format&fit=crop')",
+            backgroundImage: `url(${bgImage})`,
           }}
         />
       </div>
@@ -30,13 +39,15 @@ export default function Hero() {
               🕉 Authentic Narmadeshwar Shivlings
             </span>
 
-            <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight text-stone-900">
+            <h1 className="text-4xl lg:text-6xl block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
               Namdev
-              <span className="block text-amber-700">Narmadeshwar</span>
+              <span className="block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                Narmadeshwar
+              </span>
               Shivling Art
             </h1>
 
-            <p className="mt-8 text-lg lg:text-xl leading-9 text-gray-600 max-w-xl">
+            <p className="mt-8 text-lg leading-8 text-gray-300 max-w-xl">
               Discover handcrafted Narmadeshwar Shivlings made from sacred
               stones collected from the holy Narmada River. Every Shivling
               represents devotion, spirituality and traditional craftsmanship.
@@ -47,7 +58,7 @@ export default function Hero() {
                 type="primary"
                 size="large"
                 icon={<ArrowRightOutlined />}
-                className="!bg-amber-700 !border-none !rounded-full !px-8 !h-12"
+                className="!bg-orange-500 hover:!bg-orange-600 !border-none !rounded-full !px-8 !h-12"
               >
                 Explore Collection
               </Button>
@@ -62,27 +73,21 @@ export default function Hero() {
             </div>
 
             {/* Counter */}
-            <div className="grid grid-cols-3 gap-8 mt-20">
-              <div>
-                <h2 className="text-4xl lg:text-5xl font-bold text-amber-700">
-                  20+
-                </h2>
-                <p className="mt-2 text-gray-600">Years Experience</p>
-              </div>
+            <div className="grid grid-cols-3 gap-5 mt-16">
+              {[
+                ["20+", "Years Experience"],
+                ["5000+", "Happy Customers"],
+                ["100+", "Unique Designs"],
+              ].map(([num, label]) => (
+                <div
+                  key={label}
+                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5"
+                >
+                  <h2 className="text-4xl font-bold text-orange-400">{num}</h2>
 
-              <div>
-                <h2 className="text-4xl lg:text-5xl font-bold text-amber-700">
-                  5000+
-                </h2>
-                <p className="mt-2 text-gray-600">Happy Customers</p>
-              </div>
-
-              <div>
-                <h2 className="text-4xl lg:text-5xl font-bold text-amber-700">
-                  100+
-                </h2>
-                <p className="mt-2 text-gray-600">Designs</p>
-              </div>
+                  <p className="text-gray-300 mt-2">{label}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -93,16 +98,70 @@ export default function Hero() {
             transition={{ duration: 1 }}
             className="relative"
           >
-            <img
-              src="/image2.jpg"
-              alt="Narmadeshwar Shivling"
-              className="w-full h-[550px] rounded-[40px] object-cover shadow-2xl"
-            />
+            {/* <Swiper
+              modules={[Autoplay, Pagination]}
+              autoplay={{
+                delay: 3500,
+                disableOnInteraction: false,
+              }}
+              pagination={{ clickable: true }}
+              loop
+              className="rounded-[32px] overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
+            >
+              {slides.map((item) => {
+                const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(item.image);
 
-            <div className="absolute bottom-6 left-6 bg-white rounded-2xl shadow-xl px-8 py-5">
-              <h3 className="font-bold text-xl">Premium Quality</h3>
-              <p className="text-gray-500">Sacred Narmada Stone</p>
-            </div>
+                return (
+                  <SwiperSlide key={item.id}>
+                    {isVideo ? (
+                      <video
+                        className="w-full h-[600px] object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      >
+                        <source
+                          src={`${FILE_BASE_URL}/uploads/${item.image}`}
+                          type="video/mp4"
+                        />
+                      </video>
+                    ) : (
+                      <img
+                        src={`${FILE_BASE_URL}/uploads/${item.image}`}
+                        alt={item.name}
+                        className="w-full h-[600px] object-cover"
+                      />
+                    )}
+                  </SwiperSlide>
+                );
+              })}
+              <SwiperSlide>
+                <img
+                  src="/image3.jpg"
+                  className="w-full h-[600px] object-cover"
+                  alt=""
+                />
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <video
+                  className="w-full h-[600px] object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  <source src="/videos/workshop.mp4" type="video/mp4" />
+                </video>
+              </SwiperSlide>
+            </Swiper> */}
+
+            {/* <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 py-4 text-white">
+              <h3 className="font-semibold text-lg">Authentic Narmadeshwar</h3>
+
+              <p className="text-gray-300">Handcrafted by skilled artisans</p>
+            </div> */}
           </motion.div>
         </div>
       </Container>

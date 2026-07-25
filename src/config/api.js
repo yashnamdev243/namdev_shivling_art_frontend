@@ -16,6 +16,7 @@ export const ENDPOINTS = {
   },
   products: {
     list: "/products",
+    random: "/products/random",
     detail: (id) => `/products/${id}`,
     create: "/products",
     update: (id) => `/products/${id}`,

@@ -1,18 +1,15 @@
-import { Spin } from "antd";
-
-/**
- * Consistent loading state -- use instead of ad-hoc spinners so every
- * loading screen in the app looks the same.
- */
 export default function Loader({ fullScreen = false, label = "Loading..." }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-3 text-brand-700 ${
-        fullScreen ? "min-h-[60vh]" : "py-16"
+      className={`flex flex-col items-center justify-center gap-5 ${
+        fullScreen ? "min-h-[60vh]" : "min-h-[40vh]"
       }`}
     >
-      <Spin size="large" />
-      <p className="text-sm text-gray-500">{label}</p>
+      <div className="custom-loader" />
+
+      <p className="text-sm font-medium tracking-wide text-gray-500 animate-pulse">
+        {label}
+      </p>
     </div>
   );
 }

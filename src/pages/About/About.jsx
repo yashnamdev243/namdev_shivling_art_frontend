@@ -128,7 +128,7 @@ export default function About() {
         <title>About Us | Namdev Narmadeshwar Shivling Art</title>
       </Helmet>
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white">
+       <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white py-10 px-10">
 
         {/* Background Blur */}
 

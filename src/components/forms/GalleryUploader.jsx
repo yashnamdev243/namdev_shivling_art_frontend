@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { CloseCircleFilled, PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useMediaUpload } from "../../hooks/useMediaUpload";
+import { FILE_BASE_URL } from "../../config/api";
+import { getFileUrl } from "../../utils/fileUrl";
 
 /**
  * Reusable uploader for a *list* of images (product gallery). Keeps an
@@ -16,7 +18,12 @@ export default function GalleryUploader({ value = [], onChange, max = 8 }) {
     const toUpload = Array.from(files).slice(0, remaining);
     for (const file of toUpload) {
       const result = await upload(file);
-      if (result?.url) onChange?.([...value, result.url]);
+      if (result?.filename) {
+  onChange?.([...value, result.filename]);
+} else if (result?.url) {
+  const filename = result.url.split("/").pop();
+  onChange?.([...value, filename]);
+}
     }
   }
 
@@ -33,7 +40,8 @@ export default function GalleryUploader({ value = [], onChange, max = 8 }) {
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
         {value.map((url, index) => (
           <div key={url + index} className="relative aspect-square overflow-hidden rounded-xl border border-gray-200">
-            <img src={url} alt="" className="h-full w-full object-cover" />
+            <img    src={getFileUrl(url)}
+ alt="" className="h-full w-full object-cover" />
             <button
               type="button"
               onClick={() => removeAt(index)}

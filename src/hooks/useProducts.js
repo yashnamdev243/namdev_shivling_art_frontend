@@ -60,3 +60,10 @@ export function useDeleteProduct() {
     onError: (err) => toast.error(err.message || "Failed to delete product"),
   });
 }
+
+export function useRandomProducts(limit = 8) {
+  return useQuery({
+    queryKey: ["random-products", limit],
+    queryFn: () => productService.getRandom(limit),
+  });
+}

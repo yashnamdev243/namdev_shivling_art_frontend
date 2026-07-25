@@ -23,7 +23,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="mt-20 bg-stone-950 text-gray-300">
+    <footer className=" bg-stone-950 text-gray-300">
       {/* Top Section */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         {/* Company */}

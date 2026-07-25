@@ -4,8 +4,8 @@
 
 export const SITE = {
   name: "Namdev Narmadeshwar Shivling Art",
-  shortName: "Namdev",
-  tagline: "Narmadeshwar Shivling Art",
+  shortName: "Namdev Narmadeshwar",
+  tagline: "Shivling Art",
   description:
     "Authentic, handcrafted Narmadeshwar Shivlings, marble murtis and pooja accessories -- sourced from the sacred Narmada river and finished with devotion.",
   phone: "+91 99999 99999",

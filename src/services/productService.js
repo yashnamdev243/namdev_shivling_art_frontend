@@ -27,6 +27,12 @@ export const productService = {
   async remove(id) {
     return apiDelete(ENDPOINTS.products.remove(id));
   },
+
+  async getRandom(limit = 8) {
+  return apiGet(ENDPOINTS.products.random, {
+    params: { limit },
+  });
+},
 };
 
 export default productService;

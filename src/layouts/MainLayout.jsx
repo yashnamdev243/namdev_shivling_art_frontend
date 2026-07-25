@@ -23,7 +23,6 @@
 //   );
 // }
 
-
 import { Layout } from "antd";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -52,16 +51,15 @@ export default function MainLayout() {
   const location = useLocation();
 
   return (
-  //  <Layout className="min-h-screen overflow-x-hidden bg-stone-50">
-<Layout className="min-h-screen overflow-x-hidden bg-gradient-to-b from-amber-50 via-white to-stone-50">
+    //  <Layout className="min-h-screen overflow-x-hidden bg-stone-50">
+    <Layout className="min-h-screen overflow-x-hidden ">
       <ScrollToTop />
 
       <Header />
-         
+
       <Content className="flex-1">
         <PageLoader />
         <AnimatePresence mode="wait">
-
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0, y: 18 }}
@@ -74,13 +72,10 @@ export default function MainLayout() {
           >
             <Outlet />
           </motion.div>
-
         </AnimatePresence>
-
       </Content>
 
       <Footer />
-
     </Layout>
   );
 }

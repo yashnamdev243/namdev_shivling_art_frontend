@@ -185,7 +185,7 @@ export default function Contact() {
         description="Contact Namdev Narmadeshwar Shivling Art."
       />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white py-20 px-10">
+      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white py-28 mt-2 px-10">
 
         {/* Background Blur */}
 

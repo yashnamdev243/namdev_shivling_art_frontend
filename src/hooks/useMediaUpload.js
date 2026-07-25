@@ -23,10 +23,23 @@ export function useMediaUpload(kind = "image") {
       setProgress(0);
       try {
         const result =
-          kind === "video"
-            ? await uploadService.uploadVideo(file, setProgress)
-            : await uploadService.uploadImage(file, setProgress);
-        return result; // { url, publicId }
+  kind === "video"
+    ? await uploadService.uploadVideo(file, setProgress)
+    : await uploadService.uploadImage(file, setProgress);
+
+if (result?.image) {
+  return {
+    filename: result.image.replace(/^\/?uploads\//, ""),
+  };
+}
+
+if (result?.video) {
+  return {
+    filename: result.video.replace(/^\/?uploads\//, ""),
+  };
+}
+
+return result;// { url, publicId }
       } catch (err) {
         toast.error(err.message || "Upload failed");
         return null;

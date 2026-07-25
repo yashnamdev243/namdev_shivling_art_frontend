@@ -29,7 +29,7 @@ export default function Products() {
       category: category || undefined,
       sort,
     }),
-    [page, debouncedSearch, category, sort]
+    [page, debouncedSearch, category, sort],
   );
 
   const { data, isLoading, isError, error, refetch } = useProducts(filters);
@@ -37,7 +37,8 @@ export default function Products() {
 
   const products = data?.products || data?.data || data || [];
   const total = data?.total ?? products.length;
-  const categories = categoryData?.categories || categoryData?.data || categoryData || [];
+  const categories =
+    categoryData?.categories || categoryData?.data || categoryData || [];
 
   function handleCategoryChange(value) {
     setCategory(value);
@@ -56,26 +57,35 @@ export default function Products() {
         description="Browse authentic Narmadeshwar Shivlings, marble murtis and pooja accessories."
       />
 
-      <section className="bg-stone-texture bg-brand-50/40 py-16">
-        <div className="mx-auto max-w-7xl px-5">
-          <p className="font-medium uppercase tracking-widest text-gold-600">Our Collection</p>
-          <h1 className="mt-2 font-display text-4xl font-bold text-stone-900 sm:text-5xl">
-            Products
-          </h1>
-        </div>
-      </section>
+      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white py-28 mt-1 px-10">
+        <div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-amber-200/30 blur-[130px]" />
 
-      <section className="py-14">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="mb-10 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-            <ProductSearch
-              value={search}
-              onChange={(v) => {
-                setSearch(v);
-                setPage(1);
-              }}
-            />
-            <div className="md:w-[420px]">
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-orange-200/30 blur-[130px]" />
+        <div className="container mx-auto max-w-7xl px-5"></div>
+        <div className="container mx-auto max-w-7xl px-5">
+          <div className="mb-14 text-center">
+            <span className="rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold uppercase tracking-widest text-amber-700">
+              Our Collection
+            </span>
+
+            <h1 className="mt-6 text-4xl font-bold text-gray-900 md:text-6xl">
+              Products
+            </h1>
+          </div>
+        </div>
+
+        <div className="container mx-auto max-w-7xl px-5 ">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between bg-gradient-to-l from-amber-100 via-amber-50 to-amber-50 p-6 shadow-[0_15px_40px_rgba(249,115,22,.08)] backdrop-blur-xl rounded-2xl border border-orange-100 ">
+            <div className="flex-1">
+              <ProductSearch
+                value={search}
+                onChange={(v) => {
+                  setSearch(v);
+                  setPage(1);
+                }}
+              />
+            </div>
+            <div className="w-full lg:w-[320px]">
               <ProductFilter
                 categories={categories}
                 category={category}
@@ -88,15 +98,15 @@ export default function Products() {
               />
             </div>
           </div>
-
-          <ProductGrid
-            products={products}
-            isLoading={isLoading}
-            isError={isError}
-            error={error}
-            onRetry={refetch}
-          />
-
+          <div className="mt-10">
+            <ProductGrid
+              products={products}
+              isLoading={isLoading}
+              isError={isError}
+              error={error}
+              onRetry={refetch}
+            />
+          </div>
           {!isLoading && total > PAGE_SIZE && (
             <div className="mt-12 flex justify-center">
               <Pagination

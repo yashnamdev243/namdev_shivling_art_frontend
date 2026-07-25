@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Progress } from "antd";
 import { InboxOutlined, CloseCircleFilled, PlayCircleFilled } from "@ant-design/icons";
 import { useMediaUpload } from "../../hooks/useMediaUpload";
+import { getFileUrl } from "../../utils/fileUrl";
 
 /**
  * Reusable drag-and-drop uploader for a single image or video.
@@ -22,11 +23,21 @@ export default function MediaUploader({
   const { upload, progress, isUploading } = useMediaUpload(kind);
 
   async function handleFiles(files) {
-    const file = files?.[0];
-    if (!file) return;
-    const result = await upload(file);
-    if (result?.url) onChange?.(result.url);
-  }
+  const file = files?.[0];
+  if (!file) return;
+
+  const result = await upload(file);
+
+console.log(result);
+
+if (!result) return;
+
+if (result.filename) {
+    console.log("Sending to Form:", result.filename);
+
+  onChange?.(result.filename);
+}
+}
 
   return (
     <div>
@@ -50,12 +61,12 @@ export default function MediaUploader({
         />
 
         {value && kind === "image" && (
-          <img src={value} alt={label} className="h-full w-full object-cover" />
+          <img src={getFileUrl(value)} alt={label} className="h-full w-full object-cover" />
         )}
 
         {value && kind === "video" && (
           <div className="relative flex h-full w-full items-center justify-center bg-stone-900">
-            <video src={value} className="h-full w-full object-cover opacity-70" />
+            <video  src={getFileUrl(value)} className="h-full w-full object-cover opacity-70" />
             <PlayCircleFilled className="absolute text-5xl text-white" />
           </div>
         )}

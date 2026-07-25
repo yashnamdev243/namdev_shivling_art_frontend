@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Table, Button, Input, Tag, Image } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 import Seo from "../../../components/common/Seo";
 import AdminHeader from "../../../components/admin/AdminHeader";
@@ -10,6 +15,7 @@ import { useProducts, useDeleteProduct } from "../../../hooks/useProducts";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { formatCurrency } from "../../../utils/format";
 import { PAGE_SIZE } from "../../../config/constants";
+import { FILE_BASE_URL } from "../../../config/api";
 
 export default function ProductList() {
   const [search, setSearch] = useState("");
@@ -42,17 +48,40 @@ export default function ProductList() {
     {
       title: "Product",
       dataIndex: "name",
-      render: (name, record) => (
-        <div className="flex items-center gap-3">
-          <Image
-            src={record.thumbnail || "https://placehold.co/60x60"}
-            width={48}
-            height={48}
-            className="!rounded-lg object-cover"
-          />
-          <span className="font-medium text-stone-800">{name}</span>
-        </div>
-      ),
+      render: (name, record) => {
+        return (
+          <div className="flex items-center gap-3">
+            <img
+              src={`${FILE_BASE_URL}/uploads/${record.image}`}
+              alt={name}
+              width={48}
+              height={48}
+              style={{
+                borderRadius: 8,
+                objectFit: "cover",
+                border: "1px solid #ddd",
+              }}
+              onLoad={() => console.log("✅ Loaded")}
+              onError={(e) => {
+                console.log("Image failed");
+                console.log("URL:", e.target.src);
+
+                fetch(e.target.src)
+                  .then((res) => {
+                    console.log("Status:", res.status);
+                    console.log(
+                      "Content-Type:",
+                      res.headers.get("content-type"),
+                    );
+                  })
+                  .catch((err) => console.log(err));
+              }}
+            />
+
+            <span className="font-medium text-stone-800">{name}</span>
+          </div>
+        );
+      },
     },
     {
       title: "Category",
@@ -62,7 +91,11 @@ export default function ProductList() {
     {
       title: "Price",
       dataIndex: "price",
-      render: (price) => <span className="font-semibold text-brand-700">{formatCurrency(price)}</span>,
+      render: (price) => (
+        <span className="font-semibold text-brand-700">
+          {formatCurrency(price)}
+        </span>
+      ),
     },
     {
       title: "Stock",
@@ -99,7 +132,7 @@ export default function ProductList() {
       ),
     },
   ];
-
+  console.log(products, "products");
   return (
     <>
       <Seo title="Manage Products" />
