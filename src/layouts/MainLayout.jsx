@@ -31,6 +31,7 @@ import { useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import PageLoader from "../components/common/PageLoader";
+import AnnouncementBar from "../components/common/AnnouncementBar";
 
 const { Content } = Layout;
 
@@ -53,11 +54,16 @@ export default function MainLayout() {
   return (
     //  <Layout className="min-h-screen overflow-x-hidden bg-stone-50">
     <Layout className="min-h-screen overflow-x-hidden ">
+          <div className="fixed top-0 left-0 right-0 z-50">
+
       <ScrollToTop />
 
-      <Header />
+      <AnnouncementBar />
 
-      <Content className="flex-1">
+      <Header />
+    </div>
+
+      <Content className="flex-1 pt-[40px]">
         <PageLoader />
         <AnimatePresence mode="wait">
           <motion.div

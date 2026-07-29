@@ -100,7 +100,7 @@ export default function BrandLogo({
             light ? "text-gray-300" : "text-gray-500"
           }`}
         >
-          {SITE.tagline}
+          {SITE.title}
         </p>
       </div>
     </div>

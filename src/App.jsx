@@ -19,8 +19,9 @@ function App() {
                 colorPrimary: "#8a4019",
                 borderRadius: 10,
                 colorLink: "#8a4019",
-              },
+              },             
             }}
+            
           >
             <AppRoutes />
 

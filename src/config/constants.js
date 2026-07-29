@@ -2,21 +2,47 @@
 // Update contact details / brand copy here -- nothing else in the app
 // should hardcode these values.
 
+// export const SITE = {
+//   name: "Namdev Narmadeshwar Shivling Art",
+//   shortName: "Namdev Narmadeshwar",
+//   tagline: "Shivling Art",
+//   description:
+//     "Authentic, handcrafted Narmadeshwar Shivlings, marble murtis and pooja accessories -- sourced from the sacred Narmada river and finished with devotion.",
+//   phone: "+91 99999 99999",
+//   phoneRaw: "919999999999",
+//   email: "info@namdevshivlingart.com",
+//   address: "Namdev Narmadeshwar Shivling Art, Omkareshwar, Madhya Pradesh, India",
+//   social: {
+//     facebook: "#",
+//     instagram: "#",
+//     youtube: "#",
+//     whatsapp: "https://wa.me/919999999999",
+//   },
+// };
 export const SITE = {
   name: "Namdev Narmadeshwar Shivling Art",
   shortName: "Namdev Narmadeshwar",
-  tagline: "Shivling Art",
+  title: "Shivling Art",
+  tagline: "Authentic Narmadeshwar Shivling Manufacturer",
+
   description:
-    "Authentic, handcrafted Narmadeshwar Shivlings, marble murtis and pooja accessories -- sourced from the sacred Narmada river and finished with devotion.",
-  phone: "+91 99999 99999",
-  phoneRaw: "919999999999",
+    "Namdev Narmadeshwar Shivling Art is a trusted manufacturer and exporter of authentic Narmadeshwar Shivlings, Marble Shivlings, Temple Shivlings, Shiva Idols, Religious Sculptures and custom handcrafted Shivlings from Bakawan, Khargone, Madhya Pradesh.",
+
+  url: "https://yourdomain.com",
+
+  phone: "+91 9691089549",
+  phoneRaw: "916262529295",
+
   email: "info@namdevshivlingart.com",
-  address: "Namdev Narmadeshwar Shivling Art, Omkareshwar, Madhya Pradesh, India",
+
+  address:
+    "Namdev Narmadeshwar Shivling Art, Ram Mandir, Bakawan Village, Pitamali, Khargone, Madhya Pradesh 451113, India",
+
   social: {
-    facebook: "#",
-    instagram: "#",
-    youtube: "#",
-    whatsapp: "https://wa.me/919999999999",
+    facebook: "https://facebook.com/yourpage",
+    instagram: "https://instagram.com/yourpage",
+    youtube: "https://youtube.com/@yourchannel",
+    whatsapp: "https://wa.me/9691089549",
   },
 };
 

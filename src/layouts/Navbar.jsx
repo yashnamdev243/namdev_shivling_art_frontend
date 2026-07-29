@@ -25,8 +25,9 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-4 z-50 px-4">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between rounded-2xl border border-white/20 bg-white/80 px-6 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
+      <header className="sticky top-4 z-50 ">
+        {/* <div className="mx-auto flex h-20 max-w-7xl items-center justify-between rounded-2xl border border-white/20 bg-white/80 px-6 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.08)]"> */}
+        <div className="mx-auto flex h-20 items-center justify-between border border-white/20 bg-white/80 px-4 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
           <BrandLogo />
 
           {/* Desktop Menu */}
@@ -61,7 +62,7 @@ export default function Navbar() {
             <Button
               icon={<PhoneOutlined className="text-[16px]" />}
               href={`tel:${SITE.phoneRaw}`}
-              className="!h-10 !w-full !rounded-full !border-white !bg-gradient-to-r from-orange-500 to-amber-500 !text-white font-semibold shadow-lg"
+              className="!h-10 !w-full !rounded-2xl !border-amber-500 !bg-slate-100/80 !text-amber-500 font-semibold shadow-md"
             >
               Call
             </Button>
@@ -71,7 +72,7 @@ export default function Navbar() {
               icon={<WhatsAppOutlined className="text-[16px]" />}
               href={SITE.social.whatsapp}
               target="_blank"
-              className="!h-10 !w-full !rounded-full !border-white !bg-green-500 hover:!bg-green-600 !text-white font-semibold shadow-lg"
+              className="!h-10 !w-full !rounded-2xl !border-white !bg-green-500 hover:!bg-green-600 !text-white font-semibold shadow-md"
             >
               WhatsApp
             </Button>
