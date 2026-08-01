@@ -9,6 +9,7 @@ import {
 
 import MobileDrawer from "./MobileDrawer";
 import BrandLogo from "../components/common/BrandLogo";
+import CartWishlistIcons from "../components/common/CartWishlistIcons";
 import { SITE } from "../config/constants";
 import { ROUTES } from "../config/routes";
 
@@ -59,6 +60,10 @@ export default function Navbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-3">
+            <CartWishlistIcons />
+
+            <span className="h-8 w-px bg-slate-200" aria-hidden="true" />
+
             <Button
               icon={<PhoneOutlined className="text-[16px]" />}
               href={`tel:${SITE.phoneRaw}`}
@@ -78,13 +83,16 @@ export default function Navbar() {
             </Button>
           </div>
 
-          {/* Mobile Menu */}
-          <button
-            onClick={() => setOpen(true)}
-            className="lg:hidden flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg transition hover:scale-105 hover:bg-orange-600"
-          >
-            <MenuOutlined className="text-xl" />
-          </button>
+          {/* Mobile: cart/wishlist + menu */}
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <CartWishlistIcons />
+            <button
+              onClick={() => setOpen(true)}
+              className="lg:hidden flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg transition hover:scale-105 hover:bg-orange-600"
+            >
+              <MenuOutlined className="text-xl" />
+            </button>
+          </div>
         </div>
       </header>
       <MobileDrawer
