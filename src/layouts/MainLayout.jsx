@@ -32,6 +32,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import PageLoader from "../components/common/PageLoader";
 import AnnouncementBar from "../components/common/AnnouncementBar";
+import FloatingContactWidget from "../components/common/FloatingContactWidget";
 
 const { Content } = Layout;
 
@@ -54,6 +55,7 @@ export default function MainLayout() {
   return (
     //  <Layout className="min-h-screen overflow-x-hidden bg-stone-50">
     <Layout className="min-h-screen overflow-x-hidden ">
+       <FloatingContactWidget />
           <div className="fixed top-0 left-0 right-0 z-50">
 
       <ScrollToTop />

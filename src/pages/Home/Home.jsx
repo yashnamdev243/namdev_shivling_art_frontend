@@ -60,14 +60,14 @@ import AboutSection from "../../components/home/AboutSection";
 import GallerySection from "../../components/home/GallerySection";
 import Testimonials from "../../components/home/Testimonials";
 import ContactCTA from "../../components/home/ContactCTA";
-import FloatingContactWidget from "../../components/common/FloatingContactWidget";
+import Seo from "../../components/common/Seo";
+import { SEO_CONTENT } from "../../config/content";
+import { useContent } from "../../context/LanguageContext";
 
-// Same env-driven pattern used on the About/Contact pages, so all canonical
-// / OG URLs stay in sync with the actual deployment instead of a hardcoded
-// placeholder domain.
 const SITE_URL = import.meta.env.VITE_SITE_URL || "https://yourdomain.com";
 
 export default function Home() {
+  const seo = useContent(SEO_CONTENT.home);
   return (
     <>
       <Helmet>
@@ -117,6 +117,11 @@ export default function Home() {
           })}
         </script>
       </Helmet>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+      />
 
       <main className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-stone-50">
         {/* Decorative Background */}
@@ -155,8 +160,6 @@ export default function Home() {
 
           <ContactCTA />
         </div>
-
-        <FloatingContactWidget />
       </main>
     </>
   );

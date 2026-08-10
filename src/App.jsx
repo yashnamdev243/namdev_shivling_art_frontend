@@ -7,12 +7,18 @@ import { Toaster } from "react-hot-toast";
 import AppRoutes from "./routes/AppRoutes";
 import { store } from "./app/store";
 import { queryClient } from "./app/queryClient";
+import { LanguageProvider } from "./context/Languagecontext";
+
 
 function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
+             {/* LanguageProvider sits above everything else that reads
+              content, so the EN/HI toggle works from any page or the
+              navbar without extra wiring. */}
+          <LanguageProvider>
           <ConfigProvider
             theme={{
               token: {
@@ -32,6 +38,7 @@ function App() {
               }}
             />
           </ConfigProvider>
+          </LanguageProvider>
         </HelmetProvider>
       </QueryClientProvider>
     </Provider>

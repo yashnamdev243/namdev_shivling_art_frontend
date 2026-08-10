@@ -1,27 +1,20 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { WhatsAppOutlined, ArrowUpOutlined, CalendarOutlined } from "@ant-design/icons";
+import {
+  WhatsAppOutlined,
+  ArrowUpOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { SITE } from "../../config/constants";
+import { FLOATING_WIDGET_CONTENT } from "../../config/content";
+import { useContent } from "../../context/LanguageContext";
 
-/**
- * Site-wide floating action cluster:
- *  - WhatsApp quick-chat bubble (primary contact channel for this business)
- *  - "Book a Consultation" bubble that deep-links to the contact page
- *  - Back-to-top button
- *
- * Everything is hidden until the visitor has scrolled past the hero, so it
- * never competes with the hero's own CTAs, and it respects
- * prefers-reduced-motion for the idle pulse ring.
- *
- * Currently mounted on the Home page only. If you want it on every page,
- * move the <FloatingContactWidget /> render into your root layout /
- * App.jsx instead.
- */
 export default function FloatingContactWidget({ showAfter = 480 }) {
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const t = useContent(FLOATING_WIDGET_CONTENT);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > showAfter);
@@ -61,7 +54,7 @@ export default function FloatingContactWidget({ showAfter = 480 }) {
               exit={{ opacity: 0, scale: 0.7 }}
               whileHover={{ y: -3 }}
               onClick={scrollToTop}
-              aria-label="Scroll back to top"
+              aria-label={t.scrollTop}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-orange-200 bg-white text-orange-600 shadow-lg transition hover:border-orange-400 sm:h-11 sm:w-11"
             >
               <ArrowUpOutlined aria-hidden="true" />
@@ -82,7 +75,7 @@ export default function FloatingContactWidget({ showAfter = 480 }) {
                   className="flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-2.5 text-sm font-semibold text-orange-700 shadow-lg transition hover:border-orange-400 hover:shadow-xl"
                 >
                   <CalendarOutlined aria-hidden="true" />
-                  Book a Consultation
+                  {t.bookConsultation}
                 </Link>
               </motion.div>
             )}
@@ -97,7 +90,7 @@ export default function FloatingContactWidget({ showAfter = 480 }) {
               href={SITE.social.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Chat with us on WhatsApp"
+              aria-label={t.whatsapp}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onMouseEnter={() => setExpanded(true)}

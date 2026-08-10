@@ -79,6 +79,11 @@ export default function BrandLogo({
             <span className="text-2xl text-orange-300 drop-shadow-md">
               ॐ
             </span>
+             {/* <img
+    src="/namdev-logo.png"
+    alt="Namdev Narmadeshwar Shivling Art"
+    className="h-full w-full object-contain"
+  /> */}
           </div>
         </div>
       </div>

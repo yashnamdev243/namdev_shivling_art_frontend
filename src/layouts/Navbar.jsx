@@ -12,12 +12,13 @@ import BrandLogo from "../components/common/BrandLogo";
 import CartWishlistIcons from "../components/common/CartWishlistIcons";
 import { SITE } from "../config/constants";
 import { ROUTES } from "../config/routes";
+import LanguageSwitcher from "../components/common/LanguageSwitcher";
 
 const navItems = [
   { label: "Home", path: ROUTES.home },
+  { label: "About", path: ROUTES.about },
   { label: "Products", path: ROUTES.products },
   { label: "Gallery", path: ROUTES.gallery },
-  { label: "About", path: ROUTES.about },
   { label: "Contact", path: ROUTES.contact },
 ];
 
@@ -60,6 +61,7 @@ export default function Navbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-3">
+            <LanguageSwitcher />   
             <CartWishlistIcons />
 
             <span className="h-8 w-px bg-slate-200" aria-hidden="true" />
@@ -85,6 +87,7 @@ export default function Navbar() {
 
           {/* Mobile: cart/wishlist + menu */}
           <div className="flex items-center gap-1.5 lg:hidden">
+            <LanguageSwitcher variant="compact" />
             <CartWishlistIcons />
             <button
               onClick={() => setOpen(true)}

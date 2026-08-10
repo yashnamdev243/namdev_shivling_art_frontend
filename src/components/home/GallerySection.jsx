@@ -1,117 +1,3 @@
-// import { motion } from "framer-motion";
-// import Container from "./Container";
-// import SectionTitle from "./SectionTitle";
-// import { useProducts } from "../../hooks/useProducts";
-// import { FILE_BASE_URL } from "../../config/api";
-
-// export default function GallerySection() {
-
-//     const { data, isLoading, isError, error, refetch } = useProducts({
-//       limit: 24,
-//     });
-
-//     const products = data?.products || data?.data || data || [];
-//     const images = products.flatMap((product) => {
-//       const list = [];
-
-//       if (product.image) {
-//         list.push(`${FILE_BASE_URL}/uploads/${product.image}`);
-//       }
-
-//       if (product.gallery) {
-//         try {
-//           const gallery = Array.isArray(product.gallery)
-//             ? product.gallery
-//             : JSON.parse(product.gallery);
-
-//           gallery.forEach((img) => {
-//             list.push(`${FILE_BASE_URL}/uploads/${img}`);
-//           });
-//         } catch (e) {}
-//       }
-
-//       return list;
-//     });
-
-//   return (
-//     <section className="relative overflow-hidden py-6">
-//       <div className="absolute -top-24 left-0 h-80 w-80 rounded-full bg-orange-300/20 blur-[120px]" />
-
-//       <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-300/20 blur-[140px]" />
-
-//       <Container>
-//         <SectionTitle
-//           subtitle="Gallery"
-//           title="Explore Our Divine Collection"
-//         />
-
-//         {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
-
-//           {images.map((img, index) => (
-//             <motion.div
-//               key={index}
-//               whileHover={{ scale: 1.05 }}
-//               transition={{ duration: 0.3 }}
-//               className="overflow-hidden rounded-3xl shadow-xl"
-//             >
-//               <img
-//                 src={img}
-//                 alt=""
-//                 className="w-full h-80 object-cover transition duration-500 hover:scale-110"
-//               />
-//             </motion.div>
-//           ))}
-
-//         </div> */}
-
-//         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-//           {images.map((img, index) => (
-//             <motion.div
-//               key={index}
-//               whileHover={{ y: -10 }}
-//               transition={{ duration: 0.35 }}
-//               className="group relative overflow-hidden rounded-[28px] border border-orange-100 bg-white shadow-lg"
-//             >
-//               {/* Image */}
-//               <div className="relative h-80 overflow-hidden">
-//                 <img
-//                   src={img}
-//                   alt={`Gallery ${index + 1}`}
-//                   className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110"
-//                 />
-
-//                 {/* Gradient Overlay */}
-//                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
-
-//                 {/* Decorative Glow */}
-//                 <div className="absolute inset-0 bg-orange-500/10 opacity-0 transition duration-500 group-hover:opacity-100" />
-
-//                 {/* Hover Content */}
-//                 <div className="absolute inset-0 flex items-end justify-center p-6 opacity-0 transition-all duration-500 group-hover:opacity-100">
-//                   <div className="w-full rounded-2xl border border-white/20 bg-white/15 p-4 text-center backdrop-blur-md">
-//                     <h3 className="text-lg font-semibold text-white">
-//                       Sacred Collection
-//                     </h3>
-
-//                     <p className="mt-1 text-sm text-orange-100">
-//                       Handcrafted Narmadeshwar Shivling
-//                     </p>
-//                   </div>
-//                 </div>
-
-//                 {/* Image Number */}
-//                 <div className="absolute left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-sm font-bold text-orange-600 shadow-lg backdrop-blur">
-//                   {String(index + 1).padStart(2, "0")}
-//                 </div>
-//               </div>
-//             </motion.div>
-//           ))}
-//         </div>
-//       </Container>
-//     </section>
-//   );
-// }
-
 import { motion } from "framer-motion";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
@@ -119,9 +5,12 @@ import { useProducts } from "../../hooks/useProducts";
 import { FILE_BASE_URL } from "../../config/api";
 import Loader from "../common/Loader";
 import EmptyState from "../common/EmptyState";
+import { GALLERY_PREVIEW_CONTENT } from "../../config/content";
+import { useContent } from "../../context/LanguageContext";
 
 export default function GallerySection() {
   const { data, isLoading, isError, refetch } = useProducts({ limit: 24 });
+  const t = useContent(GALLERY_PREVIEW_CONTENT);
 
   const products = data?.products || data?.data || data || [];
 
@@ -160,17 +49,14 @@ export default function GallerySection() {
       <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 rounded-full bg-amber-300/20 blur-[100px] sm:h-96 sm:w-96 sm:blur-[140px]" />
 
       <Container>
-        <SectionTitle
-          subtitle="Gallery"
-          title="Explore Our Divine Collection"
-        />
+        <SectionTitle subtitle={t.subtitle} title={t.title} />
 
         {isLoading && <Loader label="Loading gallery..." />}
 
         {!isLoading && (isError || visibleImages.length === 0) && (
           <EmptyState
-            title="Gallery Coming Soon"
-            description="We're curating photos of our latest handcrafted Shivlings. Please check back shortly."
+            title={t.emptyTitle}
+            description={t.emptyDescription}
             onRetry={isError ? refetch : undefined}
           />
         )}
@@ -211,10 +97,10 @@ export default function GallerySection() {
                   <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 transition-all duration-500 group-hover:opacity-100 sm:p-6">
                     <div className="w-full rounded-2xl border border-white/20 bg-white/15 p-3 text-center backdrop-blur-md sm:p-4">
                       <h3 className="text-base font-semibold text-white sm:text-lg">
-                        Sacred Collection
+                        {t.cardTitle}
                       </h3>
                       <p className="mt-1 text-xs text-orange-100 sm:text-sm">
-                        Handcrafted Narmadeshwar Shivling
+                        {t.cardSubtitle}
                       </p>
                     </div>
                   </div>

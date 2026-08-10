@@ -7,10 +7,12 @@ import Seo from "../../components/common/Seo";
 import ProductCard from "../../components/cards/ProductCard";
 import { useWishlist } from "../../context/WishlistContext";
 import { ROUTES } from "../../config/routes";
+import { WISHLIST_CONTENT } from "../../config/content";
+import { useContent } from "../../context/LanguageContext";
 
 export default function Wishlist() {
   const { items } = useWishlist();
-
+  const t = useContent(WISHLIST_CONTENT);
   return (
     <>
       <Seo
@@ -27,13 +29,14 @@ export default function Wishlist() {
         <div className="container mx-auto max-w-7xl px-0 sm:px-5">
           <div className="mb-12 text-center sm:mb-14">
             <span className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-100 px-4 py-2 text-xs font-semibold text-orange-700 sm:px-5 sm:text-sm">
-              Your Wishlist
+              {t.badge}
             </span>
             <p className="mt-2 text-sm text-green-500 sm:text-base font-medium">
               {" "}
-              {items.length > 0
+              {/* {items.length > 0
                 ? `${items.length} saved item${items.length > 1 ? "s" : ""}`
-                : "Nothing saved yet"}
+                : "Nothing saved yet"} */}
+              {items.length > 0 ? t.savedCount(items.length) : t.emptyCount}
             </p>
           </div>
 
@@ -44,10 +47,10 @@ export default function Wishlist() {
                 aria-hidden="true"
               />
               <h2 className="mt-5 text-lg font-bold text-slate-900 sm:text-xl">
-                Your wishlist is empty
+                {t.emptyTitle}
               </h2>
               <p className="mt-2 max-w-sm text-sm text-gray-500 sm:text-base">
-                Tap the heart icon on any product to save it here for later.
+                {t.emptyDescription}
               </p>
               <Link to={ROUTES.products} className="mt-6">
                 <Button
@@ -56,7 +59,7 @@ export default function Wishlist() {
                   icon={<ArrowLeftOutlined />}
                   className="!h-11 !rounded-full !border-0 !bg-gradient-to-r !from-orange-500 !to-amber-500 !px-6 !font-semibold"
                 >
-                  Browse Products
+                  {t.browseButton}
                 </Button>
               </Link>
             </div>
