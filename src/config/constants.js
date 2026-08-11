@@ -77,12 +77,20 @@ export const HERITAGE_STORY = {
 };
 
 // LocalStorage keys -- kept in one place so nothing typos a raw string.
+// export const STORAGE_KEYS = {
+//   token: "nds_auth_token",
+//   user: "nds_auth_user",
+//   cart: "nds_cart",
+//   wishlist: "nds_wishlist",
+// };
 export const STORAGE_KEYS = {
   token: "nds_auth_token",
   user: "nds_auth_user",
+  adminToken: "nds_admin_token",
+  adminUser: "nds_admin_user",
   cart: "nds_cart",
-  wishlist: "nds_wishlist",
 };
+
 
 // Used as a fallback only while the categories API hasn't returned yet,
 // or if the admin hasn't created categories yet. Never used to fabricate

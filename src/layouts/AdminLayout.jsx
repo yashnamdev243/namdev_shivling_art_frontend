@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AdminSidebar from "../components/admin/AdminSidebar";
-
 /**
  * Layout shell for every /admin/* route (wrapped by <ProtectedRoute />
  * in AppRoutes.jsx, so this never renders for a logged-out visitor).

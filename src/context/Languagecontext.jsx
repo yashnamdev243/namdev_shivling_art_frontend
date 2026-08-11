@@ -1,118 +1,381 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+// import React, {
+//   createContext,
+//   useContext,
+//   useMemo,
+//   useState,
+// } from "react";
 
-// ============================================================================
-// src/context/LanguageContext.jsx
-//
-// Site-wide EN / HI language switch.
-//
-// - Persists the chosen language to localStorage so it survives a refresh.
-// - Keeps <html lang="..."> in sync (good for accessibility + SEO).
-// - Exposes a `useContent(block)` hook that picks the right half of any
-//   { en: {...}, hi: {...} } object from src/config/content.js, and always
-//   falls back to English if a Hindi string is ever missing.
-//
-// USAGE
-// ---------------------------------------------------------------------------
-// 1. Wrap the app once, in App.jsx:
-//
-//      <LanguageProvider>
-//        <AppRoutes />
-//      </LanguageProvider>
-//
-// 2. In any component:
-//
-//      import { CONTENT_BLOCK } from "../../config/content";
-//      import { useContent } from "../../context/LanguageContext";
-//
-//      const t = useContent(CONTENT_BLOCK);
-//      <h1>{t.title}</h1>
-//
-// 3. For the language toggle button itself, use `useLanguage()`:
-//
-//      const { language, setLanguage, toggleLanguage } = useLanguage();
-// ============================================================================
+// const LanguageContext = createContext(null);
 
-const LanguageContext = createContext(undefined);
+// const LANGUAGE_KEY = "site_language";
 
-const STORAGE_KEY = "nds_language"; // kept out of STORAGE_KEYS in constants.js
-                                     // on purpose — this is UI preference,
-                                     // not auth/cart state.
-const SUPPORTED_LANGUAGES = ["en", "hi"];
-const DEFAULT_LANGUAGE = "en";
+// const CONTENT = {
+//   en: {
+//     nav: {
+//       home: "Home",
+//       products: "Products",
+//       gallery: "Gallery",
+//       about: "About Us",
+//       contact: "Contact",
+//       wishlist: "Wishlist",
+//     },
 
-function readInitialLanguage() {
-  if (typeof window === "undefined") return DEFAULT_LANGUAGE;
+//     common: {
+//       loading: "Loading...",
+//       search: "Search",
+//       viewAll: "View All",
+//       readMore: "Read More",
+//       learnMore: "Learn More",
+//       submit: "Submit",
+//       cancel: "Cancel",
+//       close: "Close",
+//     },
 
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved && SUPPORTED_LANGUAGES.includes(saved)) return saved;
-  } catch {
-    // localStorage can throw in private-browsing / restricted contexts —
-    // silently fall back rather than crashing the app.
-  }
+//     home: {
+//       heroTitle: "Authentic Narmadeshwar Shivlings",
+//       heroSubtitle:
+//         "Handcrafted sacred stone art from the holy Narmada River.",
+//     },
 
-  return DEFAULT_LANGUAGE;
-}
+//     products: {
+//       title: "Our Products",
+//       subtitle:
+//         "Explore our collection of authentic handcrafted Narmadeshwar Shivlings.",
+//     },
+
+//     reviews: {
+//       title: "Customer Reviews",
+//       subtitle: "What our customers say about us.",
+//     },
+
+//     contact: {
+//       title: "Contact Us",
+//       subtitle: "We would love to hear from you.",
+//     },
+//   },
+
+//   hi: {
+//     nav: {
+//       home: "होम",
+//       products: "उत्पाद",
+//       gallery: "गैलरी",
+//       about: "हमारे बारे में",
+//       contact: "संपर्क करें",
+//       wishlist: "विशलिस्ट",
+//     },
+
+//     common: {
+//       loading: "लोड हो रहा है...",
+//       search: "खोजें",
+//       viewAll: "सभी देखें",
+//       readMore: "और पढ़ें",
+//       learnMore: "और जानें",
+//       submit: "सबमिट करें",
+//       cancel: "रद्द करें",
+//       close: "बंद करें",
+//     },
+
+//     home: {
+//       heroTitle: "प्रामाणिक नर्मदेश्वर शिवलिंग",
+//       heroSubtitle:
+//         "पवित्र नर्मदा नदी से प्राप्त हस्तनिर्मित आध्यात्मिक पत्थर कला।",
+//     },
+
+//     products: {
+//       title: "हमारे उत्पाद",
+//       subtitle:
+//         "प्रामाणिक हस्तनिर्मित नर्मदेश्वर शिवलिंग का संग्रह देखें।",
+//     },
+
+//     reviews: {
+//       title: "ग्राहक समीक्षा",
+//       subtitle: "हमारे ग्राहकों का अनुभव।",
+//     },
+
+//     contact: {
+//       title: "संपर्क करें",
+//       subtitle: "हम आपसे जुड़कर खुश होंगे।",
+//     },
+//   },
+// };
+
+// export function LanguageProvider({ children }) {
+//   const [language, setLanguage] = useState(() => {
+//     try {
+//       return localStorage.getItem(LANGUAGE_KEY) || "en";
+//     } catch {
+//       return "en";
+//     }
+//   });
+
+//   const changeLanguage = (nextLanguage) => {
+//     const next =
+//       nextLanguage === "hi" ? "hi" : "en";
+
+//     setLanguage(next);
+
+//     try {
+//       localStorage.setItem(LANGUAGE_KEY, next);
+//     } catch {
+//       // Ignore localStorage errors
+//     }
+//   };
+
+//   const toggleLanguage = () => {
+//     changeLanguage(language === "en" ? "hi" : "en");
+//   };
+
+//   const content = CONTENT[language] || CONTENT.en;
+
+//   const value = useMemo(
+//     () => ({
+//       language,
+//       setLanguage: changeLanguage,
+//       changeLanguage,
+//       toggleLanguage,
+//       content,
+//     }),
+//     [language, content]
+//   );
+
+//   return (
+//     <LanguageContext.Provider value={value}>
+//       {children}
+//     </LanguageContext.Provider>
+//   );
+// }
+
+// export function useLanguage() {
+//   const context = useContext(LanguageContext);
+
+//   if (!context) {
+//     throw new Error(
+//       "useLanguage must be used inside LanguageProvider"
+//     );
+//   }
+
+//   return {
+//     language: context.language,
+//     setLanguage: context.setLanguage,
+//     changeLanguage: context.changeLanguage,
+//     toggleLanguage: context.toggleLanguage,
+//   };
+// }
+
+// export function useContent() {
+//   const context = useContext(LanguageContext);
+
+//   if (!context) {
+//     throw new Error(
+//       "useContent must be used inside LanguageProvider"
+//     );
+//   }
+
+//   return context.content;
+// }
+
+// export default LanguageContext;
+
+
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+
+const LanguageContext = createContext(null);
+
+const LANGUAGE_KEY = "site_language";
+
+const CONTENT = {
+  en: {
+    nav: {
+      home: "Home",
+      products: "Products",
+      gallery: "Gallery",
+      about: "About Us",
+      contact: "Contact",
+      wishlist: "Wishlist",
+    },
+
+    common: {
+      loading: "Loading...",
+      search: "Search",
+      viewAll: "View All",
+      readMore: "Read More",
+      learnMore: "Learn More",
+      submit: "Submit",
+      cancel: "Cancel",
+      close: "Close",
+    },
+
+    home: {
+      heroTitle: "Authentic Narmadeshwar Shivlings",
+      heroSubtitle:
+        "Handcrafted sacred stone art from the holy Narmada River.",
+    },
+
+    products: {
+      title: "Our Products",
+      subtitle:
+        "Explore our collection of authentic handcrafted Narmadeshwar Shivlings.",
+    },
+
+    reviews: {
+      title: "Customer Reviews",
+      subtitle: "What our customers say about us.",
+    },
+
+    contact: {
+      title: "Contact Us",
+      subtitle: "We would love to hear from you.",
+    },
+  },
+
+  hi: {
+    nav: {
+      home: "होम",
+      products: "उत्पाद",
+      gallery: "गैलरी",
+      about: "हमारे बारे में",
+      contact: "संपर्क करें",
+      wishlist: "विशलिस्ट",
+    },
+
+    common: {
+      loading: "लोड हो रहा है...",
+      search: "खोजें",
+      viewAll: "सभी देखें",
+      readMore: "और पढ़ें",
+      learnMore: "और जानें",
+      submit: "सबमिट करें",
+      cancel: "रद्द करें",
+      close: "बंद करें",
+    },
+
+    home: {
+      heroTitle: "प्रामाणिक नर्मदेश्वर शिवलिंग",
+      heroSubtitle:
+        "पवित्र नर्मदा नदी से प्राप्त हस्तनिर्मित आध्यात्मिक पत्थर कला।",
+    },
+
+    products: {
+      title: "हमारे उत्पाद",
+      subtitle:
+        "प्रामाणिक हस्तनिर्मित नर्मदेश्वर शिवलिंग का संग्रह देखें।",
+    },
+
+    reviews: {
+      title: "ग्राहक समीक्षा",
+      subtitle: "हमारे ग्राहकों का अनुभव।",
+    },
+
+    contact: {
+      title: "संपर्क करें",
+      subtitle: "हम आपसे जुड़कर खुश होंगे।",
+    },
+  },
+};
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguageState] = useState(readInitialLanguage);
-
-  // Keep <html lang> and localStorage in sync whenever language changes.
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = language;
+  const [language, setLanguage] = useState(() => {
+    try {
+      return localStorage.getItem(LANGUAGE_KEY) || "en";
+    } catch {
+      return "en";
     }
+  });
+
+  const changeLanguage = (nextLanguage) => {
+    const next = nextLanguage === "hi" ? "hi" : "en";
+
+    setLanguage(next);
 
     try {
-      window.localStorage.setItem(STORAGE_KEY, language);
+      localStorage.setItem(LANGUAGE_KEY, next);
     } catch {
-      // Ignore write failures (private browsing, storage full, etc.)
+      // Ignore localStorage errors
     }
-  }, [language]);
+  };
 
-  function setLanguage(next) {
-    setLanguageState(SUPPORTED_LANGUAGES.includes(next) ? next : DEFAULT_LANGUAGE);
-  }
+  const toggleLanguage = () => {
+    changeLanguage(language === "en" ? "hi" : "en");
+  };
 
-  function toggleLanguage() {
-    setLanguageState((prev) => (prev === "en" ? "hi" : "en"));
-  }
+  const content = CONTENT[language] || CONTENT.en;
 
   const value = useMemo(
     () => ({
       language,
-      setLanguage,
+      setLanguage: changeLanguage,
+      changeLanguage,
       toggleLanguage,
-      isHindi: language === "hi",
-      isEnglish: language === "en",
+      content,
     }),
-    [language],
+    [language]
   );
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
-}
-
-/** Access { language, setLanguage, toggleLanguage, isHindi, isEnglish }. */
-export function useLanguage() {
-  const ctx = useContext(LanguageContext);
-
-  if (!ctx) {
-    throw new Error("useLanguage() must be used inside <LanguageProvider>.");
-  }
-
-  return ctx;
+  return (
+    <LanguageContext.Provider value={value}>
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 /**
- * Pick the active language's slice out of a bilingual content block
- * (anything shaped like `{ en: {...}, hi: {...} }`, as defined in
- * src/config/content.js). Always falls back to English so the UI never
- * renders blank text if a Hindi translation is missing for a new key.
+ * Returns current language:
+ *
+ * const { language } = useLanguage();
  */
-export function useContent(block) {
-  const { language } = useLanguage();
+export function useLanguage() {
+  const context = useContext(LanguageContext);
 
-  if (!block) return null;
+  if (!context) {
+    throw new Error(
+      "useLanguage must be used inside LanguageProvider"
+    );
+  }
 
-  return block[language] ?? block[DEFAULT_LANGUAGE] ?? null;
+  return {
+    language: context.language,
+    setLanguage: context.setLanguage,
+    changeLanguage: context.changeLanguage,
+    toggleLanguage: context.toggleLanguage,
+  };
 }
+
+/**
+ * Returns translated content.
+ *
+ * Usage:
+ * const t = useContent(ANNOUNCEMENT_CONTENT);
+ *
+ * OR:
+ * const t = useContent(HERO_CONTENT);
+ *
+ * It automatically selects:
+ * ANNOUNCEMENT_CONTENT.en
+ * OR
+ * ANNOUNCEMENT_CONTENT.hi
+ */
+export function useContent(source) {
+  const context = useContext(LanguageContext);
+
+  if (!context) {
+    throw new Error(
+      "useContent must be used inside LanguageProvider"
+    );
+  }
+
+  // If a specific content object was provided
+  if (source) {
+    return source[context.language] ?? source.en ?? source;
+  }
+
+  // Backward compatibility:
+  // useContent() returns the main context content
+  return context.content;
+}
+
+export default LanguageContext;

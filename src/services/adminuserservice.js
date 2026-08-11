@@ -1,12 +1,44 @@
-import { apiGet } from "../api/axios";
-import { ENDPOINTS } from "../config/api";
+import api from "../api/axios";
 
-export const adminUserService = {
-  async listUsers() {
-    return apiGet(ENDPOINTS.admin.users);
+const adminUserService = {
+  getAll: async (params = {}) => {
+    const response = await api.get("/admin/users", {
+      params,
+    });
+
+    return response.data;
   },
-  async activity(userId) {
-    return apiGet(ENDPOINTS.admin.activity, { params: userId ? { userId } : {} });
+
+  getOne: async (id) => {
+    const response = await api.get(`/admin/users/${id}`);
+
+    return response.data;
+  },
+
+  create: async (payload) => {
+    const response = await api.post(
+      "/admin/users",
+      payload
+    );
+
+    return response.data;
+  },
+
+  update: async (id, payload) => {
+    const response = await api.put(
+      `/admin/users/${id}`,
+      payload
+    );
+
+    return response.data;
+  },
+
+  remove: async (id) => {
+    const response = await api.delete(
+      `/admin/users/${id}`
+    );
+
+    return response.data;
   },
 };
 

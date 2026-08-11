@@ -1,80 +1,69 @@
-import { Form, Input, Button, Card } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-
-import Seo from "../../components/common/Seo";
-import { useAuth } from "../../hooks/useAuth";
-import { ROUTES } from "../../config/routes";
+import { useState } from "react";
+import { Input, Button } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 export default function Login() {
-  const { login, isLoggingIn } = useAuth();
-  const isAuthenticated = useSelector((s) => s.auth.isAuthenticated);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const from = location.state?.from || "/";
 
-  useEffect(() => {
-    if (isAuthenticated) navigate(ROUTES.adminDashboard, { replace: true });
-  }, [isAuthenticated, navigate]);
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!email.trim()) return toast.error("Please enter your email.");
+    if (!password) return toast.error("Please enter your password.");
+
+    try {
+      setLoading(true);
+      await login({ email:email.trim().toLowerCase(), password });
+      toast.success("Welcome back!");
+      navigate(from, { replace:true });
+    } catch (error) {
+      toast.error(error?.message || "Login failed.");
+    } finally { setLoading(false); }
+  };
 
   return (
-    <>
-      <Seo title="Admin Login" />
-
-      <div className="flex min-h-screen items-center justify-center bg-stone-texture bg-gray-600 px-5">
-        <div className="w-full max-w-md">
-          <div className="mb-8 text-center">
-            <div
-              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full shadow-soft"
-              style={{
-                background: "linear-gradient(135deg, #a8511f 0%, #8a4019 55%, #5c2c18 100%)",
-              }}
-            >
-              <span className="font-display text-2xl text-gold-200">ॐ</span>
-            </div>
-            <h1 className="font-display text-2xl font-bold text-white">Namdev Admin</h1>
-            <p className="mt-1 text-sm text-stone-400">Sign in to manage products &amp; categories</p>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 px-4 py-12">
+      <div className="mx-auto max-w-md rounded-3xl border border-orange-100 bg-white p-6 shadow-xl sm:p-8">
+        <div className="text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-orange-100">
+            <LockOutlined className="text-2xl text-orange-500" />
           </div>
+          <h1 className="mt-5 text-3xl font-bold text-slate-900">Welcome Back</h1>
+          <p className="mt-2 text-sm text-gray-500">Login to continue to your account.</p>
+        </div>
 
-          <Card className="rounded-3xl border-0 shadow-soft">
-            <Form layout="vertical" onFinish={login} requiredMark={false}>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  { required: true, message: "Please enter your email" },
-                  { type: "email", message: "Enter a valid email address" },
-                ]}
-              >
-                <Input size="large" prefix={<UserOutlined className="text-gray-400" />} placeholder="admin@example.com" />
-              </Form.Item>
+        <form onSubmit={submit} className="mt-8">
+          <label className="mb-2 block text-sm font-semibold">Email Address</label>
+          <Input size="large" prefix={<MailOutlined />} type="email"
+            value={email} onChange={e=>setEmail(e.target.value)}
+            placeholder="you@example.com" autoComplete="email" />
 
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: "Please enter your password" }]}
-              >
-                <Input.Password size="large" prefix={<LockOutlined className="text-gray-400" />} placeholder="********" />
-              </Form.Item>
+          <label className="mb-2 mt-5 block text-sm font-semibold">Password</label>
+          <Input.Password size="large" prefix={<LockOutlined />}
+            value={password} onChange={e=>setPassword(e.target.value)}
+            placeholder="Enter your password" autoComplete="current-password" />
 
-              <Button
-                htmlType="submit"
-                type="primary"
-                size="large"
-                block
-                loading={isLoggingIn}
-                className="!rounded-full !border-none !bg-brand-700 hover:!bg-brand-800"
-              >
-                Sign In
-              </Button>
-            </Form>
-          </Card>
+          <Button htmlType="submit" type="primary" loading={loading} block size="large"
+            className="!mt-6 !h-12 !rounded-xl !border-0 !bg-gradient-to-r !from-orange-500 !to-amber-500 !font-semibold">
+            Login
+          </Button>
+        </form>
 
-          <p className="mt-6 text-center text-xs text-stone-500">
-            &copy; {new Date().getFullYear()} Namdev Narmadeshwar Shivling Art
-          </p>
+        <div className="mt-6 text-center text-sm">
+          <span className="text-gray-500">Don't have an account?</span>
+          <Link to="/register" state={{from}} className="ml-1 font-semibold text-orange-600">
+            Create Account
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }

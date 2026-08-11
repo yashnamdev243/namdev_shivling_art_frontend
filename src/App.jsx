@@ -8,36 +8,40 @@ import AppRoutes from "./routes/AppRoutes";
 import { store } from "./app/store";
 import { queryClient } from "./app/queryClient";
 import { LanguageProvider } from "./context/Languagecontext";
-
+import { UserAuthProvider } from "./context/UserAuthContext";
+import { AdminAuthProvider } from "./context/AdminAuthContext";
 
 function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
-             {/* LanguageProvider sits above everything else that reads
+          {/* LanguageProvider sits above everything else that reads
               content, so the EN/HI toggle works from any page or the
               navbar without extra wiring. */}
           <LanguageProvider>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: "#8a4019",
-                borderRadius: 10,
-                colorLink: "#8a4019",
-              },             
-            }}
-            
-          >
-            <AppRoutes />
-
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 3000,
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#8a4019",
+                  borderRadius: 10,
+                  colorLink: "#8a4019",
+                },
               }}
-            />
-          </ConfigProvider>
+            >
+              <UserAuthProvider>
+                <AdminAuthProvider>
+                  <AppRoutes />
+                </AdminAuthProvider>
+
+                <Toaster
+                  position="top-right"
+                  toastOptions={{
+                    duration: 3000,
+                  }}
+                />
+              </UserAuthProvider>
+            </ConfigProvider>
           </LanguageProvider>
         </HelmetProvider>
       </QueryClientProvider>

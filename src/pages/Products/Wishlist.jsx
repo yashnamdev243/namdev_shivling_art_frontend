@@ -5,14 +5,33 @@ import { motion } from "framer-motion";
 
 import Seo from "../../components/common/Seo";
 import ProductCard from "../../components/cards/ProductCard";
-import { useWishlist } from "../../context/WishlistContext";
+import { useWishlist } from "../../hooks/useWishlist";
 import { ROUTES } from "../../config/routes";
 import { WISHLIST_CONTENT } from "../../config/content";
+import useAuth from "../../hooks/useAuth";
 import { useContent } from "../../context/LanguageContext";
 
 export default function Wishlist() {
   const { items } = useWishlist();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const t = useContent(WISHLIST_CONTENT);
+  if (!authLoading && !isAuthenticated) {
+    return (
+      <>
+        <Seo title="Your Wishlist" description="Login to access your personal wishlist." noIndex />
+        <section className="flex min-h-[60vh] items-center justify-center bg-amber-50 px-4 py-16">
+          <div className="max-w-md rounded-3xl bg-white p-8 text-center shadow-xl">
+            <HeartOutlined className="text-5xl text-orange-400" />
+            <h1 className="mt-4 text-2xl font-bold text-slate-900">Login to view your wishlist</h1>
+            <p className="mt-2 text-gray-500">Your wishlist is private to your account and syncs across devices after login.</p>
+            <Link to="/login" state={{ from: "/wishlist" }} className="mt-6 inline-block">
+              <Button type="primary" size="large" className="!rounded-full">Login / Create Account</Button>
+            </Link>
+          </div>
+        </section>
+      </>
+    );
+  }
   return (
     <>
       <Seo

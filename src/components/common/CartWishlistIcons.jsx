@@ -2,7 +2,7 @@
 // import { Badge } from "antd";
 // import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 // import { useCart } from "../../context/CartContext";
-// import { useWishlist } from "../../context/WishlistContext";
+// import { useWishlist } from "../../hooks/useWishlist";
 
 // /**
 //  * Standalone header widget: wishlist + cart icons with live count badges.
@@ -49,7 +49,7 @@
 import { Link } from "react-router-dom";
 import { Badge } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
-import { useWishlist } from "../../context/WishlistContext";
+import { useWishlist } from "../../hooks/useWishlist";
 
 /**
  * Header wishlist icon with a live count badge. Kept the same component
