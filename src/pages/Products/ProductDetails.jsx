@@ -1459,6 +1459,7 @@ import ProductReviewForm from "../../components/product/ProductReviewForm";
 import ProductReviewList from "../../components/product/ProductReviewList";
 import useProductLike from "../../hooks/useProductLike";
 import useProductReviews from "../../hooks/useProductReviews";
+import CouponApplyBox from "../../components/coupon/CouponApplyBox";
 
 // Standard size bands we can craft to order, from small home-worship
 // pieces up to full temple installations. "Custom" opens a bespoke
@@ -1502,6 +1503,7 @@ export default function ProductDetails() {
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [isCustomSize, setIsCustomSize] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   // const { isWishlisted, toggleWishlist } = useWishlist();
 
@@ -1662,6 +1664,10 @@ export default function ProductDetails() {
                   {formatCurrency(product.price)}
                 </h2>
               </div>
+              <CouponApplyBox
+                product={product}
+                onApplied={setAppliedCoupon}
+              />
 
               {product.description && (
                 <div className="mt-6 rounded-2xl border border-orange-100 bg-orange-50/40 p-4 sm:rounded-3xl">

@@ -38,6 +38,30 @@ function App() {
                   position="top-right"
                   toastOptions={{
                     duration: 3000,
+                    style: {
+                      borderRadius: "14px",
+                      padding: "12px 16px",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+                      border: "1px solid #f3f4f6",
+                    },
+                    success: {
+                      iconTheme: { primary: "#16a34a", secondary: "#fff" },
+                      style: {
+                        background: "#f0fdf4",
+                        color: "#166534",
+                        border: "1px solid #bbf7d0",
+                      },
+                    },
+                    error: {
+                      iconTheme: { primary: "#dc2626", secondary: "#fff" },
+                      style: {
+                        background: "#fef2f2",
+                        color: "#991b1b",
+                        border: "1px solid #fecaca",
+                      },
+                    },
                   }}
                 />
               </UserAuthProvider>
