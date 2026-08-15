@@ -13,6 +13,8 @@ import CartWishlistIcons from "../components/common/CartWishlistIcons";
 import { SITE } from "../config/constants";
 import { ROUTES } from "../config/routes";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
+import UserMenu from "../components/common/UserMenu";
+import AccountButton from "../components/common/AccountButton";
 
 const navItems = [
   { label: "Home", path: ROUTES.home },
@@ -61,7 +63,7 @@ export default function Navbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <LanguageSwitcher />   
+            <LanguageSwitcher />
             <CartWishlistIcons />
 
             <span className="h-8 w-px bg-slate-200" aria-hidden="true" />
@@ -83,6 +85,8 @@ export default function Navbar() {
             >
               WhatsApp
             </Button>
+
+            <AccountButton />
           </div>
 
           {/* Mobile: cart/wishlist + menu */}

@@ -318,9 +318,11 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import couponService from "../../services/couponService";
 import { useUserAuth } from "../../context/UserAuthContext";
+import LoginRequiredModal from "../auth/LoginRequiredModal";
 
 export default function CouponApplyBox({ product, onApplied }) {
   const { isAuthenticated } = useUserAuth();
+  const [loginOpen, setLoginOpen] = useState(false);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -337,12 +339,15 @@ export default function CouponApplyBox({ product, onApplied }) {
   const history = historyData?.redemptions || [];
 
   const applyCoupon = async () => {
-    const couponCode = code.trim().toUpperCase();
-
+   
     if (!isAuthenticated) {
-      toast.error("Please login to apply a coupon.");
+      // toast.error("Please login to apply a coupon.");
+      setLoginOpen(true);
       return;
     }
+
+   const couponCode = code.trim().toUpperCase();
+
     if (!couponCode) {
       toast.error("Please enter a coupon code.");
       return;
@@ -494,6 +499,13 @@ export default function CouponApplyBox({ product, onApplied }) {
           </div>
         </div>
       )}
+
+       <LoginRequiredModal
+        open={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        title="Login to use a coupon"
+        description="Please login before applying a coupon. This helps us track your savings and prevent misuse."
+      />
 
       {/* HISTORY MODAL */}
       <Modal

@@ -114,3 +114,227 @@ h1, h2, h3, h4 {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+.admin-clean-table .ant-table {
+  border-radius: 14px;
+  overflow: hidden;
+}
+.admin-clean-table .ant-table-thead > tr > th {
+  background: #fff7ed;
+  color: #9a3412;
+  font-weight: 600;
+  border-bottom: 1px solid #fed7aa;
+}
+.admin-clean-table .ant-table-tbody > tr:hover > td {
+  background: #fffaf0;
+}
+
+/* =====================================================
+   THEME TOKENS (orange/amber brand)
+   ===================================================== */
+:root {
+  --brand-primary: #f97316;      /* orange-500 */
+  --brand-primary-dark: #c2410c; /* orange-700 */
+  --brand-accent: #f59e0b;       /* amber-500 */
+  --brand-track: #fff7ed;        /* orange-50 */
+  --sidebar-bg: #0c0a09;         /* stone-950 */
+  --sidebar-track: #292524;      /* stone-800 */
+  --sidebar-thumb: #f59e0b;      /* amber-500 */
+}
+
+/* =====================================================
+   THEMED SCROLLBAR — light surfaces (tables, page body, modals)
+   Apply class="themed-scrollbar" to any scrollable container,
+   or rely on the global .ant-table-content / .ant-select-dropdown
+   overrides below which apply automatically everywhere.
+   ===================================================== */
+.themed-scrollbar::-webkit-scrollbar,
+.ant-table-content::-webkit-scrollbar,
+.ant-select-dropdown::-webkit-scrollbar,
+.ant-modal-body::-webkit-scrollbar,
+.ant-drawer-body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-track,
+.ant-table-content::-webkit-scrollbar-track,
+.ant-select-dropdown::-webkit-scrollbar-track,
+.ant-modal-body::-webkit-scrollbar-track,
+.ant-drawer-body::-webkit-scrollbar-track {
+  background: var(--brand-track);
+  border-radius: 8px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb,
+.ant-table-content::-webkit-scrollbar-thumb,
+.ant-select-dropdown::-webkit-scrollbar-thumb,
+.ant-modal-body::-webkit-scrollbar-thumb,
+.ant-drawer-body::-webkit-scrollbar-thumb {
+  background: var(--brand-primary);
+  border-radius: 8px;
+  border: 2px solid var(--brand-track);
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb:hover,
+.ant-table-content::-webkit-scrollbar-thumb:hover,
+.ant-select-dropdown::-webkit-scrollbar-thumb:hover,
+.ant-modal-body::-webkit-scrollbar-thumb:hover,
+.ant-drawer-body::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary-dark);
+}
+
+.themed-scrollbar,
+.ant-table-content,
+.ant-select-dropdown,
+.ant-modal-body,
+.ant-drawer-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-primary) var(--brand-track);
+}
+
+/* =====================================================
+   THEMED SCROLLBAR — dark surfaces (admin sidebar nav)
+   ===================================================== */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: var(--sidebar-track);
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--sidebar-thumb);
+  border-radius: 8px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-accent);
+}
+
+.sidebar-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sidebar-thumb) var(--sidebar-track);
+}
+
+/* =====================================================
+   THEMED PAGINATION (applies globally to every antd Table)
+   ===================================================== */
+.admin-clean-table .ant-pagination {
+  padding: 12px 0 0 !important;
+  justify-content: flex-end;
+}
+
+.admin-clean-table .ant-pagination-item {
+  border-radius: 8px !important;
+  border: 1px solid #fed7aa !important;
+  background-color: #ffffff !important;
+  color: #7c2d12 !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  line-height: 30px !important;
+  transition: all 0.2s !important;
+}
+
+.admin-clean-table .ant-pagination-item a {
+  color: #7c2d12 !important;
+}
+
+.admin-clean-table .ant-pagination-item-active {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent)) !important;
+  border-color: transparent !important;
+}
+
+.admin-clean-table .ant-pagination-item-active a {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.admin-clean-table .ant-pagination-item:hover {
+  border-color: var(--brand-primary) !important;
+}
+
+.admin-clean-table .ant-pagination-item:hover a {
+  color: var(--brand-primary) !important;
+}
+
+.admin-clean-table .ant-pagination-prev .ant-pagination-item-link,
+.admin-clean-table .ant-pagination-next .ant-pagination-item-link {
+  border-radius: 8px !important;
+  border: 1px solid #fed7aa !important;
+  color: #7c2d12 !important;
+  transition: all 0.2s !important;
+}
+
+.admin-clean-table .ant-pagination-prev:hover .ant-pagination-item-link,
+.admin-clean-table .ant-pagination-next:hover .ant-pagination-item-link {
+  border-color: var(--brand-primary) !important;
+  color: var(--brand-primary) !important;
+}
+
+.admin-clean-table .ant-pagination-options .ant-select-selector {
+  border-radius: 8px !important;
+  border: 1px solid #fed7aa !important;
+}
+
+.admin-clean-table .ant-pagination-options-quick-jumper input {
+  border-radius: 8px !important;
+  border: 1px solid #fed7aa !important;
+  height: 32px !important;
+}
+
+.admin-clean-table .ant-pagination-options-quick-jumper input:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15) !important;
+}
+
+/* =====================================================
+   TABLE HEADER / ROWS (matches your brand instead of default antd grey)
+   ===================================================== */
+.admin-clean-table .ant-table {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.admin-clean-table .ant-table-thead > tr > th {
+  background: #fff7ed !important;
+  color: #9a3412 !important;
+  font-weight: 600;
+  border-bottom: 1px solid #fed7aa !important;
+  white-space: nowrap;
+}
+
+.admin-clean-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #fef3e2 !important;
+}
+
+.admin-clean-table .ant-table-tbody > tr:hover > td {
+  background: #fffaf0 !important;
+}
+/* 
+.account-modal .ant-modal-content {
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  .account-modal.ant-modal {
+    max-width: calc(100vw - 24px);
+    top: 40px;
+  }
+} */
+
+.auth-modal .ant-modal-content {
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  .auth-modal.ant-modal {
+    max-width: calc(100vw - 24px);
+    top: 24px;
+  }
+}

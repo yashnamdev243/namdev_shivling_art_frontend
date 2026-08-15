@@ -2,10 +2,21 @@ import { Drawer, Button } from "antd";
 import { NavLink } from "react-router-dom";
 import { PhoneOutlined, WhatsAppOutlined } from "@ant-design/icons";
 import { SITE } from "../config/constants";
+import UserMenu from "../components/common/UserMenu";
+import AccountButton from "../components/common/AccountButton";
 
 export default function MobileDrawer({ open, onClose, navItems }) {
   return (
-    <Drawer title="Menu" placement="right" open={open} onClose={onClose} width={300}>
+    <Drawer
+      title="Menu"
+      placement="right"
+      open={open}
+      onClose={onClose}
+      width={300}
+    >
+      <div className="mb-5">
+        <AccountButton variant="card" />
+      </div>
       <div className="flex flex-col gap-2">
         {navItems.map((item) => (
           <NavLink

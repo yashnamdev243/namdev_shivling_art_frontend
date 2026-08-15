@@ -9,12 +9,27 @@ const adminUserService = {
     return response.data;
   },
 
+   listUsers: async (params = {}) => {
+    const response = await api.get("/admin/users", { params });
+    return response.data;
+  },
+
+  activity: async (params = {}) => {
+    const response = await api.get("/admin/activity", { params });
+    return response.data;
+  },
+
   getOne: async (id) => {
     const response = await api.get(`/admin/users/${id}`);
 
     return response.data;
   },
-
+   
+   updateStatus: async (id, status) => {
+    const response = await api.patch(`/admin/users/${id}/status`, { status });
+    return response.data;
+  },
+  
   create: async (payload) => {
     const response = await api.post(
       "/admin/users",
