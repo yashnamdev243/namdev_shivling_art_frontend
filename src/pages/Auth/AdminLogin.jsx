@@ -53,8 +53,6 @@
 //   );
 // }
 
-
-
 import { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { Form, Input, Button, Card } from "antd";
@@ -76,7 +74,9 @@ export default function AdminLogin() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-gradient-to-br from-amber-50 via-white to-orange-50 px-4">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-orange-200 border-t-orange-500" />
-        <p className="text-sm font-medium text-gray-500">Checking your session…</p>
+        <p className="text-sm font-medium text-gray-500">
+          Checking your session…
+        </p>
       </div>
     );
   }
@@ -89,7 +89,10 @@ export default function AdminLogin() {
   const handleSubmit = async (values) => {
     try {
       setSubmitting(true);
-      await login({ email: values.email.trim().toLowerCase(), password: values.password });
+      await login({
+        email: values.email.trim().toLowerCase(),
+        password: values.password,
+      });
       toast.success("Admin login successful.");
       navigate(from, { replace: true });
     } catch (error) {
@@ -113,8 +116,24 @@ export default function AdminLogin() {
           styles={{ body: { padding: 0 } }}
         >
           <div className="relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-8 text-center text-white">
-            <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+            <svg
+              className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.15]"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <pattern
+                  id="loginDots"
+                  width="18"
+                  height="18"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1.4" fill="white" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#loginDots)" />
+            </svg>
+            <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/15 blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-12 -left-8 h-32 w-32 rounded-full bg-black/10 blur-2xl" />
 
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -125,17 +144,33 @@ export default function AdminLogin() {
               <LockOutlined className="text-3xl" />
             </motion.div>
             <h1 className="relative mt-4 text-2xl font-bold">Admin Login</h1>
-            <p className="relative mt-1 text-sm text-white/80">Sign in to manage your website</p>
+            <p className="relative mt-1 text-sm text-white/80">
+              Sign in to manage your website
+            </p>
           </div>
 
           <div className="p-6 sm:p-8">
-            <Form layout="vertical" onFinish={handleSubmit} autoComplete="off" disabled={submitting}>
+            <Form
+              layout="vertical"
+              onFinish={handleSubmit}
+              autoComplete="off"
+              disabled={submitting}
+            >
               <Form.Item
                 label="Email Address"
                 name="email"
-                rules={[{ required: true, message: "Please enter your email." }, { type: "email", message: "Enter a valid email." }]}
+                rules={[
+                  { required: true, message: "Please enter your email." },
+                  { type: "email", message: "Enter a valid email." },
+                ]}
               >
-                <Input size="large" prefix={<MailOutlined className="text-gray-400" />} autoComplete="username" className="!rounded-xl" placeholder="admin@example.com" />
+                <Input
+                  size="large"
+                  prefix={<MailOutlined className="text-gray-400" />}
+                  autoComplete="username"
+                  className="!rounded-xl"
+                  placeholder="admin@example.com"
+                />
               </Form.Item>
 
               <Form.Item
@@ -143,7 +178,13 @@ export default function AdminLogin() {
                 name="password"
                 rules={[{ required: true, message: "Enter your password." }]}
               >
-                <Input.Password size="large" prefix={<LockOutlined className="text-gray-400" />} autoComplete="current-password" className="!rounded-xl" placeholder="••••••••" />
+                <Input.Password
+                  size="large"
+                  prefix={<LockOutlined className="text-gray-400" />}
+                  autoComplete="current-password"
+                  className="!rounded-xl"
+                  placeholder="••••••••"
+                />
               </Form.Item>
 
               <Button

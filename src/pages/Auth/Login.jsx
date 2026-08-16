@@ -221,7 +221,7 @@ export default function Login() {
       onCancel={closeModal}
       footer={null}
       centered
-      width={408}
+      width={430}
       destroyOnClose
       maskClosable
       closeIcon={null}

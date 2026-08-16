@@ -141,9 +141,6 @@
 //   );
 // }
 
-
-
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -170,7 +167,11 @@ import { ROUTES } from "../../config/routes";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 
 const links = [
-  { to: ROUTES.adminDashboard, label: "Dashboard", icon: <DashboardOutlined /> },
+  {
+    to: ROUTES.adminDashboard,
+    label: "Dashboard",
+    icon: <DashboardOutlined />,
+  },
   { to: ROUTES.adminCategories, label: "Categories", icon: <TagsOutlined /> },
   { to: ROUTES.adminProducts, label: "Products", icon: <AppstoreOutlined /> },
   { to: "/admin/reviews", label: "Reviews", icon: <MessageOutlined /> },
@@ -200,7 +201,7 @@ export default function AdminSidebar({ mobileOpen = false, onCloseMobile }) {
 
   const sidebarContent = (isMobile) => (
     <>
-      <div className="flex items-center justify-between px-4 py-6">
+      {/* <div className="flex items-center justify-between px-4 py-6">
         {(!collapsed || isMobile) && (
           <div>
             <p className="font-display text-lg font-bold text-white">Namdev Admin</p>
@@ -208,6 +209,54 @@ export default function AdminSidebar({ mobileOpen = false, onCloseMobile }) {
           </div>
         )}
 
+        {isMobile ? (
+          <button
+            onClick={onCloseMobile}
+            className="rounded-lg p-2 text-stone-400 hover:bg-stone-800 hover:text-white"
+            aria-label="Close menu"
+          >
+            <CloseOutlined />
+          </button>
+        ) : (
+          <button
+            onClick={() => dispatch(toggleAdminSidebar())}
+            className="rounded-lg p-2 text-stone-400 hover:bg-stone-800 hover:text-white"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </button>
+        )}
+      </div> */}
+      <div className="flex items-center justify-between px-4 py-6">
+        {/* LOGO + ADMIN NAME */}
+        <div
+          className={`flex min-w-0 items-center ${
+            collapsed && !isMobile ? "justify-center" : "gap-3"
+          }`}
+        >
+          {/* OM CIRCLE */}
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full
+                 border-2 border-amber-400 bg-slate-950
+                 shadow-lg shadow-amber-500/20"
+          >
+            <span className="text-xl font-semibold leading-none text-orange-300">
+              ॐ
+            </span>
+          </div>
+
+          {/* NAMDEV ADMIN */}
+          {(!collapsed || isMobile) && (
+            <div className="min-w-0">
+              <p className="truncate font-display text-lg font-bold text-white">
+                Namdev Admin
+              </p>
+              <p className="text-xs text-amber-300/80">Narmadeshwar Shivling</p>
+            </div>
+          )}
+        </div>
+
+        {/* TOGGLE / CLOSE BUTTON */}
         {isMobile ? (
           <button
             onClick={onCloseMobile}
@@ -243,7 +292,9 @@ export default function AdminSidebar({ mobileOpen = false, onCloseMobile }) {
             }
           >
             <span className="shrink-0 text-lg">{link.icon}</span>
-            {(!collapsed || isMobile) && <span className="truncate">{link.label}</span>}
+            {(!collapsed || isMobile) && (
+              <span className="truncate">{link.label}</span>
+            )}
           </NavLink>
         ))}
 
@@ -259,13 +310,17 @@ export default function AdminSidebar({ mobileOpen = false, onCloseMobile }) {
       </nav>
 
       <div className="shrink-0 border-t border-stone-800 p-3">
-        <div className={`flex items-center gap-3 rounded-xl px-2 py-2 ${collapsed && !isMobile ? "justify-center" : ""}`}>
+        <div
+          className={`flex items-center gap-3 rounded-xl px-2 py-2 ${collapsed && !isMobile ? "justify-center" : ""}`}
+        >
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 font-semibold text-white">
             {(user?.name || "A")[0].toUpperCase()}
           </div>
           {(!collapsed || isMobile) && (
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-white">{user?.name || "Admin"}</p>
+              <p className="truncate text-sm font-medium text-white">
+                {user?.name || "Admin"}
+              </p>
               <p className="truncate text-xs text-stone-500">{user?.email}</p>
             </div>
           )}
@@ -326,7 +381,9 @@ export default function AdminSidebar({ mobileOpen = false, onCloseMobile }) {
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
             <ExclamationCircleFilled className="text-2xl text-red-500" />
           </div>
-          <h2 className="mt-4 text-lg font-bold text-slate-900">Logout from admin?</h2>
+          <h2 className="mt-4 text-lg font-bold text-slate-900">
+            Logout from admin?
+          </h2>
           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
             You'll need to sign in again to access the admin dashboard.
           </p>

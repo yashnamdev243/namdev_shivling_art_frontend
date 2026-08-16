@@ -22,10 +22,6 @@
 //   );
 // }
 
-
-
-
-
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -42,7 +38,10 @@ export default function AdminLayout() {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      <AdminSidebar mobileOpen={mobileOpen} onCloseMobile={() => setMobileOpen(false)} />
+      <AdminSidebar
+        mobileOpen={mobileOpen}
+        onCloseMobile={() => setMobileOpen(false)}
+      />
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile top bar — only visible below lg */}
@@ -54,12 +53,16 @@ export default function AdminLayout() {
           >
             <MenuOutlined />
           </button>
-          <p className="font-display text-base font-bold text-slate-900">Namdev Admin</p>
+          <p className="font-display text-base font-bold text-slate-900">
+            Namdev Admin
+          </p>
         </div>
 
         <main
           className={`themed-scrollbar min-w-0 flex-1 overflow-x-hidden px-4 py-6 transition-all duration-300 sm:px-6 lg:px-8 lg:py-8 ${
-            collapsed ? "lg:max-w-[calc(100vw-5rem)]" : "lg:max-w-[calc(100vw-16rem)]"
+            collapsed
+              ? "lg:max-w-[calc(100vw-5rem)]"
+              : "lg:max-w-[calc(100vw-16rem)]"
           }`}
         >
           <Outlet />

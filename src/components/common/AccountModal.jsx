@@ -62,9 +62,9 @@ export default function AccountModal({ open, onClose }) {
       footer={null}
       centered
       width={420}
+      closeIcon={null}
       destroyOnClose
-      closeIcon={<span className="text-lg">✕</span>}
-      className="account-modal"
+      className="auth-modal"
       styles={{ body: { padding: 0 } }}
     >
       {/* ================= LOGOUT CONFIRM STATE ================= */}
@@ -73,9 +73,12 @@ export default function AccountModal({ open, onClose }) {
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
             <ExclamationCircleFilled className="text-2xl text-red-500" />
           </div>
-          <h2 className="mt-4 text-lg font-bold text-slate-900">Logout from your account?</h2>
+          <h2 className="mt-4 text-lg font-bold text-slate-900">
+            Logout from your account?
+          </h2>
           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
-            You'll need to login again to access your wishlist, coupons and reviews.
+            You'll need to login again to access your wishlist, coupons and
+            reviews.
           </p>
           <div className="mt-6 flex gap-3">
             <button
@@ -116,18 +119,26 @@ export default function AccountModal({ open, onClose }) {
             ) : (
               <div className="space-y-3">
                 {history.map((r) => (
-                  <div key={r.id} className="rounded-2xl border border-orange-100 bg-orange-50/50 p-4">
+                  <div
+                    key={r.id}
+                    className="rounded-2xl border border-orange-100 bg-orange-50/50 p-4"
+                  >
                     <div className="flex items-center justify-between gap-2">
                       <Tag color="orange">{r.coupon?.code || "—"}</Tag>
                       <span className="text-xs text-gray-500">
                         {dayjs(r.createdAt).format("DD MMM YYYY")}
                       </span>
                     </div>
-                    {r.coupon?.title && <p className="mt-2 text-sm font-medium text-slate-900">{r.coupon.title}</p>}
+                    {r.coupon?.title && (
+                      <p className="mt-2 text-sm font-medium text-slate-900">
+                        {r.coupon.title}
+                      </p>
+                    )}
                     <div className="mt-2 flex justify-between text-sm">
                       <span className="text-gray-500">You saved</span>
                       <span className="font-semibold text-green-600">
-                        ₹{Number(r.discount_amount || 0).toLocaleString("en-IN")}
+                        ₹
+                        {Number(r.discount_amount || 0).toLocaleString("en-IN")}
                       </span>
                     </div>
                   </div>
@@ -144,6 +155,14 @@ export default function AccountModal({ open, onClose }) {
             <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
             <div className="pointer-events-none absolute -bottom-10 -left-6 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
 
+            <button
+              onClick={handleClose}
+              aria-label="Close"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 hover:rotate-90 duration-300"
+            >
+              <span className="text-sm leading-none">✕</span>
+            </button>
+
             <div className="relative flex items-center gap-4">
               <Avatar
                 size={64}
@@ -153,7 +172,9 @@ export default function AccountModal({ open, onClose }) {
                 {!user?.avatar && (user?.name || "U").charAt(0).toUpperCase()}
               </Avatar>
               <div className="min-w-0">
-                <p className="truncate text-lg font-bold">{user?.name || "Customer"}</p>
+                <p className="truncate text-lg font-bold">
+                  {user?.name || "Customer"}
+                </p>
                 <div className="mt-1 flex items-center gap-1.5 text-xs text-white/85">
                   <MailOutlined />
                   <span className="truncate">{user?.email}</span>
@@ -175,7 +196,9 @@ export default function AccountModal({ open, onClose }) {
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
                   <HeartOutlined />
                 </div>
-                <p className="mt-2 text-xl font-bold text-slate-900">{wishlistCount}</p>
+                <p className="mt-2 text-xl font-bold text-slate-900">
+                  {wishlistCount}
+                </p>
                 <p className="text-xs text-gray-500">Wishlist Items</p>
               </button>
 
@@ -186,7 +209,9 @@ export default function AccountModal({ open, onClose }) {
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
                   <TagOutlined />
                 </div>
-                <p className="mt-2 text-xl font-bold text-slate-900">{history.length || (historyLoading ? "…" : 0)}</p>
+                <p className="mt-2 text-xl font-bold text-slate-900">
+                  {history.length || (historyLoading ? "…" : 0)}
+                </p>
                 <p className="text-xs text-gray-500">Coupons Used</p>
               </button>
             </div>
@@ -218,7 +243,8 @@ export default function AccountModal({ open, onClose }) {
                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
               >
                 <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
-                  <ThunderboltFilled className="text-orange-500" /> Browse Products
+                  <ThunderboltFilled className="text-orange-500" /> Browse
+                  Products
                 </span>
                 <RightOutlined className="text-xs text-gray-400" />
               </button>
@@ -239,9 +265,12 @@ export default function AccountModal({ open, onClose }) {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg">
             <UserOutlined className="text-2xl" />
           </div>
-          <h2 className="mt-5 text-xl font-bold text-slate-900">Welcome to Namdev</h2>
+          <h2 className="mt-5 text-xl font-bold text-slate-900">
+            Welcome to Namdev
+          </h2>
           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
-            Login or create an account to save your wishlist, apply coupons and track your reviews.
+            Login or create an account to save your wishlist, apply coupons and
+            track your reviews.
           </p>
 
           <button
@@ -264,7 +293,10 @@ export default function AccountModal({ open, onClose }) {
               "Apply coupons and track your savings",
               "Like products & write reviews",
             ].map((line) => (
-              <div key={line} className="flex items-center gap-2.5 text-sm text-gray-600">
+              <div
+                key={line}
+                className="flex items-center gap-2.5 text-sm text-gray-600"
+              >
                 <StarFilled className="text-amber-400" />
                 {line}
               </div>
