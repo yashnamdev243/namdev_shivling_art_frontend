@@ -103,7 +103,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-amber-50 via-white to-orange-50 px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-amber-200 via-amber-100 to-orange-100 px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}

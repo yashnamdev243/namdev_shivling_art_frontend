@@ -112,8 +112,6 @@
 //   return <Tag color="orange">{value}</Tag>;
 // }
 
-
-
 import { Table, Empty, Spin, Card, Tag, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -132,6 +130,7 @@ export default function AdminDataTable({
   searchPlaceholder = "Search...",
   pageSize = 10,
   scrollX,
+  actions,
   bare = false, // when true: no outer Card wrapper, for nesting inside another Card
 }) {
   const body = (
@@ -144,8 +143,14 @@ export default function AdminDataTable({
             </div>
           )}
           <div>
-            <h2 className="text-lg font-bold text-slate-900 sm:text-xl">{title}</h2>
-            {subtitle && <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">{subtitle}</p>}
+            <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+              {title}
+            </h2>
+            {subtitle && (
+              <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">
+                {subtitle}
+              </p>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -159,7 +164,8 @@ export default function AdminDataTable({
               className="!w-full !rounded-xl sm:!w-64"
             />
           )}
-          {extra}
+          {extra}{" "}
+          {actions && <div className="flex items-center gap-3">{actions}</div>}
         </div>
       </div>
 
@@ -183,7 +189,8 @@ export default function AdminDataTable({
                 pageSize,
                 showSizeChanger: true,
                 pageSizeOptions: ["10", "20", "50", "100"],
-                showTotal: (total, range) => `${range[0]}–${range[1]} of ${total}`,
+                showTotal: (total, range) =>
+                  `${range[0]}–${range[1]} of ${total}`,
               }}
               className="admin-clean-table"
             />
@@ -196,16 +203,25 @@ export default function AdminDataTable({
   if (bare) return body;
 
   return (
-    <Card className="!rounded-3xl !border-orange-100 !shadow-sm" styles={{ body: { padding: 0 } }}>
+    <Card
+      className="!rounded-3xl !border-orange-100 !shadow-sm"
+      styles={{ body: { padding: 0 } }}
+    >
       {body}
     </Card>
   );
 }
 // /* Small shared helpers other admin pages can reuse for consistent cell styling */
-export function StatusTag({ value, activeLabel = "Active", inactiveLabel = "Inactive" }) {
+export function StatusTag({
+  value,
+  activeLabel = "Active",
+  inactiveLabel = "Inactive",
+}) {
   const isActive = value === true || value === "active";
   return (
-    <Tag color={isActive ? "green" : "default"}>{isActive ? activeLabel : inactiveLabel}</Tag>
+    <Tag color={isActive ? "green" : "default"}>
+      {isActive ? activeLabel : inactiveLabel}
+    </Tag>
   );
 }
 

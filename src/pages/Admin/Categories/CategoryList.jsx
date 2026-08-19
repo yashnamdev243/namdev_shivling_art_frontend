@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Button, Empty, Input } from "antd";
+import { Button, Card, Empty, Input } from "antd";
 import Seo from "../../../components/common/Seo";
-import AdminHeader from "../../../components/admin/AdminHeader";
 import CategoryFormModal from "../../../components/admin/CategoryFormModal";
 import { confirmDelete } from "../../../components/common/ConfirmDialog";
 import Loader from "../../../components/common/Loader";
@@ -9,7 +8,7 @@ import { useCategories, useDeleteCategory } from "../../../hooks/useCategories";
 import { FILE_BASE_URL } from "../../../config/api";
 
 import { FiPlus, FiEdit2, FiTrash2, FiFolder, FiImage } from "react-icons/fi";
-import { SearchOutlined } from "@ant-design/icons";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
 export default function CategoryList() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,30 +37,69 @@ export default function CategoryList() {
     <>
       <Seo title="Manage Categories" />
 
-      <AdminHeader
-        title="Categories"
-        description="Manage product collections and organize your store."
-        actions={
-          <Button
-            onClick={openCreate}
-            icon={<FiPlus />}
-            className="!h-11 !w-full !rounded-2xl !border-0 !bg-orange-600 !px-6 !font-medium !text-white hover:!bg-orange-700 sm:!w-auto"
-          >
-            Add Category
-          </Button>
-        }
-      />
+      <Card
+        className="!rounded-3xl !border-orange-100 !shadow-sm mb-4"
+        styles={{ body: { padding: 0 } }}
+      >
+        <div className="flex flex-col gap-4 border-b border-orange-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6 ">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-lg text-orange-600">
+              <FiFolder aria-hidden="true" />
+            </div>
 
-      <div className="mb-5 max-w-sm">
-        <Input
-          allowClear
-          prefix={<SearchOutlined className="text-gray-400" />}
-          placeholder="Search categories..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="!rounded-xl"
-        />
-      </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+                Categories
+              </h2>
+              <p className="mt-0.5 text-xs text-gray-500 sm:text-sm font-normal">
+                Organize your products into collections.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center gap-3">
+            <Input
+              allowClear
+              prefix={<SearchOutlined className="text-gray-400" />}
+              placeholder="Search categories..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="!rounded-xl"
+            />
+            <Button
+              type="primary"
+              onClick={openCreate}
+              icon={
+                <span
+                  className="
+      flex h-5 w-5 items-center justify-center
+      rounded-lg bg-white/10
+      transition-colors duration-200
+      group-hover:bg-white/15
+    "
+                >
+                  <PlusOutlined size={17} strokeWidth={2.5} />
+                </span>
+              }
+              className=" group
+    !flex !h-8 !items-center !gap-2.5
+    !rounded-xl !border-0
+    !bg-slate-900
+    !px-3
+    !font-semibold !text-white
+    !shadow-lg !shadow-slate-900/15
+    transition-all duration-200
+    hover:!-translate-y-0.5
+    hover:!bg-orange-600
+    hover:!shadow-xl hover:!shadow-orange-600/20
+    active:!translate-y-0"
+            >
+              Add Category
+            </Button>
+          </div>
+        </div>
+      </Card>
+
       {/* Stats */}
       <div className="mb-6 grid gap-4 sm:mb-8 sm:gap-5 md:grid-cols-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:rounded-3xl sm:p-6">

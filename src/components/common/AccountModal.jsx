@@ -22,9 +22,11 @@ import dayjs from "dayjs";
 import useAuth from "../../hooks/useAuth";
 import { useWishlist } from "../../hooks/useWishlist";
 import couponService from "../../services/couponService";
+import useOpenAuthModal from "../../hooks/useOpenAuthModal";
 
 export default function AccountModal({ open, onClose }) {
   const navigate = useNavigate();
+  const openAuthModal = useOpenAuthModal();
   const { user, isAuthenticated, logout } = useAuth();
   const { wishlistCount } = useWishlist();
   const [confirmingLogout, setConfirmingLogout] = useState(false);
@@ -40,6 +42,11 @@ export default function AccountModal({ open, onClose }) {
   const go = (path) => {
     onClose();
     navigate(path);
+  };
+
+  const goAuth = (path) => {
+    onClose();
+    openAuthModal(path);
   };
 
   const handleClose = () => {
@@ -274,14 +281,14 @@ export default function AccountModal({ open, onClose }) {
           </p>
 
           <button
-            onClick={() => go("/login")}
+            onClick={() => goAuth("/login")}
             className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <LoginOutlined /> Login
           </button>
 
           <button
-            onClick={() => go("/register")}
+            onClick={() => goAuth("/register")}
             className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3.5 font-semibold text-orange-600 transition hover:bg-orange-100"
           >
             <UserAddOutlined /> Create New Account

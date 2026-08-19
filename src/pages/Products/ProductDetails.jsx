@@ -1572,7 +1572,7 @@ export default function ProductDetails() {
 
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             {/* Gallery */}
-            <div className="rounded-[24px] border border-orange-100 shadow-[0_30px_80px_rgba(249,115,22,.10)] backdrop-blur-xl sm:rounded-[36px]">
+            <div className="rounded-[24px] border border-orange-100 p-6 shadow-[0_30px_80px_rgba(249,115,22,.10)] backdrop-blur-xl sm:rounded-[36px] sm:p-10">
               <div className="overflow-hidden rounded-[18px] bg-stone-100 sm:rounded-[28px]">
                 <img
                   src={gallery[activeImage] || "https://placehold.co/800"}
@@ -1614,71 +1614,7 @@ export default function ProductDetails() {
                   />
                 </div>
               )}
-            </div>
-
-            {/* Info */}
-            <div className="rounded-[24px] border border-orange-100 p-6 shadow-[0_30px_80px_rgba(249,115,22,.10)] backdrop-blur-xl sm:rounded-[36px] sm:p-10">
-              <div className="flex items-start justify-between gap-3">
-                {product.category && (
-                  <span className="inline-flex rounded-full bg-gradient-to-r from-orange-100 to-amber-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-orange-700 sm:px-5 sm:py-2 sm:tracking-[0.25em]">
-                    {product.category}
-                  </span>
-                )}
-
-                <div className="flex shrink-0 items-center gap-2">
-                  {/* <button
-                    type="button"
-                    onClick={() => toggleWishlist(product)}
-                    aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                    aria-pressed={wishlisted}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-orange-100 bg-white shadow-sm transition hover:scale-110 sm:h-10 sm:w-10"
-                  >
-                    {wishlisted ? (
-                      <HeartFilled className="text-red-500" aria-hidden="true" />
-                    ) : (
-                      <HeartOutlined className="text-slate-600" aria-hidden="true" />
-                    )}
-                  </button> */}
-                  <WishlistButton
-  product={product}
-  size="middle"
-/>
-
-                  <ShareProduct
-                    url={typeof window !== "undefined" ? window.location.href : ""}
-                    title={product.name}
-                    className="!border-orange-100 !bg-white !shadow-sm"
-                  />
-                </div>
-              </div>
-
-              <h1 className="mt-4 text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl">
-                {product.name}
-              </h1>
-
-              <div className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500 sm:tracking-[0.35em]">
-                  Starting From
-                </p>
-                <h2 className="mt-2 text-3xl font-bold text-orange-600 sm:text-4xl">
-                  {formatCurrency(product.price)}
-                </h2>
-              </div>
-              <CouponApplyBox
-                product={product}
-                onApplied={setAppliedCoupon}
-              />
-
-              {product.description && (
-                <div className="mt-6 rounded-2xl border border-orange-100 bg-orange-50/40 p-4 sm:rounded-3xl">
-                  <h3 className="mb-2 text-base font-semibold text-slate-900 sm:text-lg">Description</h3>
-                  <p className="text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
-                    {product.description}
-                  </p>
-                </div>
-              )}
-
-              {/* Size selector */}
+                 {/* Size selector */}
               <div className="mt-6 rounded-2xl border border-orange-100 bg-white p-4 sm:mt-8 sm:rounded-3xl sm:p-5">
                 <h3 className="text-base font-semibold text-slate-900 sm:text-lg">
                   Select a Size
@@ -1811,6 +1747,60 @@ export default function ProductDetails() {
                 </div>
               </div>
               
+            </div>
+            
+
+            {/* Info */}
+            <div className="rounded-[24px] border border-orange-100 p-6 shadow-[0_30px_80px_rgba(249,115,22,.10)] backdrop-blur-xl sm:rounded-[36px] sm:p-10">
+              <div className="flex items-start justify-between gap-3">
+                {product.category && (
+                  <span className="inline-flex rounded-full bg-gradient-to-r from-orange-100 to-amber-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-orange-700 sm:px-5 sm:py-2 sm:tracking-[0.25em]">
+                    {product.category}
+                  </span>
+                )}
+
+                <div className="flex shrink-0 items-center gap-2">
+                  
+                  <WishlistButton
+                    product={product}
+                    size="middle"
+                  />
+
+                  <ShareProduct
+                    url={typeof window !== "undefined" ? window.location.href : ""}
+                    title={product.name}
+                    className="!border-orange-100 !bg-white !shadow-sm"
+                  />
+                </div>
+              </div>
+
+              <h1 className="mt-4 text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl">
+                {product.name}
+              </h1>
+
+              <div className="mt-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500 sm:tracking-[0.35em]">
+                  Starting From
+                </p>
+                <h2 className="mt-2 text-3xl font-bold text-orange-600 sm:text-4xl">
+                  {formatCurrency(product.price)}
+                </h2>
+              </div>
+              <CouponApplyBox
+                product={product}
+                onApplied={setAppliedCoupon}
+              />
+
+              {product.description && (
+                <div className="mt-6 rounded-2xl border border-orange-100 bg-orange-50/40 p-4 sm:rounded-3xl">
+                  <h3 className="mb-2 text-base font-semibold text-slate-900 sm:text-lg">Description</h3>
+                  <p className="text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
+                    {product.description}
+                  </p>
+                </div>
+              )}
+
+           
             </div>
           </div>
           {/* =========================================================

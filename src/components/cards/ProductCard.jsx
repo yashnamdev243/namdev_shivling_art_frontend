@@ -121,6 +121,7 @@ export default function ProductCard({ product }) {
             {/* =================================================
                 CATEGORY
             ================================================== */}
+           
             {product?.category && (
               <div className="mb-2.5 inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1.5 sm:mb-3">
                 <span className="h-2 w-2 rounded-full bg-orange-500" />
@@ -130,13 +131,21 @@ export default function ProductCard({ product }) {
                 </span>
               </div>
             )}
+               {/* =================================================
+                LIKE
+            ================================================== */}
+             <div className="my-2 flex justify-between gap-4">
+              <ProductLikeButton
+                productId={id}
+              />
+            </div>
 
             {/* =================================================
                 PRODUCT NAME
             ================================================== */}
             <Link
               to={detailsUrl}
-              className="block min-h-[64px] sm:min-h-[72px]"
+              className="block min-h-[24px] sm:min-h-[32px] md:min-h-[42px] lg:min-h-[42px] "
             >
               <Tooltip title={product?.name}>
                 <h3 className="line-clamp-2 min-h-[36px] text-base font-bold leading-6 tracking-tight text-slate-900 transition-all duration-300 group-hover:text-orange-600 sm:min-h-[40px] sm:text-lg">
@@ -176,14 +185,7 @@ export default function ProductCard({ product }) {
               )}
             </div>
 
-            {/* =================================================
-                LIKE
-            ================================================== */}
-            <div className="mt-4">
-              <ProductLikeButton
-                productId={id}
-              />
-            </div>
+         
           </div>
 
           {/* =====================================================

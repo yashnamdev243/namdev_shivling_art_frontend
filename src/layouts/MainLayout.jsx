@@ -55,20 +55,19 @@ export default function MainLayout() {
   return (
     //  <Layout className="min-h-screen overflow-x-hidden bg-stone-50">
     <Layout className="min-h-screen overflow-x-hidden ">
-       <FloatingContactWidget />
-          <div className="fixed top-0 left-0 right-0 z-50">
+      {/* <FloatingContactWidget /> */}
 
       <ScrollToTop />
+      <div className="fixed inset-x-0 top-0 z-50">
+        <AnnouncementBar />
 
-      <AnnouncementBar />
-
-      <Header />
-    </div>
+        <Header />
+      </div>
 
       <Content className="flex-1 pt-[40px]">
         <PageLoader />
-        <AnimatePresence mode="wait">
-          <motion.div
+        {/* <AnimatePresence mode="wait"> */}
+        {/* <motion.div
             key={location.pathname}
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,14 +75,29 @@ export default function MainLayout() {
             transition={{
               duration: 0.35,
               ease: "easeOut",
-            }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+            }} */}
+        <motion.div
+          key={location.pathname}
+          initial={{
+            opacity: 0,
+            y: 12,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.25,
+            ease: "easeOut",
+          }}
+        >
+          <Outlet />
+        </motion.div>
+        {/* </AnimatePresence> */}
       </Content>
 
       <Footer />
+      <FloatingContactWidget />
     </Layout>
   );
 }

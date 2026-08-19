@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Table, Button, Input, Tag } from "antd";
 import {
@@ -18,6 +17,7 @@ import { formatCurrency } from "../../../utils/format";
 import { PAGE_SIZE } from "../../../config/constants";
 import { FILE_BASE_URL } from "../../../config/api";
 import AdminDataTable from "../../../components/admin/AdminDataTable";
+import { FiPackage } from "react-icons/fi";
 
 export default function ProductList() {
   const [search, setSearch] = useState("");
@@ -138,22 +138,12 @@ export default function ProductList() {
     <>
       <Seo title="Manage Products" />
 
-      <AdminHeader
-        title="Products"
-        description="Add, edit, or remove products from your catalogue."
-        actions={
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            className="!w-full !rounded-full !border-none !bg-brand-700 hover:!bg-brand-800 sm:!w-auto"
-            onClick={openCreate}
-          >
-            Add Product
-          </Button>
-        }
-      />
+      {/* <AdminHeader
+       
+       
+      /> */}
 
-      <div className="mb-5 w-full max-w-sm">
+      {/* <div className="mb-5 w-full max-w-sm">
         <Input
           size="large"
           allowClear
@@ -167,18 +157,56 @@ export default function ProductList() {
             setPage(1);
           }}
         />
-      </div>
+      </div> */}
 
       <AdminDataTable
+        title="Products"
+        icon={<FiPackage />}
+        subtitle="Manage your products and inventory."
         columns={columns}
         dataSource={products}
         loading={isLoading}
         rowKey={(r) => r._id || r.id}
         emptyText="No products found."
         searchValue={search}
-        onSearchChange={(v) => { setSearch(v); setPage(1); }}
+        onSearchChange={(v) => {
+          setSearch(v);
+          setPage(1);
+        }}
         searchPlaceholder="Search products..."
         scrollX={760}
+        actions={
+          <Button
+            type="primary"
+            icon={
+              <span
+                className="
+      flex h-5 w-5 items-center justify-center
+      rounded-lg bg-white/10
+      transition-colors duration-200
+      group-hover:bg-white/15
+    "
+              >
+                <PlusOutlined size={17} strokeWidth={2.5} />
+              </span>
+            }
+            className=" group
+    !flex !h-8 !items-center !gap-2.5
+    !rounded-xl !border-0
+    !bg-slate-900
+    !px-3
+    !font-semibold !text-white
+    !shadow-lg !shadow-slate-900/15
+    transition-all duration-200
+    hover:!-translate-y-0.5
+    hover:!bg-orange-600
+    hover:!shadow-xl hover:!shadow-orange-600/20
+    active:!translate-y-0"
+            onClick={openCreate}
+          >
+            Add Product
+          </Button>
+        }
       />
       {/* <div className="overflow-hidden rounded-2xl border border-stone-100 bg-white shadow-card">
         <Table

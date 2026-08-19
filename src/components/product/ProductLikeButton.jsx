@@ -25,10 +25,10 @@ export default function ProductLikeButton({ productId }) {
           loading={loading}
           onClick={handleLike}
           icon={liked ? <LikeFilled className="text-orange-600" /> : <LikeOutlined />}
-          className="!rounded-full"
+          className="mb-2.5 inline-flex items-center gap-2 rounded-2xl bg-orange-50 px-3 py-1.5 sm:mb-3"
           aria-pressed={liked}
         >
-          {likeCount} {likeCount === 1 ? "Like" : "Likes"}
+           {likeCount}  {likeCount === 1 ? "Like" : "Likes"}
         </Button>
 
         {users?.length > 0 && (
