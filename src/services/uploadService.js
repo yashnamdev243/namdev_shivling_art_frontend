@@ -6,7 +6,7 @@ import { ENDPOINTS } from "../config/api";
  * reporting, used by the reusable <MediaUploader /> component in the
  * admin dashboard. Expects the backend to respond with { url, publicId }.
  */
-async function uploadFile(file, kind = "image", onProgress) {
+async function uploadFile(file, kind = "image", onProgress, opts = {}) {
   const formData = new FormData();
   formData.append(kind, file);
 
@@ -19,14 +19,15 @@ async function uploadFile(file, kind = "image", onProgress) {
       if (!onProgress || !evt.total) return;
       onProgress(Math.round((evt.loaded * 100) / evt.total));
     },
+        ...opts,
   });
 
   return res.data; // { url, publicId }
 }
 
 export const uploadService = {
-  uploadImage: (file, onProgress) => uploadFile(file, "image", onProgress),
-  uploadVideo: (file, onProgress) => uploadFile(file, "video", onProgress),
+  uploadImage: (file, onProgress, opts) => uploadFile(file, "image", onProgress ,opts),
+  uploadVideo: (file, onProgress, opts) => uploadFile(file, "video", onProgress, opts),
 
   async remove(publicId) {
     const res = await api.post(ENDPOINTS.upload.remove, { publicId });

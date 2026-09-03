@@ -62,7 +62,18 @@ export function UserAuthProvider({ children }) {
 
   const register = async (payload) => saveSession(await authService.register(payload));
   const login = async (payload) => saveSession(await authService.login(payload));
+  const updateProfile = async (payload) => {
+  const response = await authService.updateProfile(payload);
 
+  if (!response?.user) {
+    throw new Error(response?.message || "Failed to update profile.");
+  }
+
+  setUser(response.user);
+  localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(response.user));
+
+  return response;
+};
   const logout = async () => {
     try {
       if (localStorage.getItem(STORAGE_KEYS.token)) await authService.logout();
@@ -77,7 +88,7 @@ export function UserAuthProvider({ children }) {
 
   const value = useMemo(() => ({
     user, loading, isAuthenticated,
-    register, login, logout,
+    register, login, updateProfile, logout,
     loginModalOpen, setLoginModalOpen,
   }), [user, loading, isAuthenticated, loginModalOpen, dispatch]);
 

@@ -23,9 +23,9 @@ function App() {
             <ConfigProvider
               theme={{
                 token: {
-                  colorPrimary: "#8a4019",
+                  colorPrimary: "#D4AF6A",
                   borderRadius: 10,
-                  colorLink: "#8a4019",
+                  colorLink: "#D4AF6A",
                 },
               }}
             >

@@ -17,18 +17,18 @@ export default function AccountButton({ variant = "icon" }) {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Account"
-          className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-amber-500 bg-black shadow-sm transition hover:border-amber-400 p-2"
+          className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#D4AF6A] bg-black shadow-sm transition hover:border-[#c29c54] p-0.5"
         >
           {isAuthenticated ? (
             <Avatar
               size={30}
               src={user?.avatar || undefined}
-              className="!text-amber-500 font-extrabold"
+              className="!text-[#D4AF6A] font-extrabold"
             >
               {!user?.avatar && initial}
             </Avatar>
           ) : (
-            <UserOutlined className="text-lg text-amber-500" />
+            <UserOutlined className="text-lg text-[#D4AF6A]" />
           )}
         </button>
       ) : (
@@ -42,7 +42,7 @@ export default function AccountButton({ variant = "icon" }) {
               <Avatar
                 size={40}
                 src={user?.avatar || undefined}
-                className="!bg-gradient-to-br !from-orange-500 !to-amber-500 !text-white"
+                className="!bg-[#D4AF6A] !text-white"
               >
                 {!user?.avatar && initial}
               </Avatar>
@@ -55,7 +55,7 @@ export default function AccountButton({ variant = "icon" }) {
             </>
           ) : (
             <>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-orange-500 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#D4AF6A] shadow-sm">
                 <UserOutlined className="text-lg" />
               </div>
               <div>

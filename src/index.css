@@ -29,10 +29,10 @@ h1, h2, h3, h4 {
 
 /* Ant Design primary-color alignment with the brand palette */
 .ant-btn-primary {
-  background-color: #8a4019 !important;
+  background-color: #1C1A17 !important;
 }
 .ant-btn-primary:hover {
-  background-color: #6f3419 !important;
+  background-color: #2A2620 !important;
 }
 .ant-tabs-ink-bar,
 .ant-radio-checked .ant-radio-inner,
@@ -52,11 +52,11 @@ h1, h2, h3, h4 {
 }
 
 .premium-select:hover .ant-select-selector {
-  border-color: #fb923c !important;
+  border-color: #D4AF6A !important;
 }
 
 .premium-select.ant-select-focused .ant-select-selector {
-  border-color: #f97316 !important;
+  border-color: #D4AF6A !important;
   box-shadow: 0 0 0 4px rgba(249,115,22,.12) !important;
 }
 
@@ -70,7 +70,7 @@ h1, h2, h3, h4 {
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 1px;
-  background: conic-gradient(#0000 10%, #f59e0b) content-box;
+  background: conic-gradient(#0000 10%, #D4AF6A) content-box;
 
   -webkit-mask:
     repeating-conic-gradient(

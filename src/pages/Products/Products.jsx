@@ -140,6 +140,234 @@
 // }
 
 
+// import { useEffect, useMemo, useState } from "react";
+// import { useSearchParams } from "react-router-dom";
+// import { Pagination } from "antd";
+
+// import Seo from "../../components/common/Seo";
+// import ProductSearch from "../../components/cards/ProductSearch";
+// import ProductFilter from "../../components/cards/ProductFilter";
+// import ProductGrid from "../../components/cards/ProductGrid";
+
+// import { useProducts } from "../../hooks/useProducts";
+// import { useCategories } from "../../hooks/useCategories";
+// import { useDebounce } from "../../hooks/useDebounce";
+
+// import { PAGE_SIZE } from "../../config/constants";
+// import {
+//   PRODUCTS_PAGE_CONTENT,
+//   SEO_CONTENT,
+// } from "../../config/content";
+
+// import { useContent } from "../../context/LanguageContext";
+
+// export default function Products() {
+//   const [searchParams, setSearchParams] =
+//     useSearchParams();
+
+//   const [search, setSearch] = useState(
+//     searchParams.get("q") || ""
+//   );
+
+//   const [category, setCategory] = useState(
+//     searchParams.get("category") || ""
+//   );
+
+//   const [sort, setSort] = useState(
+//     searchParams.get("sort") || "-createdAt"
+//   );
+
+//   const [page, setPage] = useState(
+//     Number(searchParams.get("page")) || 1
+//   );
+
+//   const t = useContent(PRODUCTS_PAGE_CONTENT);
+//   const seo = useContent(SEO_CONTENT.products);
+
+//   const debouncedSearch = useDebounce(search, 400);
+
+//   useEffect(() => {
+//     const next = new URLSearchParams();
+
+//     if (debouncedSearch) {
+//       next.set("q", debouncedSearch);
+//     }
+
+//     if (category) {
+//       next.set("category", category);
+//     }
+
+//     if (sort && sort !== "-createdAt") {
+//       next.set("sort", sort);
+//     }
+
+//     if (page > 1) {
+//       next.set("page", String(page));
+//     }
+
+//     setSearchParams(next, {
+//       replace: true,
+//     });
+//   }, [
+//     debouncedSearch,
+//     category,
+//     sort,
+//     page,
+//     setSearchParams,
+//   ]);
+
+//   const filters = useMemo(
+//     () => ({
+//       page,
+//       limit: PAGE_SIZE,
+//       search:
+//         debouncedSearch || undefined,
+//       category:
+//         category || undefined,
+//       sort,
+//     }),
+//     [
+//       page,
+//       debouncedSearch,
+//       category,
+//       sort,
+//     ]
+//   );
+
+//   const {
+//     data,
+//     isLoading,
+//     isError,
+//     error,
+//     refetch,
+//   } = useProducts(filters);
+
+//   const {
+//     data: categoryData,
+//   } = useCategories();
+
+//   const products =
+//     data?.products ||
+//     data?.data ||
+//     data ||
+//     [];
+
+//   const total =
+//     data?.total ??
+//     products.length;
+
+//   const categories =
+//     categoryData?.categories ||
+//     categoryData?.data ||
+//     categoryData ||
+//     [];
+
+//   function handleCategoryChange(value) {
+//     setCategory(value);
+//     setPage(1);
+//   }
+
+//   const seoNode = (
+//     <Seo
+//       title={seo.title}
+//       description={seo.description}
+//       keywords={seo.keywords}
+//     />
+//   );
+
+//   return (
+//     <>
+//       {seoNode}
+
+//       <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white px-4 py-12 sm:px-6 sm:py-16 md:py-24 lg:px-8 lg:py-28">
+//         {/* Background Blur */}
+//         <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 rounded-full bg-amber-200/30 blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
+
+//         <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-orange-200/30 blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
+
+//         <div className="container mx-auto max-w-7xl px-0 sm:px-5">
+
+//           {/* Heading */}
+//           <div className="mb-12 text-center sm:mb-14">
+//             <span className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-100 px-4 py-2 text-xs font-semibold text-orange-700 sm:px-5 sm:text-sm">
+//               {t.badge}
+//             </span>
+
+//             <h1 className="mt-5 text-3xl font-bold text-gray-900 sm:mt-6 sm:text-4xl md:text-6xl">
+//               {t.title}
+//             </h1>
+//           </div>
+
+//           {/* Search + Filter */}
+//           <div className="flex flex-col gap-5 rounded-2xl border border-orange-100 bg-gradient-to-l from-amber-100 via-amber-50 to-amber-50 p-4 shadow-[0_15px_40px_rgba(249,115,22,.08)] backdrop-blur-xl sm:gap-6 sm:rounded-3xl sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+
+//             <div className="flex-1">
+//               <ProductSearch
+//                 value={search}
+//                 onChange={(value) => {
+//                   setSearch(value);
+//                   setPage(1);
+//                 }}
+//               />
+//             </div>
+
+//             <div className="w-full lg:w-[320px]">
+//               <ProductFilter
+//                 categories={categories}
+//                 category={category}
+//                 onCategoryChange={
+//                   handleCategoryChange
+//                 }
+//                 sort={sort}
+//                 onSortChange={(value) => {
+//                   setSort(value);
+//                   setPage(1);
+//                 }}
+//               />
+//             </div>
+
+//           </div>
+
+//           {/* Products */}
+//           <div className="mt-8 sm:mt-10">
+//             <ProductGrid
+//               products={products}
+//               isLoading={isLoading}
+//               isError={isError}
+//               error={error}
+//               onRetry={refetch}
+//             />
+//           </div>
+
+//           {/* Pagination */}
+//           {!isLoading &&
+//             total > PAGE_SIZE && (
+//               <div className="mt-10 flex justify-center sm:mt-12">
+//                 <Pagination
+//                   current={page}
+//                   pageSize={PAGE_SIZE}
+//                   total={total}
+//                   onChange={(p) => {
+//                     setPage(p);
+
+//                     window.scrollTo({
+//                       top: 0,
+//                       behavior: "smooth",
+//                     });
+//                   }}
+//                   showSizeChanger={false}
+//                 />
+//               </div>
+//             )}
+
+//         </div>
+//       </section>
+//     </>
+//   );
+// }
+
+
+
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Pagination } from "antd";
@@ -279,27 +507,26 @@ export default function Products() {
     <>
       {seoNode}
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-white px-4 py-12 sm:px-6 sm:py-16 md:py-24 lg:px-8 lg:py-28">
-        {/* Background Blur */}
-        <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 rounded-full bg-amber-200/30 blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
-
-        <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-orange-200/30 blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#FBF7EF] via-white to-white px-4 py-12 sm:px-6 sm:py-16 md:py-24 lg:px-8 lg:py-28">
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 rounded-full bg-[#D4AF6A]/[0.07] blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-[#C9A227]/[0.06] blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
 
         <div className="container mx-auto max-w-7xl px-0 sm:px-5">
 
           {/* Heading */}
           <div className="mb-12 text-center sm:mb-14">
-            <span className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-100 px-4 py-2 text-xs font-semibold text-orange-700 sm:px-5 sm:text-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF6A]/25 bg-[#A8823C]/[0.05] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#A8823C] sm:px-5 sm:text-sm">
               {t.badge}
             </span>
 
-            <h1 className="mt-5 text-3xl font-bold text-gray-900 sm:mt-6 sm:text-4xl md:text-6xl">
+            <h1 className="mt-5 text-3xl font-bold text-[#1C1A17] sm:mt-6 sm:text-4xl md:text-6xl">
               {t.title}
             </h1>
           </div>
 
-          {/* Search + Filter */}
-          <div className="flex flex-col gap-5 rounded-2xl border border-orange-100 bg-gradient-to-l from-amber-100 via-amber-50 to-amber-50 p-4 shadow-[0_15px_40px_rgba(249,115,22,.08)] backdrop-blur-xl sm:gap-6 sm:rounded-3xl sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          {/* Search + Filter — Luxury Collection Toolbar */}
+          <div className="flex flex-col gap-5 rounded-sm border border-[#1C1A17]/[0.06] bg-white p-4 shadow-[0_4px_20px_rgba(28,26,23,0.05)] sm:gap-6 sm:rounded-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
 
             <div className="flex-1">
               <ProductSearch
@@ -342,7 +569,7 @@ export default function Products() {
           {/* Pagination */}
           {!isLoading &&
             total > PAGE_SIZE && (
-              <div className="mt-10 flex justify-center sm:mt-12">
+              <div className="mt-10 flex justify-center sm:mt-12 [&_.ant-pagination-item-active]:!border-[#1C1A17] [&_.ant-pagination-item-active]:!bg-[#1C1A17] [&_.ant-pagination-item-active_a]:!text-[#F2E3C8] [&_.ant-pagination-item:hover]:!border-[#A8823C]/50">
                 <Pagination
                   current={page}
                   pageSize={PAGE_SIZE}

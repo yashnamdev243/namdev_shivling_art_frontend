@@ -1,5 +1,656 @@
-import { useState } from "react";
-import { Modal, Avatar, Button, Tag, Empty, Spin } from "antd";
+// import { useState } from "react";
+// import { Modal, Avatar, Button, Tag, Empty, Spin } from "antd";
+// import {
+//   UserOutlined,
+//   MailOutlined,
+//   HeartOutlined,
+//   TagOutlined,
+//   LogoutOutlined,
+//   LoginOutlined,
+//   UserAddOutlined,
+//   RightOutlined,
+//   ExclamationCircleFilled,
+//   ArrowLeftOutlined,
+//   CheckCircleFilled,
+//   StarFilled,
+//   ThunderboltFilled,
+// } from "@ant-design/icons";
+// import { useNavigate } from "react-router-dom";
+// import { useQuery } from "@tanstack/react-query";
+// import dayjs from "dayjs";
+
+// import useAuth from "../../hooks/useAuth";
+// import { useWishlist } from "../../hooks/useWishlist";
+// import couponService from "../../services/couponService";
+// import useOpenAuthModal from "../../hooks/useOpenAuthModal";
+
+// export default function AccountModal({ open, onClose }) {
+//   const navigate = useNavigate();
+//   const openAuthModal = useOpenAuthModal();
+//   const { user, isAuthenticated, logout } = useAuth();
+//   const { wishlistCount } = useWishlist();
+//   const [confirmingLogout, setConfirmingLogout] = useState(false);
+//   const [historyOpen, setHistoryOpen] = useState(false);
+
+//   const { data: historyData, isLoading: historyLoading } = useQuery({
+//     queryKey: ["my-coupon-history"],
+//     queryFn: couponService.myRedemptions,
+//     enabled: open && isAuthenticated,
+//   });
+//   const history = historyData?.redemptions || [];
+
+//   const go = (path) => {
+//     onClose();
+//     navigate(path);
+//   };
+
+//   const goAuth = (path) => {
+//     onClose();
+//     openAuthModal(path);
+//   };
+
+//   const handleClose = () => {
+//     setConfirmingLogout(false);
+//     setHistoryOpen(false);
+//     onClose();
+//   };
+
+//   const handleLogout = () => {
+//     setConfirmingLogout(false);
+//     onClose();
+//     logout();
+//     navigate("/");
+//   };
+
+//   return (
+//     <Modal
+//       open={open}
+//       onCancel={handleClose}
+//       footer={null}
+//       centered
+//       width={420}
+//       closeIcon={null}
+//       destroyOnClose
+//       className="auth-modal"
+//       styles={{ body: { padding: 0 } }}
+//     >
+//       {/* ================= LOGOUT CONFIRM STATE ================= */}
+//       {confirmingLogout ? (
+//         <div className="p-6 text-center sm:p-8">
+//           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
+//             <ExclamationCircleFilled className="text-2xl text-red-500" />
+//           </div>
+//           <h2 className="mt-4 text-lg font-bold text-slate-900">
+//             Logout from your account?
+//           </h2>
+//           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
+//             You'll need to login again to access your wishlist, coupons and
+//             reviews.
+//           </p>
+//           <div className="mt-6 flex gap-3">
+//             <button
+//               onClick={() => setConfirmingLogout(false)}
+//               className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+//             >
+//               Cancel
+//             </button>
+//             <button
+//               onClick={handleLogout}
+//               className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
+//             >
+//               Yes, Logout
+//             </button>
+//           </div>
+//         </div>
+//       ) : historyOpen ? (
+//         /* ================= COUPON HISTORY STATE ================= */
+//         <div>
+//           <div className="flex items-center gap-3 border-b border-orange-100 px-5 py-4 sm:px-6">
+//             <button
+//               onClick={() => setHistoryOpen(false)}
+//               className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100"
+//               aria-label="Back"
+//             >
+//               <ArrowLeftOutlined />
+//             </button>
+//             <h3 className="font-bold text-slate-900">My Coupon History</h3>
+//           </div>
+
+//           <div className="max-h-[70vh] overflow-y-auto p-5 sm:p-6">
+//             {historyLoading ? (
+//               <div className="flex justify-center py-10">
+//                 <Spin />
+//               </div>
+//             ) : history.length === 0 ? (
+//               <Empty description="You haven't used any coupons yet." />
+//             ) : (
+//               <div className="space-y-3">
+//                 {history.map((r) => (
+//                   <div
+//                     key={r.id}
+//                     className="rounded-2xl border border-orange-100 bg-orange-50/50 p-4"
+//                   >
+//                     <div className="flex items-center justify-between gap-2">
+//                       <Tag color="orange">{r.coupon?.code || "—"}</Tag>
+//                       <span className="text-xs text-gray-500">
+//                         {dayjs(r.createdAt).format("DD MMM YYYY")}
+//                       </span>
+//                     </div>
+//                     {r.coupon?.title && (
+//                       <p className="mt-2 text-sm font-medium text-slate-900">
+//                         {r.coupon.title}
+//                       </p>
+//                     )}
+//                     <div className="mt-2 flex justify-between text-sm">
+//                       <span className="text-gray-500">You saved</span>
+//                       <span className="font-semibold text-green-600">
+//                         ₹
+//                         {Number(r.discount_amount || 0).toLocaleString("en-IN")}
+//                       </span>
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       ) : isAuthenticated ? (
+//         /* ================= LOGGED-IN MAIN STATE ================= */
+//         <div>
+//           {/* Header */}
+//           <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-orange-500 to-amber-500 px-6 pb-8 pt-8 text-white sm:px-7">
+//             <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+//             <div className="pointer-events-none absolute -bottom-10 -left-6 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+
+//             <button
+//               onClick={handleClose}
+//               aria-label="Close"
+//               className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 hover:rotate-90 duration-300"
+//             >
+//               <span className="text-sm leading-none">✕</span>
+//             </button>
+
+//             <div className="relative flex items-center gap-4">
+//               <Avatar
+//                 size={64}
+//                 src={user?.avatar || undefined}
+//                 className="!border-2 !border-white/40 !bg-white/20 !text-2xl !font-bold"
+//               >
+//                 {!user?.avatar && (user?.name || "U").charAt(0).toUpperCase()}
+//               </Avatar>
+//               <div className="min-w-0">
+//                 <p className="truncate text-lg font-bold">
+//                   {user?.name || "Customer"}
+//                 </p>
+//                 <div className="mt-1 flex items-center gap-1.5 text-xs text-white/85">
+//                   <MailOutlined />
+//                   <span className="truncate">{user?.email}</span>
+//                 </div>
+//                 <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold">
+//                   <CheckCircleFilled /> Verified Account
+//                 </span>
+//               </div>
+//             </div>
+//           </div>
+
+//           <div className="p-5 sm:p-6">
+//             {/* Quick stats */}
+//             <div className="grid grid-cols-2 gap-3">
+//               <button
+//                 onClick={() => go("/wishlist")}
+//                 className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4 text-left transition hover:border-orange-300 hover:bg-orange-50"
+//               >
+//                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
+//                   <HeartOutlined />
+//                 </div>
+//                 <p className="mt-2 text-xl font-bold text-slate-900">
+//                   {wishlistCount}
+//                 </p>
+//                 <p className="text-xs text-gray-500">Wishlist Items</p>
+//               </button>
+
+//               <button
+//                 onClick={() => setHistoryOpen(true)}
+//                 className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4 text-left transition hover:border-orange-300 hover:bg-orange-50"
+//               >
+//                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
+//                   <TagOutlined />
+//                 </div>
+//                 <p className="mt-2 text-xl font-bold text-slate-900">
+//                   {history.length || (historyLoading ? "…" : 0)}
+//                 </p>
+//                 <p className="text-xs text-gray-500">Coupons Used</p>
+//               </button>
+//             </div>
+
+//             {/* Quick links */}
+//             <div className="mt-4 divide-y divide-orange-50 overflow-hidden rounded-2xl border border-orange-100">
+//               <button
+//                 onClick={() => go("/wishlist")}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
+//                   <HeartOutlined className="text-orange-500" /> My Wishlist
+//                 </span>
+//                 <RightOutlined className="text-xs text-gray-400" />
+//               </button>
+
+//               <button
+//                 onClick={() => setHistoryOpen(true)}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
+//                   <TagOutlined className="text-orange-500" /> Coupon History
+//                 </span>
+//                 <RightOutlined className="text-xs text-gray-400" />
+//               </button>
+
+//               <button
+//                 onClick={() => go("/products")}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
+//                   <ThunderboltFilled className="text-orange-500" /> Browse
+//                   Products
+//                 </span>
+//                 <RightOutlined className="text-xs text-gray-400" />
+//               </button>
+//             </div>
+
+//             {/* Logout */}
+//             <button
+//               onClick={() => setConfirmingLogout(true)}
+//               className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+//             >
+//               <LogoutOutlined /> Logout
+//             </button>
+//           </div>
+//         </div>
+//       ) : (
+//         /* ================= LOGGED-OUT STATE ================= */
+//         <div className="p-6 text-center sm:p-8">
+//           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg">
+//             <UserOutlined className="text-2xl" />
+//           </div>
+//           <h2 className="mt-5 text-xl font-bold text-slate-900">
+//             Welcome to Namdev
+//           </h2>
+//           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
+//             Login or create an account to save your wishlist, apply coupons and
+//             track your reviews.
+//           </p>
+
+//           <button
+//             onClick={() => goAuth("/login")}
+//             className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
+//           >
+//             <LoginOutlined /> Login
+//           </button>
+
+//           <button
+//             onClick={() => goAuth("/register")}
+//             className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3.5 font-semibold text-orange-600 transition hover:bg-orange-100"
+//           >
+//             <UserAddOutlined /> Create New Account
+//           </button>
+
+//           <div className="mt-7 space-y-2.5 rounded-2xl bg-gray-50 p-4 text-left">
+//             {[
+//               "Save products to your wishlist",
+//               "Apply coupons and track your savings",
+//               "Like products & write reviews",
+//             ].map((line) => (
+//               <div
+//                 key={line}
+//                 className="flex items-center gap-2.5 text-sm text-gray-600"
+//               >
+//                 <StarFilled className="text-amber-400" />
+//                 {line}
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+//     </Modal>
+//   );
+// }
+
+// import { useState } from "react";
+// import { Modal, Avatar, Button, Tag, Empty, Spin } from "antd";
+// import {
+//   UserOutlined,
+//   MailOutlined,
+//   HeartOutlined,
+//   TagOutlined,
+//   LogoutOutlined,
+//   LoginOutlined,
+//   UserAddOutlined,
+//   RightOutlined,
+//   ExclamationCircleFilled,
+//   ArrowLeftOutlined,
+//   CheckCircleFilled,
+//   StarFilled,
+//   ThunderboltFilled,
+// } from "@ant-design/icons";
+// import { useNavigate } from "react-router-dom";
+// import { useQuery } from "@tanstack/react-query";
+// import dayjs from "dayjs";
+
+// import useAuth from "../../hooks/useAuth";
+// import { useWishlist } from "../../hooks/useWishlist";
+// import couponService from "../../services/couponService";
+// import useOpenAuthModal from "../../hooks/useOpenAuthModal";
+
+// export default function AccountModal({ open, onClose }) {
+//   const navigate = useNavigate();
+//   const openAuthModal = useOpenAuthModal();
+//   const { user, isAuthenticated, logout } = useAuth();
+//   const { wishlistCount } = useWishlist();
+//   const [confirmingLogout, setConfirmingLogout] = useState(false);
+//   const [historyOpen, setHistoryOpen] = useState(false);
+
+//   const { data: historyData, isLoading: historyLoading } = useQuery({
+//     queryKey: ["my-coupon-history"],
+//     queryFn: couponService.myRedemptions,
+//     enabled: open && isAuthenticated,
+//   });
+//   const history = historyData?.redemptions || [];
+
+//   const go = (path) => {
+//     onClose();
+//     navigate(path);
+//   };
+
+//   const goAuth = (path) => {
+//     onClose();
+//     openAuthModal(path);
+//   };
+
+//   const handleClose = () => {
+//     setConfirmingLogout(false);
+//     setHistoryOpen(false);
+//     onClose();
+//   };
+
+//   const handleLogout = () => {
+//     setConfirmingLogout(false);
+//     onClose();
+//     logout();
+//     navigate("/");
+//   };
+
+//   return (
+//     <Modal
+//       open={open}
+//       onCancel={handleClose}
+//       footer={null}
+//       centered
+//       width={420}
+//       closeIcon={null}
+//       destroyOnClose
+//       className="auth-modal"
+//       styles={{
+//         body: { padding: 0 },
+//         mask: { backdropFilter: "blur(3px)", background: "rgba(15,10,5,0.55)" },
+//         content: { padding: 0, borderRadius: 24, overflow: "hidden" },
+//       }}
+//     >
+//       {/* ================= LOGOUT CONFIRM STATE ================= */}
+//       {confirmingLogout ? (
+//         <div className="bg-[#FAF8F3] p-6 text-center sm:p-8">
+//           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#9B4444]/20 bg-[#9B4444]/[0.06]">
+//             <ExclamationCircleFilled className="text-2xl text-[#9B4444]" />
+//           </div>
+//           <h2 className="mt-4 text-lg font-bold text-[#1C1A17]">
+//             Logout from your account?
+//           </h2>
+//           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#6B6459]">
+//             You'll need to login again to access your wishlist, coupons and
+//             reviews.
+//           </p>
+//           <div className="mt-6 flex gap-3">
+//             <button
+//               onClick={() => setConfirmingLogout(false)}
+//               className="flex-1 rounded-xl border border-[#1C1A17]/10 px-4 py-2.5 text-sm font-medium text-[#4A453D] transition hover:bg-[#1C1A17]/[0.04]"
+//             >
+//               Cancel
+//             </button>
+//             <button
+//               onClick={handleLogout}
+//               className="flex-1 rounded-xl bg-[#9B4444] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#853A3A]"
+//             >
+//               Yes, Logout
+//             </button>
+//           </div>
+//         </div>
+//       ) : historyOpen ? (
+//         /* ================= COUPON HISTORY STATE ================= */
+//         <div className="bg-[#FAF8F3]">
+//           <div className="flex items-center gap-3 border-b border-[#1C1A17]/[0.06] px-5 py-4 sm:px-6">
+//             <button
+//               onClick={() => setHistoryOpen(false)}
+//               className="flex h-8 w-8 items-center justify-center rounded-full text-[#4A453D] transition hover:bg-[#1C1A17]/[0.06]"
+//               aria-label="Back"
+//             >
+//               <ArrowLeftOutlined />
+//             </button>
+//             <h3 className="font-bold text-[#1C1A17]">My Coupon History</h3>
+//           </div>
+
+//           <div className="max-h-[70vh] overflow-y-auto p-5 sm:p-6">
+//             {historyLoading ? (
+//               <div className="flex justify-center py-10">
+//                 <Spin />
+//               </div>
+//             ) : history.length === 0 ? (
+//               <Empty description="You haven't used any coupons yet." />
+//             ) : (
+//               <div className="space-y-3">
+//                 {history.map((r) => (
+//                   <div
+//                     key={r.id}
+//                     className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4"
+//                   >
+//                     <div className="flex items-center justify-between gap-2">
+//                       <Tag className="!border-[#D4AF6A]/30 !bg-[#A8823C]/[0.08] !text-[#A8823C]">
+//                         {r.coupon?.code || "—"}
+//                       </Tag>
+//                       <span className="text-xs text-[#8A8377]">
+//                         {dayjs(r.createdAt).format("DD MMM YYYY")}
+//                       </span>
+//                     </div>
+//                     {r.coupon?.title && (
+//                       <p className="mt-2 text-sm font-medium text-[#1C1A17]">
+//                         {r.coupon.title}
+//                       </p>
+//                     )}
+//                     <div className="mt-2 flex justify-between text-sm">
+//                       <span className="text-[#8A8377]">You saved</span>
+//                       <span className="font-semibold text-emerald-700">
+//                         ₹
+//                         {Number(r.discount_amount || 0).toLocaleString("en-IN")}
+//                       </span>
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       ) : isAuthenticated ? (
+//         /* ================= LOGGED-IN MAIN STATE ================= */
+//         <div className="bg-[#FAF8F3]">
+//           {/* Header */}
+//           <div className="relative overflow-hidden bg-[#1C1A17] px-6 pb-8 pt-8 text-white sm:px-7">
+//             <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#D4AF6A]/[0.08] blur-2xl" />
+//             <div className="pointer-events-none absolute -bottom-10 -left-6 h-28 w-28 rounded-full bg-black/20 blur-2xl" />
+//             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#D4AF6A]/40 to-transparent" />
+
+//             <button
+//               onClick={handleClose}
+//               aria-label="Close"
+//               className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/80 transition duration-300 hover:bg-white/[0.12] hover:text-white"
+//             >
+//               <span className="text-sm leading-none">✕</span>
+//             </button>
+
+//             <div className="relative flex items-center gap-4">
+//               <Avatar
+//                 size={64}
+//                 src={user?.avatar || undefined}
+//                 className="!border-2 !border-[#D4AF6A]/40 !bg-white/10 !text-2xl !font-bold"
+//               >
+//                 {!user?.avatar && (user?.name || "U").charAt(0).toUpperCase()}
+//               </Avatar>
+//               <div className="min-w-0">
+//                 <p className="truncate text-lg font-bold">
+//                   {user?.name || "Customer"}
+//                 </p>
+//                 <div className="mt-1 flex items-center gap-1.5 text-xs text-white/60">
+//                   <MailOutlined />
+//                   <span className="truncate">{user?.email}</span>
+//                 </div>
+//                 <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[#D4AF6A]/30 bg-[#D4AF6A]/[0.1] px-2.5 py-0.5 text-[11px] font-semibold text-[#D4AF6A]">
+//                   <CheckCircleFilled /> Verified Account
+//                 </span>
+//               </div>
+//             </div>
+//           </div>
+
+//           <div className="p-5 sm:p-6">
+//             {/* Quick stats */}
+//             <div className="grid grid-cols-2 gap-3">
+//               <button
+//                 onClick={() => go("/wishlist")}
+//                 className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left transition-all duration-200 hover:border-[#D4AF6A]/40 hover:-translate-y-0.5"
+//               >
+//                 <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-[#A8823C]">
+//                   <HeartOutlined />
+//                 </div>
+//                 <p className="mt-2 text-xl font-bold text-[#1C1A17]">
+//                   {wishlistCount}
+//                 </p>
+//                 <p className="text-xs text-[#8A8377]">Wishlist Items</p>
+//               </button>
+
+//               <button
+//                 onClick={() => setHistoryOpen(true)}
+//                 className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left transition-all duration-200 hover:border-[#D4AF6A]/40 hover:-translate-y-0.5"
+//               >
+//                 <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-[#A8823C]">
+//                   <TagOutlined />
+//                 </div>
+//                 <p className="mt-2 text-xl font-bold text-[#1C1A17]">
+//                   {history.length || (historyLoading ? "…" : 0)}
+//                 </p>
+//                 <p className="text-xs text-[#8A8377]">Coupons Used</p>
+//               </button>
+//             </div>
+
+//             {/* Quick links */}
+//             <div className="mt-4 divide-y divide-[#1C1A17]/[0.06] overflow-hidden rounded-2xl border border-[#1C1A17]/[0.06] bg-white">
+//               <button
+//                 onClick={() => go("/wishlist")}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+//                   <HeartOutlined className="text-[#A8823C]" /> My Wishlist
+//                 </span>
+//                 <RightOutlined className="text-xs text-[#8A8377]" />
+//               </button>
+
+//               <button
+//                 onClick={() => setHistoryOpen(true)}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+//                   <TagOutlined className="text-[#A8823C]" /> Coupon History
+//                 </span>
+//                 <RightOutlined className="text-xs text-[#8A8377]" />
+//               </button>
+
+//               <button
+//                 onClick={() => go("/products")}
+//                 className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
+//               >
+//                 <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+//                   <ThunderboltFilled className="text-[#A8823C]" /> Browse
+//                   Products
+//                 </span>
+//                 <RightOutlined className="text-xs text-[#8A8377]" />
+//               </button>
+//             </div>
+
+//             {/* Logout */}
+//             <button
+//               onClick={() => setConfirmingLogout(true)}
+//               className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-[#9B4444]/20 bg-[#9B4444]/[0.05] px-4 py-3 text-sm font-medium text-[#9B4444] transition hover:bg-[#9B4444]/[0.09]"
+//             >
+//               <LogoutOutlined /> Logout
+//             </button>
+//           </div>
+//         </div>
+//       ) : (
+//         /* ================= LOGGED-OUT STATE ================= */
+//         <div className="bg-[#FAF8F3] p-6 text-center sm:p-8">
+//           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF6A]/30 bg-[#A8823C]/[0.06]">
+//             <UserOutlined className="text-2xl text-[#A8823C]" />
+//           </div>
+//           <h2 className="mt-5 text-xl font-bold text-[#1C1A17]">
+//             Welcome to Namdev
+//           </h2>
+//           <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#6B6459]">
+//             Login or create an account to save your wishlist, apply coupons and
+//             track your reviews.
+//           </p>
+
+//           <button
+//             onClick={() => goAuth("/login")}
+//             className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-[#1C1A17] px-4 py-3.5 font-medium text-[#F2E3C8] shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2A2620]"
+//           >
+//             <LoginOutlined className="text-[#D4AF6A]" /> Login
+//           </button>
+
+//           <button
+//             onClick={() => goAuth("/register")}
+//             className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-[#1C1A17]/12 bg-white px-4 py-3.5 font-medium text-[#1C1A17] transition-colors duration-200 hover:border-[#A8823C]/40 hover:text-[#A8823C]"
+//           >
+//             <UserAddOutlined /> Create New Account
+//           </button>
+
+//           <div className="mt-7 space-y-2.5 rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left">
+//             {[
+//               "Save products to your wishlist",
+//               "Apply coupons and track your savings",
+//               "Like products & write reviews",
+//             ].map((line) => (
+//               <div
+//                 key={line}
+//                 className="flex items-center gap-2.5 text-sm text-[#4A453D]"
+//               >
+//                 <StarFilled className="text-[#A8823C]" />
+//                 {line}
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+//     </Modal>
+//   );
+// }
+
+import { useRef, useState } from "react";
+import {
+  Modal,
+  Avatar,
+  Button,
+  Tag,
+  Empty,
+  Spin,
+  Input,
+  Form,
+  message,
+} from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -14,6 +665,8 @@ import {
   CheckCircleFilled,
   StarFilled,
   ThunderboltFilled,
+  EditOutlined,
+  PhoneOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -23,20 +676,32 @@ import useAuth from "../../hooks/useAuth";
 import { useWishlist } from "../../hooks/useWishlist";
 import couponService from "../../services/couponService";
 import useOpenAuthModal from "../../hooks/useOpenAuthModal";
+import { CameraOutlined, LoadingOutlined } from "@ant-design/icons";
+import uploadService from "../../services/uploadService";
+import { FILE_BASE_URL } from "../../config/api";
 
 export default function AccountModal({ open, onClose }) {
   const navigate = useNavigate();
   const openAuthModal = useOpenAuthModal();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, updateProfile } = useAuth();
   const { wishlistCount } = useWishlist();
+
   const [confirmingLogout, setConfirmingLogout] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const [form] = Form.useForm();
 
   const { data: historyData, isLoading: historyLoading } = useQuery({
     queryKey: ["my-coupon-history"],
     queryFn: couponService.myRedemptions,
     enabled: open && isAuthenticated,
   });
+
   const history = historyData?.redemptions || [];
 
   const go = (path) => {
@@ -52,6 +717,7 @@ export default function AccountModal({ open, onClose }) {
   const handleClose = () => {
     setConfirmingLogout(false);
     setHistoryOpen(false);
+    setProfileOpen(false);
     onClose();
   };
 
@@ -62,6 +728,97 @@ export default function AccountModal({ open, onClose }) {
     navigate("/");
   };
 
+  // ================= PROFILE =================
+
+  const openProfileEditor = () => {
+    form.setFieldsValue({
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
+    });
+
+    setProfileOpen(true);
+  };
+
+  const closeProfileEditor = () => {
+    if (!savingProfile) {
+      setProfileOpen(false);
+      form.resetFields();
+    }
+  };
+
+  const handleProfileUpdate = async (values) => {
+    try {
+      setSavingProfile(true);
+
+      const response = await updateProfile({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        avatar: user?.avatar,
+      });
+
+      message.success(response?.message || "Profile updated successfully");
+
+      setProfileOpen(false);
+      form.resetFields();
+    } catch (error) {
+      message.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to update profile",
+      );
+    } finally {
+      setSavingProfile(false);
+    }
+  };
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      message.error("Please select an image file");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      message.error("Image must be under 5MB");
+      return;
+    }
+
+    const localUrl = URL.createObjectURL(file);
+    setAvatarPreview(localUrl);
+
+    try {
+      setUploadingAvatar(true);
+
+      const res = await uploadService.uploadImage(file, undefined, {
+        forceUserAuth: true,
+      });
+
+      if (!res?.status || !res?.image) {
+        throw new Error(res?.message || "Upload failed");
+      }
+
+      const fullUrl = res.image.startsWith("http")
+        ? res.image
+        : `${FILE_BASE_URL}${res.image}`;
+
+      await updateProfile({
+        name: form.getFieldValue("name") ?? user?.name,
+        email: form.getFieldValue("email") ?? user?.email,
+        phone: form.getFieldValue("phone") ?? user?.phone,
+        avatar: fullUrl,
+      });
+
+      message.success("Profile photo updated");
+    } catch (error) {
+      message.error(error?.message || "Failed to upload photo");
+    } finally {
+      setAvatarPreview(null);
+      setUploadingAvatar(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
   return (
     <Modal
       open={open}
@@ -72,31 +829,46 @@ export default function AccountModal({ open, onClose }) {
       closeIcon={null}
       destroyOnClose
       className="auth-modal"
-      styles={{ body: { padding: 0 } }}
+      styles={{
+        body: { padding: 0 },
+        mask: {
+          backdropFilter: "blur(3px)",
+          background: "rgba(15,10,5,0.55)",
+        },
+        content: {
+          padding: 0,
+          borderRadius: 24,
+          overflow: "hidden",
+        },
+      }}
     >
       {/* ================= LOGOUT CONFIRM STATE ================= */}
       {confirmingLogout ? (
-        <div className="p-6 text-center sm:p-8">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
-            <ExclamationCircleFilled className="text-2xl text-red-500" />
+        <div className="bg-[#FAF8F3] p-6 text-center sm:p-8">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#9B4444]/20 bg-[#9B4444]/[0.06]">
+            <ExclamationCircleFilled className="text-2xl text-[#9B4444]" />
           </div>
-          <h2 className="mt-4 text-lg font-bold text-slate-900">
+
+          <h2 className="mt-4 text-lg font-bold text-[#1C1A17]">
             Logout from your account?
           </h2>
-          <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
+
+          <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#6B6459]">
             You'll need to login again to access your wishlist, coupons and
             reviews.
           </p>
+
           <div className="mt-6 flex gap-3">
             <button
               onClick={() => setConfirmingLogout(false)}
-              className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+              className="flex-1 rounded-xl border border-[#1C1A17]/10 px-4 py-2.5 text-sm font-medium text-[#4A453D] transition hover:bg-[#1C1A17]/[0.04]"
             >
               Cancel
             </button>
+
             <button
               onClick={handleLogout}
-              className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
+              className="flex-1 rounded-xl bg-[#9B4444] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#853A3A]"
             >
               Yes, Logout
             </button>
@@ -104,16 +876,17 @@ export default function AccountModal({ open, onClose }) {
         </div>
       ) : historyOpen ? (
         /* ================= COUPON HISTORY STATE ================= */
-        <div>
-          <div className="flex items-center gap-3 border-b border-orange-100 px-5 py-4 sm:px-6">
+        <div className="bg-[#FAF8F3]">
+          <div className="flex items-center gap-3 border-b border-[#1C1A17]/[0.06] px-5 py-4 sm:px-6">
             <button
               onClick={() => setHistoryOpen(false)}
-              className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[#4A453D] transition hover:bg-[#1C1A17]/[0.06]"
               aria-label="Back"
             >
               <ArrowLeftOutlined />
             </button>
-            <h3 className="font-bold text-slate-900">My Coupon History</h3>
+
+            <h3 className="font-bold text-[#1C1A17]">My Coupon History</h3>
           </div>
 
           <div className="max-h-[70vh] overflow-y-auto p-5 sm:p-6">
@@ -128,22 +901,28 @@ export default function AccountModal({ open, onClose }) {
                 {history.map((r) => (
                   <div
                     key={r.id}
-                    className="rounded-2xl border border-orange-100 bg-orange-50/50 p-4"
+                    className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <Tag color="orange">{r.coupon?.code || "—"}</Tag>
-                      <span className="text-xs text-gray-500">
+                      <Tag className="!border-[#D4AF6A]/30 !bg-[#A8823C]/[0.08] !text-[#A8823C]">
+                        {r.coupon?.code || "—"}
+                      </Tag>
+
+                      <span className="text-xs text-[#8A8377]">
                         {dayjs(r.createdAt).format("DD MMM YYYY")}
                       </span>
                     </div>
+
                     {r.coupon?.title && (
-                      <p className="mt-2 text-sm font-medium text-slate-900">
+                      <p className="mt-2 text-sm font-medium text-[#1C1A17]">
                         {r.coupon.title}
                       </p>
                     )}
+
                     <div className="mt-2 flex justify-between text-sm">
-                      <span className="text-gray-500">You saved</span>
-                      <span className="font-semibold text-green-600">
+                      <span className="text-[#8A8377]">You saved</span>
+
+                      <span className="font-semibold text-emerald-700">
                         ₹
                         {Number(r.discount_amount || 0).toLocaleString("en-IN")}
                       </span>
@@ -154,18 +933,189 @@ export default function AccountModal({ open, onClose }) {
             )}
           </div>
         </div>
+      ) : profileOpen ? (
+        /* ================= EDIT PROFILE STATE ================= */
+        <div className="bg-[#FAF8F3]">
+          {/* Header */}
+          <div className="relative bg-[#1C1A17] px-5 py-4 text-white sm:px-6">
+            <button
+              onClick={closeProfileEditor}
+              disabled={savingProfile}
+              className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-white/80 transition hover:bg-white/[0.08] hover:text-white disabled:opacity-50"
+              aria-label="Back"
+            >
+              <ArrowLeftOutlined />
+            </button>
+
+            <h3 className="text-center font-bold">Edit Profile</h3>
+          </div>
+
+          <div className="p-5 sm:p-6">
+            {/* Avatar */}
+            <div className="mb-6 flex flex-col items-center">
+              <div
+                onClick={() =>
+                  !uploadingAvatar && fileInputRef.current?.click()
+                }
+                className="group relative cursor-pointer"
+              >
+                <Avatar
+                  size={76}
+                  src={avatarPreview || user?.avatar || undefined}
+                  className="!border-2 !border-[#D4AF6A]/40 !bg-[#1C1A17] !text-2xl !font-bold"
+                >
+                  {!avatarPreview &&
+                    !user?.avatar &&
+                    (user?.name || "U").charAt(0).toUpperCase()}
+                </Avatar>
+
+                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition group-hover:opacity-100">
+                  {uploadingAvatar ? (
+                    <LoadingOutlined className="text-lg text-white" spin />
+                  ) : (
+                    <CameraOutlined className="text-lg text-white" />
+                  )}
+                </div>
+
+                <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-[#FAF8F3] bg-[#D4AF6A] text-xs text-[#1C1A17]">
+                  <CameraOutlined />
+                </div>
+              </div>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+
+              <p className="mt-2 text-xs text-[#8A8377]">
+                {uploadingAvatar ? "Uploading…" : "Tap photo to change"}
+              </p>
+            </div>
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={handleProfileUpdate}
+              requiredMark={false}
+            >
+              <Form.Item
+                label={
+                  <span className="font-medium text-[#4A453D]">Full Name</span>
+                }
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your name",
+                  },
+                  {
+                    min: 2,
+                    message: "Name must be at least 2 characters",
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined className="text-[#A8823C]" />}
+                  placeholder="Enter your name"
+                  size="large"
+                  className="rounded-xl"
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="font-medium text-[#4A453D]">Email</span>
+                }
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your email",
+                  },
+                  {
+                    type: "email",
+                    message: "Please enter a valid email",
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<MailOutlined className="text-[#A8823C]" />}
+                  placeholder="Enter your email"
+                  size="large"
+                  className="rounded-xl"
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="font-medium text-[#4A453D]">
+                    Phone Number
+                  </span>
+                }
+                name="phone"
+              >
+                <Input
+                  prefix={<PhoneOutlined className="text-[#A8823C]" />}
+                  placeholder="Enter your phone number"
+                  size="large"
+                  className="rounded-xl"
+                />
+              </Form.Item>
+
+              <div className="mt-6 flex gap-3">
+                <Button
+                  onClick={closeProfileEditor}
+                  disabled={savingProfile}
+                  size="large"
+                  className="flex-1 rounded-xl"
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={savingProfile}
+                  size="large"
+                  className="flex-1 rounded-xl !border-0 !bg-[#1C1A17]"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </Form>
+          </div>
+        </div>
       ) : isAuthenticated ? (
         /* ================= LOGGED-IN MAIN STATE ================= */
-        <div>
+        <div className="bg-[#FAF8F3]">
           {/* Header */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-orange-500 to-amber-500 px-6 pb-8 pt-8 text-white sm:px-7">
-            <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-10 -left-6 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+          <div className="relative overflow-hidden bg-[#1C1A17] px-6 pb-8 pt-8 text-white sm:px-7">
+            <svg
+              className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.06]"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <pattern
+                  id="loginDots"
+                  width="18"
+                  height="18"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1.4" fill="white" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#loginDots)" />
+            </svg>
+            <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#D4AF6A]/[0.08] blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-10 -left-6 h-28 w-28 rounded-full bg-black/20 blur-2xl" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#D4AF6A]/40 to-transparent" />
 
             <button
               onClick={handleClose}
               aria-label="Close"
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 hover:rotate-90 duration-300"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/80 transition duration-300 hover:bg-white/[0.12] hover:text-white"
             >
               <span className="text-sm leading-none">✕</span>
             </button>
@@ -174,19 +1124,22 @@ export default function AccountModal({ open, onClose }) {
               <Avatar
                 size={64}
                 src={user?.avatar || undefined}
-                className="!border-2 !border-white/40 !bg-white/20 !text-2xl !font-bold"
+                className="!border-2 !border-[#D4AF6A]/40 !bg-white/10 !text-2xl !font-bold"
               >
                 {!user?.avatar && (user?.name || "U").charAt(0).toUpperCase()}
               </Avatar>
+
               <div className="min-w-0">
                 <p className="truncate text-lg font-bold">
                   {user?.name || "Customer"}
                 </p>
-                <div className="mt-1 flex items-center gap-1.5 text-xs text-white/85">
+
+                <div className="mt-1 flex items-center gap-1.5 text-xs text-white/60">
                   <MailOutlined />
                   <span className="truncate">{user?.email}</span>
                 </div>
-                <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold">
+
+                <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[#D4AF6A]/30 bg-[#D4AF6A]/[0.1] px-2.5 py-0.5 text-[11px] font-semibold text-[#D4AF6A]">
                   <CheckCircleFilled /> Verified Account
                 </span>
               </div>
@@ -198,69 +1151,91 @@ export default function AccountModal({ open, onClose }) {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => go("/wishlist")}
-                className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4 text-left transition hover:border-orange-300 hover:bg-orange-50"
+                className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D4AF6A]/40"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-[#A8823C]">
                   <HeartOutlined />
                 </div>
-                <p className="mt-2 text-xl font-bold text-slate-900">
+
+                <p className="mt-2 text-xl font-bold text-[#1C1A17]">
                   {wishlistCount}
                 </p>
-                <p className="text-xs text-gray-500">Wishlist Items</p>
+
+                <p className="text-xs text-[#8A8377]">Wishlist Items</p>
               </button>
 
               <button
                 onClick={() => setHistoryOpen(true)}
-                className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4 text-left transition hover:border-orange-300 hover:bg-orange-50"
+                className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D4AF6A]/40"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-orange-500 shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-[#A8823C]">
                   <TagOutlined />
                 </div>
-                <p className="mt-2 text-xl font-bold text-slate-900">
+
+                <p className="mt-2 text-xl font-bold text-[#1C1A17]">
                   {history.length || (historyLoading ? "…" : 0)}
                 </p>
-                <p className="text-xs text-gray-500">Coupons Used</p>
+
+                <p className="text-xs text-[#8A8377]">Coupons Used</p>
               </button>
             </div>
 
             {/* Quick links */}
-            <div className="mt-4 divide-y divide-orange-50 overflow-hidden rounded-2xl border border-orange-100">
+            <div className="mt-4 divide-y divide-[#1C1A17]/[0.06] overflow-hidden rounded-2xl border border-[#1C1A17]/[0.06] bg-white">
+              {/* EDIT PROFILE */}
+              <button
+                onClick={openProfileEditor}
+                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
+              >
+                <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+                  <EditOutlined className="text-[#A8823C]" />
+                  Edit Profile
+                </span>
+
+                <RightOutlined className="text-xs text-[#8A8377]" />
+              </button>
+
               <button
                 onClick={() => go("/wishlist")}
-                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
               >
-                <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
-                  <HeartOutlined className="text-orange-500" /> My Wishlist
+                <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+                  <HeartOutlined className="text-[#A8823C]" />
+                  My Wishlist
                 </span>
-                <RightOutlined className="text-xs text-gray-400" />
+
+                <RightOutlined className="text-xs text-[#8A8377]" />
               </button>
 
               <button
                 onClick={() => setHistoryOpen(true)}
-                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
               >
-                <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
-                  <TagOutlined className="text-orange-500" /> Coupon History
+                <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+                  <TagOutlined className="text-[#A8823C]" />
+                  Coupon History
                 </span>
-                <RightOutlined className="text-xs text-gray-400" />
+
+                <RightOutlined className="text-xs text-[#8A8377]" />
               </button>
 
               <button
                 onClick={() => go("/products")}
-                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-orange-50/60"
+                className="flex w-full items-center justify-between px-4 py-3.5 text-left transition hover:bg-[#1C1A17]/[0.03]"
               >
-                <span className="flex items-center gap-3 text-sm font-medium text-slate-800">
-                  <ThunderboltFilled className="text-orange-500" /> Browse
-                  Products
+                <span className="flex items-center gap-3 text-sm font-medium text-[#1C1A17]">
+                  <ThunderboltFilled className="text-[#A8823C]" />
+                  Browse Products
                 </span>
-                <RightOutlined className="text-xs text-gray-400" />
+
+                <RightOutlined className="text-xs text-[#8A8377]" />
               </button>
             </div>
 
             {/* Logout */}
             <button
               onClick={() => setConfirmingLogout(true)}
-              className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-[#9B4444]/20 bg-[#9B4444]/[0.05] px-4 py-3 text-sm font-medium text-[#9B4444] transition hover:bg-[#9B4444]/[0.09]"
             >
               <LogoutOutlined /> Logout
             </button>
@@ -268,33 +1243,37 @@ export default function AccountModal({ open, onClose }) {
         </div>
       ) : (
         /* ================= LOGGED-OUT STATE ================= */
-        <div className="p-6 text-center sm:p-8">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg">
-            <UserOutlined className="text-2xl" />
+        <div className="bg-[#FAF8F3] p-6 text-center sm:p-8">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF6A]/30 bg-[#A8823C]/[0.06]">
+            <UserOutlined className="text-2xl text-[#A8823C]" />
           </div>
-          <h2 className="mt-5 text-xl font-bold text-slate-900">
+
+          <h2 className="mt-5 text-xl font-bold text-[#1C1A17]">
             Welcome to Namdev
           </h2>
-          <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-gray-500">
+
+          <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#6B6459]">
             Login or create an account to save your wishlist, apply coupons and
             track your reviews.
           </p>
 
           <button
             onClick={() => goAuth("/login")}
-            className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3.5 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
+            className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-[#1C1A17] px-4 py-3.5 font-medium text-[#F2E3C8] shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2A2620]"
           >
-            <LoginOutlined /> Login
+            <LoginOutlined className="text-[#D4AF6A]" />
+            Login
           </button>
 
           <button
             onClick={() => goAuth("/register")}
-            className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3.5 font-semibold text-orange-600 transition hover:bg-orange-100"
+            className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-[#1C1A17]/12 bg-white px-4 py-3.5 font-medium text-[#1C1A17] transition-colors duration-200 hover:border-[#A8823C]/40 hover:text-[#A8823C]"
           >
-            <UserAddOutlined /> Create New Account
+            <UserAddOutlined />
+            Create New Account
           </button>
 
-          <div className="mt-7 space-y-2.5 rounded-2xl bg-gray-50 p-4 text-left">
+          <div className="mt-7 space-y-2.5 rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-4 text-left">
             {[
               "Save products to your wishlist",
               "Apply coupons and track your savings",
@@ -302,9 +1281,9 @@ export default function AccountModal({ open, onClose }) {
             ].map((line) => (
               <div
                 key={line}
-                className="flex items-center gap-2.5 text-sm text-gray-600"
+                className="flex items-center gap-2.5 text-sm text-[#4A453D]"
               >
-                <StarFilled className="text-amber-400" />
+                <StarFilled className="text-[#A8823C]" />
                 {line}
               </div>
             ))}

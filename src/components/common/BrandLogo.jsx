@@ -72,7 +72,7 @@ export default function BrandLogo({
 
         {/* Ring */}
         <div
-          className={`${iconSize} relative rounded-full p-[2px] bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-300 shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}
+          className={`${iconSize} relative rounded-full p-[2px] bg-[#c29c54] shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}
         >
           {/* Inner Circle */}
           <div className="flex h-full w-full items-center justify-center rounded-full bg-slate-950">
@@ -95,7 +95,7 @@ export default function BrandLogo({
             light ? "text-white" : "text-slate-900"
           }`}
         >
-          <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+          <span className="bg-[#c29c54] bg-clip-text text-transparent">
             {SITE.shortName}
           </span>
         </h2>

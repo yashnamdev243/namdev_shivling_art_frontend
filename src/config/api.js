@@ -8,6 +8,7 @@ export const ENDPOINTS = {
     register: "/auth/register",
     login: "/auth/login",
     session: "/auth/me",
+    updateProfile: "/auth/profile",
     userLogout: "/auth/logout",
     adminLogin: "/admin/login",
     adminLogout: "/admin/logout",

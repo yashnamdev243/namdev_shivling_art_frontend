@@ -117,7 +117,7 @@ const CouponList = lazy(() => import("../pages/Admin/Coupons/CouponList"));
 function RouteFallback() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-200 border-t-orange-500" />
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#D4AF6A]/20 border-t-[#D4AF6A]" />
     </div>
   );
 }
