@@ -203,7 +203,7 @@ useEffect(() => {
   styles={{
     body: {
       background: "#f8fafc",
-      maxHeight: "78vh",
+      maxHeight: "75vh",
       overflowY: "auto",
       padding: 24,
     },

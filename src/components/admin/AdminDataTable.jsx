@@ -1,23 +1,7 @@
+
 // import { Table, Empty, Spin, Card, Tag, Input } from "antd";
 // import { SearchOutlined } from "@ant-design/icons";
 
-// /**
-//  * Reusable admin list table.
-//  *
-//  * Props:
-//  * - title: string — card header title
-//  * - icon: ReactNode — icon shown next to title
-//  * - subtitle: string — small description under title
-//  * - columns: antd Table columns array (dynamic per page)
-//  * - dataSource: array
-//  * - loading: boolean
-//  * - rowKey: string | fn (default "id")
-//  * - emptyText: string
-//  * - extra: ReactNode — right-side header actions (buttons, filters)
-//  * - searchValue / onSearchChange / searchPlaceholder — optional built-in search box
-//  * - pageSize: number (default 10)
-//  * - scrollX: number — horizontal scroll width if table is wide
-//  */
 // export default function AdminDataTable({
 //   title,
 //   icon,
@@ -33,13 +17,11 @@
 //   searchPlaceholder = "Search...",
 //   pageSize = 10,
 //   scrollX,
+//   actions,
+//   bare = false, // when true: no outer Card wrapper, for nesting inside another Card
 // }) {
-//   return (
-//     <Card
-//       className="!rounded-3xl !border-orange-100 !shadow-sm"
-//       styles={{ body: { padding: 0 } }}
-//     >
-//       {/* HEADER */}
+//   const body = (
+//     <>
 //       <div className="flex flex-col gap-4 border-b border-orange-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
 //         <div className="flex items-start gap-3">
 //           {icon && (
@@ -48,11 +30,16 @@
 //             </div>
 //           )}
 //           <div>
-//             <h2 className="text-lg font-bold text-slate-900 sm:text-xl">{title}</h2>
-//             {subtitle && <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">{subtitle}</p>}
+//             <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+//               {title}
+//             </h2>
+//             {subtitle && (
+//               <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">
+//                 {subtitle}
+//               </p>
+//             )}
 //           </div>
 //         </div>
-
 //         <div className="flex flex-wrap items-center gap-3">
 //           {onSearchChange && (
 //             <Input
@@ -64,11 +51,11 @@
 //               className="!w-full !rounded-xl sm:!w-64"
 //             />
 //           )}
-//           {extra}
+//           {extra}{" "}
+//           {actions && <div className="flex items-center gap-3">{actions}</div>}
 //         </div>
 //       </div>
 
-//       {/* BODY */}
 //       <div className="p-3 sm:p-5">
 //         {loading ? (
 //           <div className="flex justify-center py-16">
@@ -89,28 +76,47 @@
 //                 pageSize,
 //                 showSizeChanger: true,
 //                 pageSizeOptions: ["10", "20", "50", "100"],
-//                 showTotal: (total, range) => `${range[0]}–${range[1]} of ${total}`,
+//                 showTotal: (total, range) =>
+//                   `${range[0]}–${range[1]} of ${total}`,
 //               }}
 //               className="admin-clean-table"
 //             />
 //           </div>
 //         )}
 //       </div>
+//     </>
+//   );
+
+//   if (bare) return body;
+
+//   return (
+//     <Card
+//       className="!rounded-3xl !border-orange-100 !shadow-sm"
+//       styles={{ body: { padding: 0 } }}
+//     >
+//       {body}
 //     </Card>
 //   );
 // }
-
-// /* Small shared helpers other admin pages can reuse for consistent cell styling */
-// export function StatusTag({ value, activeLabel = "Active", inactiveLabel = "Inactive" }) {
+// // /* Small shared helpers other admin pages can reuse for consistent cell styling */
+// export function StatusTag({
+//   value,
+//   activeLabel = "Active",
+//   inactiveLabel = "Inactive",
+// }) {
 //   const isActive = value === true || value === "active";
 //   return (
-//     <Tag color={isActive ? "green" : "default"}>{isActive ? activeLabel : inactiveLabel}</Tag>
+//     <Tag color={isActive ? "green" : "default"}>
+//       {isActive ? activeLabel : inactiveLabel}
+//     </Tag>
 //   );
 // }
 
 // export function ActionTag({ value }) {
 //   return <Tag color="orange">{value}</Tag>;
 // }
+
+
 
 import { Table, Empty, Spin, Card, Tag, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -135,19 +141,19 @@ export default function AdminDataTable({
 }) {
   const body = (
     <>
-      <div className="flex flex-col gap-4 border-b border-orange-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+      <div className="flex flex-col gap-4 border-b border-[#1C1A17]/[0.06] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-start gap-3">
           {icon && (
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-lg text-orange-600">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-lg text-[#A8823C]">
               {icon}
             </div>
           )}
           <div>
-            <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+            <h2 className="text-lg font-bold text-[#1C1A17] sm:text-xl">
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">
+              <p className="mt-0.5 text-xs text-[#8A8377] sm:text-sm">
                 {subtitle}
               </p>
             )}
@@ -160,8 +166,8 @@ export default function AdminDataTable({
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              prefix={<SearchOutlined className="text-gray-400" />}
-              className="!w-full !rounded-xl sm:!w-64"
+              prefix={<SearchOutlined className="text-[#A8823C]/60" />}
+              className="!w-full !rounded-xl !border-[#1C1A17]/10 !bg-[#FAF8F3] focus-within:!border-[#A8823C]/50 focus-within:!shadow-[0_0_0_3px_rgba(168,130,60,0.1)] sm:!w-64"
             />
           )}
           {extra}{" "}
@@ -171,8 +177,9 @@ export default function AdminDataTable({
 
       <div className="p-3 sm:p-5">
         {loading ? (
-          <div className="flex justify-center py-16">
+          <div className="flex flex-col items-center justify-center gap-3 py-16">
             <Spin size="large" />
+            <p className="text-xs text-[#8A8377]">Loading records…</p>
           </div>
         ) : !dataSource.length ? (
           <div className="py-14">
@@ -204,14 +211,15 @@ export default function AdminDataTable({
 
   return (
     <Card
-      className="!rounded-3xl !border-orange-100 !shadow-sm"
+      className="!rounded-3xl !border-[#1C1A17]/[0.06] !shadow-[0_4px_20px_rgba(28,26,23,0.04)]"
       styles={{ body: { padding: 0 } }}
     >
       {body}
     </Card>
   );
 }
-// /* Small shared helpers other admin pages can reuse for consistent cell styling */
+
+// Small shared helpers other admin pages can reuse for consistent cell styling
 export function StatusTag({
   value,
   activeLabel = "Active",
@@ -219,12 +227,22 @@ export function StatusTag({
 }) {
   const isActive = value === true || value === "active";
   return (
-    <Tag color={isActive ? "green" : "default"}>
+    <Tag
+      className={
+        isActive
+          ? "!border-emerald-700/20 !bg-emerald-50 !text-emerald-700"
+          : "!border-[#1C1A17]/10 !bg-[#F5F1E8] !text-[#6B6459]"
+      }
+    >
       {isActive ? activeLabel : inactiveLabel}
     </Tag>
   );
 }
 
 export function ActionTag({ value }) {
-  return <Tag color="orange">{value}</Tag>;
+  return (
+    <Tag className="!border-[#D4AF6A]/30 !bg-[#A8823C]/[0.08] !text-[#8A6B2E]">
+      {value}
+    </Tag>
+  );
 }

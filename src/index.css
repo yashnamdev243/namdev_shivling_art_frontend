@@ -133,13 +133,13 @@ h1, h2, h3, h4 {
    THEME TOKENS (orange/amber brand)
    ===================================================== */
 :root {
-  --brand-primary: #f97316;      /* orange-500 */
+  --brand-primary: #dcb98c;      /* orange-500 */
   --brand-primary-dark: #c2410c; /* orange-700 */
-  --brand-accent: #f59e0b;       /* amber-500 */
+  --brand-accent: #dcb98c;       /* amber-500 */
   --brand-track: #fff7ed;        /* orange-50 */
   --sidebar-bg: #0c0a09;         /* stone-950 */
   --sidebar-track: #292524;      /* stone-800 */
-  --sidebar-thumb: #f59e0b;      /* amber-500 */
+  --sidebar-thumb: #dcb98c;      /* orange-500 */
 }
 
 /* =====================================================

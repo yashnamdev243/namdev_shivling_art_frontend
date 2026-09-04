@@ -1,3 +1,226 @@
+// import { useState } from "react";
+// import { Button, Card, Empty, Input } from "antd";
+// import Seo from "../../../components/common/Seo";
+// import CategoryFormModal from "../../../components/admin/CategoryFormModal";
+// import { confirmDelete } from "../../../components/common/ConfirmDialog";
+// import Loader from "../../../components/common/Loader";
+// import { useCategories, useDeleteCategory } from "../../../hooks/useCategories";
+// import { FILE_BASE_URL } from "../../../config/api";
+
+// import { FiPlus, FiEdit2, FiTrash2, FiFolder, FiImage } from "react-icons/fi";
+// import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+
+// export default function CategoryList() {
+//   const [modalOpen, setModalOpen] = useState(false);
+//   const [editingCategory, setEditingCategory] = useState(null);
+//   const [search, setSearch] = useState("");
+
+//   const { data, isLoading } = useCategories();
+//   const deleteMutation = useDeleteCategory();
+
+//   const categories = data?.categories || data?.data || data || [];
+
+//   const openCreate = () => {
+//     setEditingCategory(null);
+//     setModalOpen(true);
+//   };
+
+//   const openEdit = (category) => {
+//     setEditingCategory(category);
+//     setModalOpen(true);
+//   };
+//   const filtered = categories.filter((c) =>
+//     c.name?.toLowerCase().includes(search.toLowerCase()),
+//   );
+
+//   return (
+//     <>
+//       <Seo title="Manage Categories" />
+
+//       <Card
+//         className="!rounded-3xl !border-orange-100 !shadow-sm mb-4"
+//         styles={{ body: { padding: 0 } }}
+//       >
+//         <div className="flex flex-col gap-4 border-b border-orange-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6 ">
+//           <div className="flex items-center gap-3">
+//             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-lg text-orange-600">
+//               <FiFolder aria-hidden="true" />
+//             </div>
+
+//             <div>
+//               <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+//                 Categories
+//               </h2>
+//               <p className="mt-0.5 text-xs text-gray-500 sm:text-sm font-normal">
+//                 Organize your products into collections.
+//               </p>
+//             </div>
+//           </div>
+
+//           <div className="flex justify-between items-center gap-3">
+//             <Input
+//               allowClear
+//               prefix={<SearchOutlined className="text-gray-400" />}
+//               placeholder="Search categories..."
+//               value={search}
+//               onChange={(e) => setSearch(e.target.value)}
+//               className="!rounded-xl"
+//             />
+//             <Button
+//               type="primary"
+//               onClick={openCreate}
+//               icon={
+//                 <span
+//                   className="
+//       flex h-5 w-5 items-center justify-center
+//       rounded-lg bg-white/10
+//       transition-colors duration-200
+//       group-hover:bg-white/15
+//     "
+//                 >
+//                   <PlusOutlined size={17} strokeWidth={2.5} />
+//                 </span>
+//               }
+//               className=" group
+//     !flex !h-8 !items-center !gap-2.5
+//     !rounded-xl !border-0
+//     !bg-slate-900
+//     !px-3
+//     !font-semibold !text-white
+//     !shadow-lg !shadow-slate-900/15
+//     transition-all duration-200
+//     hover:!-translate-y-0.5
+//     hover:!bg-orange-600
+//     hover:!shadow-xl hover:!shadow-orange-600/20
+//     active:!translate-y-0"
+//             >
+//               Add Category
+//             </Button>
+//           </div>
+//         </div>
+//       </Card>
+
+//       {/* Stats */}
+//       <div className="mb-6 grid gap-4 sm:mb-8 sm:gap-5 md:grid-cols-3">
+//         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:rounded-3xl sm:p-6">
+//           <div className="flex items-center justify-between">
+//             <div>
+//               <p className="text-sm text-gray-500">Total Categories</p>
+//               <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
+//                 {categories.length}
+//               </h2>
+//             </div>
+//             <div className="rounded-2xl bg-indigo-100 p-3 text-indigo-600 sm:p-4">
+//               <FiFolder size={24} aria-hidden="true" />
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {isLoading ? (
+//         <Loader />
+//       ) : categories.length === 0 ? (
+//         <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-16 sm:rounded-3xl sm:py-20">
+//           <Empty
+//             image={
+//               <FiImage
+//                 size={60}
+//                 className="mx-auto text-gray-300"
+//                 aria-hidden="true"
+//               />
+//             }
+//             description={
+//               <div>
+//                 <h3 className="text-lg font-semibold text-slate-800">
+//                   No Categories Found
+//                 </h3>
+//                 <p className="text-gray-500">
+//                   Create your first category to organize products.
+//                 </p>
+//               </div>
+//             }
+//           />
+//         </div>
+//       ) : (
+//         <div className="grid gap-5 sm:grid-cols-2 sm:gap-7 xl:grid-cols-3">
+//           {categories.map((c) => (
+//             <div
+//               key={c._id || c.id}
+//               className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl sm:rounded-3xl"
+//             >
+//               {/* Image */}
+//               <div className="relative overflow-hidden">
+//                 <img
+//                   src={
+//                     c.image
+//                       ? `${FILE_BASE_URL}/uploads/${c.image}`
+//                       : "https://placehold.co/600x400"
+//                   }
+//                   alt={c.name}
+//                   className="h-44 w-full object-cover transition duration-500 group-hover:scale-110 sm:h-56"
+//                   onError={(e) => {
+//                     e.currentTarget.src =
+//                       "https://placehold.co/600x400?text=No+Image";
+//                   }}
+//                 />
+//                 <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 backdrop-blur">
+//                   Category
+//                 </div>
+//               </div>
+
+//               {/* Content */}
+//               <div className="space-y-4 p-5 sm:space-y-5 sm:p-6">
+//                 <div>
+//                   <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+//                     {c.name}
+//                   </h3>
+//                   <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-gray-500 sm:mt-2">
+//                     {c.description || "No description available."}
+//                   </p>
+//                 </div>
+
+//                 <div className="flex items-center justify-between border-t pt-4 sm:pt-5">
+//                   <Button
+//                     icon={<FiEdit2 />}
+//                     onClick={() => openEdit(c)}
+//                     className="!rounded-xl"
+//                   >
+//                     Edit
+//                   </Button>
+
+//                   <Button
+//                     danger
+//                     icon={<FiTrash2 />}
+//                     className="!rounded-xl"
+//                     onClick={() =>
+//                       confirmDelete({
+//                         name: c.name,
+//                         onConfirm: () => deleteMutation.mutate(c._id || c.id),
+//                       })
+//                     }
+//                   >
+//                     Delete
+//                   </Button>
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+
+//       <CategoryFormModal
+//         open={modalOpen}
+//         onClose={() => setModalOpen(false)}
+//         category={editingCategory}
+//       />
+//     </>
+//   );
+// }
+
+
+
+
+
 import { useState } from "react";
 import { Button, Card, Empty, Input } from "antd";
 import Seo from "../../../components/common/Seo";
@@ -38,21 +261,21 @@ export default function CategoryList() {
       <Seo title="Manage Categories" />
 
       <Card
-        className="!rounded-3xl !border-orange-100 !shadow-sm mb-4"
+        className="!rounded-3xl !border-[#1C1A17]/[0.06] !shadow-[0_4px_20px_rgba(28,26,23,0.04)] mb-4"
         styles={{ body: { padding: 0 } }}
       >
-        <div className="flex flex-col gap-4 border-b border-orange-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6 ">
+        <div className="flex flex-col gap-4 border-b border-[#1C1A17]/[0.06] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6 ">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-lg text-orange-600">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] text-lg text-[#A8823C]">
               <FiFolder aria-hidden="true" />
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                Categories
+              <h2 className="text-lg font-bold text-[#1C1A17] sm:text-xl">
+                Collections
               </h2>
-              <p className="mt-0.5 text-xs text-gray-500 sm:text-sm font-normal">
-                Organize your products into collections.
+              <p className="mt-0.5 text-xs text-[#8A8377] sm:text-sm font-normal">
+                Organize your products into meaningful collections.
               </p>
             </div>
           </div>
@@ -60,39 +283,21 @@ export default function CategoryList() {
           <div className="flex justify-between items-center gap-3">
             <Input
               allowClear
-              prefix={<SearchOutlined className="text-gray-400" />}
+              prefix={<SearchOutlined className="text-[#A8823C]/60" />}
               placeholder="Search categories..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="!rounded-xl"
+              className="!rounded-xl !border-[#1C1A17]/10 !bg-[#FAF8F3] focus-within:!border-[#A8823C]/50"
             />
             <Button
               type="primary"
               onClick={openCreate}
               icon={
-                <span
-                  className="
-      flex h-5 w-5 items-center justify-center
-      rounded-lg bg-white/10
-      transition-colors duration-200
-      group-hover:bg-white/15
-    "
-                >
+                <span className="flex h-5 w-5 items-center justify-center rounded-lg bg-white/10 transition-colors duration-200 group-hover:bg-white/15">
                   <PlusOutlined size={17} strokeWidth={2.5} />
                 </span>
               }
-              className=" group
-    !flex !h-8 !items-center !gap-2.5
-    !rounded-xl !border-0
-    !bg-slate-900
-    !px-3
-    !font-semibold !text-white
-    !shadow-lg !shadow-slate-900/15
-    transition-all duration-200
-    hover:!-translate-y-0.5
-    hover:!bg-orange-600
-    hover:!shadow-xl hover:!shadow-orange-600/20
-    active:!translate-y-0"
+              className="group !flex !h-8 !items-center !gap-2.5 !rounded-xl !border-0 !bg-[#1C1A17] !px-3 !font-semibold !text-[#F2E3C8] !shadow-none transition-all duration-200 hover:!-translate-y-0.5 hover:!bg-[#2A2620] active:!translate-y-0"
             >
               Add Category
             </Button>
@@ -102,15 +307,16 @@ export default function CategoryList() {
 
       {/* Stats */}
       <div className="mb-6 grid gap-4 sm:mb-8 sm:gap-5 md:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:rounded-3xl sm:p-6">
+        <div className="rounded-2xl border border-[#1C1A17]/[0.06] bg-white p-5 shadow-[0_4px_20px_rgba(28,26,23,0.04)] sm:rounded-3xl sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Total Categories</p>
-              <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#A8823C]">Collections</p>
+              <h2 className="mt-2 text-2xl font-bold text-[#1C1A17] sm:text-3xl">
                 {categories.length}
               </h2>
+              <p className="text-xs text-[#8A8377]">Total categories</p>
             </div>
-            <div className="rounded-2xl bg-indigo-100 p-3 text-indigo-600 sm:p-4">
+            <div className="rounded-2xl border border-[#D4AF6A]/25 bg-[#A8823C]/[0.06] p-3 text-[#A8823C] sm:p-4">
               <FiFolder size={24} aria-hidden="true" />
             </div>
           </div>
@@ -120,23 +326,30 @@ export default function CategoryList() {
       {isLoading ? (
         <Loader />
       ) : categories.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-16 sm:rounded-3xl sm:py-20">
+        <div className="rounded-2xl border border-dashed border-[#D4AF6A]/30 bg-white py-16 sm:rounded-3xl sm:py-20">
           <Empty
             image={
               <FiImage
-                size={60}
-                className="mx-auto text-gray-300"
+                size={56}
+                className="mx-auto text-[#1C1A17]/15"
                 aria-hidden="true"
               />
             }
             description={
               <div>
-                <h3 className="text-lg font-semibold text-slate-800">
-                  No Categories Found
+                <h3 className="text-lg font-semibold text-[#1C1A17]">
+                  No categories yet
                 </h3>
-                <p className="text-gray-500">
-                  Create your first category to organize products.
+                <p className="mt-1 text-[#8A8377]">
+                  Create your first collection to organize your products.
                 </p>
+                <Button
+                  type="primary"
+                  onClick={openCreate}
+                  className="!mt-4 !rounded-xl !border-0 !bg-[#1C1A17] !font-medium !text-[#F2E3C8] hover:!bg-[#2A2620]"
+                >
+                  Add Category
+                </Button>
               </div>
             }
           />
@@ -146,7 +359,7 @@ export default function CategoryList() {
           {categories.map((c) => (
             <div
               key={c._id || c.id}
-              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl sm:rounded-3xl"
+              className="group overflow-hidden rounded-2xl border border-[#1C1A17]/[0.06] bg-white shadow-[0_4px_20px_rgba(28,26,23,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(28,26,23,0.1)] sm:rounded-3xl"
             >
               {/* Image */}
               <div className="relative overflow-hidden">
@@ -157,13 +370,14 @@ export default function CategoryList() {
                       : "https://placehold.co/600x400"
                   }
                   alt={c.name}
-                  className="h-44 w-full object-cover transition duration-500 group-hover:scale-110 sm:h-56"
+                  className="h-44 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-56"
                   onError={(e) => {
                     e.currentTarget.src =
                       "https://placehold.co/600x400?text=No+Image";
                   }}
                 />
-                <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 backdrop-blur">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E0D0A]/50 via-transparent to-transparent" />
+                <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-[#1C1A17]/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-md">
                   Category
                 </div>
               </div>
@@ -171,19 +385,19 @@ export default function CategoryList() {
               {/* Content */}
               <div className="space-y-4 p-5 sm:space-y-5 sm:p-6">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+                  <h3 className="text-lg font-bold text-[#1C1A17] sm:text-xl">
                     {c.name}
                   </h3>
-                  <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-gray-500 sm:mt-2">
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-[#6B6459] sm:mt-2">
                     {c.description || "No description available."}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between border-t pt-4 sm:pt-5">
+                <div className="flex items-center justify-between border-t border-[#1C1A17]/[0.06] pt-4 sm:pt-5">
                   <Button
                     icon={<FiEdit2 />}
                     onClick={() => openEdit(c)}
-                    className="!rounded-xl"
+                    className="!flex !items-center !rounded-xl !border-[#1C1A17]/12 !font-medium !text-[#1C1A17] hover:!border-[#A8823C]/40 hover:!text-[#A8823C]"
                   >
                     Edit
                   </Button>
@@ -191,7 +405,7 @@ export default function CategoryList() {
                   <Button
                     danger
                     icon={<FiTrash2 />}
-                    className="!rounded-xl"
+                    className="!flex !items-center !rounded-xl"
                     onClick={() =>
                       confirmDelete({
                         name: c.name,

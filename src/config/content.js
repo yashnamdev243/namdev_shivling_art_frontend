@@ -178,7 +178,7 @@ export const SEO_CONTENT = {
 // ---------------------------------------------------------------------------
 export const HERO_CONTENT = {
   en: {
-    badge: "🕉 Authentic Narmadeshwar Shivlings",
+    badge: "Authentic Narmadeshwar Shivlings",
     titleLine1: "Namdev Narmadeshwar",
     titleLine2: "Shivling Art",
     subtitle:
@@ -192,7 +192,7 @@ export const HERO_CONTENT = {
     ],
   },
   hi: {
-    badge: "🕉 असली नर्मदेश्वर शिवलिंग",
+    badge: "असली नर्मदेश्वर शिवलिंग",
     titleLine1: "नामदेव नर्मदेश्वर",
     titleLine2: "शिवलिंग आर्ट",
     subtitle:
