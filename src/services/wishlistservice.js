@@ -1,12 +1,42 @@
-import { apiGet, apiPost } from "../api/axios";
-import { ENDPOINTS } from "../config/api";
+import api from "../api/axios";
 
-export const wishlistService = {
-  async getWishlist() {
-    return apiGet(ENDPOINTS.wishlist.list);
+const wishlistService = {
+  getAll: async () => {
+    const response = await api.get("/wishlist");
+
+    return response.data;
   },
-  async toggle(productId) {
-    return apiPost(ENDPOINTS.wishlist.toggle(productId));
+
+  check: async (productId) => {
+    const response = await api.get(
+      `/wishlist/${productId}`
+    );
+
+    return response.data;
+  },
+
+  add: async (productId) => {
+    const response = await api.post(
+      `/wishlist/${productId}`
+    );
+
+    return response.data;
+  },
+
+  remove: async (productId) => {
+    const response = await api.delete(
+      `/wishlist/${productId}`
+    );
+
+    return response.data;
+  },
+
+  toggle: async (productId) => {
+    const response = await api.post(
+      `/wishlist/${productId}`
+    );
+
+    return response.data;
   },
 };
 

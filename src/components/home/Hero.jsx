@@ -1,174 +1,3 @@
-// import { Button } from "antd";
-// import { motion } from "framer-motion";
-// import { ArrowRightOutlined, WhatsAppOutlined } from "@ant-design/icons";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay, Pagination } from "swiper/modules";
-
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import Container from "./Container";
-// import { useRandomProducts } from "../../hooks/useProducts";
-// import { FILE_BASE_URL } from "../../config/api";
-// import bgImage from "/background.png"; // adjust the path
-
-// export default function Hero() {
-//   const { data, isLoading } = useRandomProducts(6);
-//   console.log("API Response:", data);
-//   const slides = data?.products || [];
-//   return (
-//     <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-black to-slate-900 pt-14">
-//       {/* Background */}
-//       <div className="absolute inset-0 opacity-40">
-//         <div
-//           className="w-full h-full bg-cover bg-center"
-//           style={{
-//             backgroundImage: `url(${bgImage})`,
-//           }}
-//         />
-//       </div>
-
-//       <Container>
-//         <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[calc(100vh-112px)] py-12">
-//           {/* Left */}
-//           <motion.div
-//             initial={{ opacity: 0, x: -70 }}
-//             animate={{ opacity: 1, x: 0 }}
-//             transition={{ duration: 0.8 }}
-//           >
-//             <span className="inline-block bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold mb-6">
-//               🕉 Authentic Narmadeshwar Shivlings
-//             </span>
-
-//             <h1 className="text-4xl lg:text-6xl block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-//               Namdev
-//               <span className="block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-//                 Narmadeshwar
-//               </span>
-//               Shivling Art
-//             </h1>
-
-//             <p className="mt-8 text-lg leading-8 text-gray-300 max-w-xl">
-//               Discover handcrafted Narmadeshwar Shivlings made from sacred
-//               stones collected from the holy Narmada River. Every Shivling
-//               represents devotion, spirituality and traditional craftsmanship.
-//             </p>
-
-//             <div className="flex flex-wrap gap-5 mt-10">
-//               <Button
-//                 type="primary"
-//                 size="large"
-//                 icon={<ArrowRightOutlined />}
-//                 className="!bg-orange-500 hover:!bg-orange-600 !border-none !rounded-full !px-8 !h-12"
-//               >
-//                 Explore Collection
-//               </Button>
-
-//               <Button
-//                 size="large"
-//                 icon={<WhatsAppOutlined />}
-//                 className="!rounded-full !px-8 !h-12"
-//               >
-//                 Contact Us
-//               </Button>
-//             </div>
-
-//             {/* Counter */}
-//             <div className="grid grid-cols-3 gap-5 mt-16">
-//               {[
-//                 ["20+", "Years Experience"],
-//                 ["5000+", "Happy Customers"],
-//                 ["100+", "Unique Designs"],
-//               ].map(([num, label]) => (
-//                 <div
-//                   key={label}
-//                   className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5"
-//                 >
-//                   <h2 className="text-4xl font-bold text-orange-400">{num}</h2>
-
-//                   <p className="text-gray-300 mt-2">{label}</p>
-//                 </div>
-//               ))}
-//             </div>
-//           </motion.div>
-
-//           {/* Right */}
-//           <motion.div
-//             initial={{ opacity: 0, x: 70 }}
-//             animate={{ opacity: 1, x: 0 }}
-//             transition={{ duration: 1 }}
-//             className="relative"
-//           >
-//             {/* <Swiper
-//               modules={[Autoplay, Pagination]}
-//               autoplay={{
-//                 delay: 3500,
-//                 disableOnInteraction: false,
-//               }}
-//               pagination={{ clickable: true }}
-//               loop
-//               className="rounded-[32px] overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
-//             >
-//               {slides.map((item) => {
-//                 const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(item.image);
-
-//                 return (
-//                   <SwiperSlide key={item.id}>
-//                     {isVideo ? (
-//                       <video
-//                         className="w-full h-[600px] object-cover"
-//                         autoPlay
-//                         muted
-//                         loop
-//                         playsInline
-//                       >
-//                         <source
-//                           src={`${FILE_BASE_URL}/uploads/${item.image}`}
-//                           type="video/mp4"
-//                         />
-//                       </video>
-//                     ) : (
-//                       <img
-//                         src={`${FILE_BASE_URL}/uploads/${item.image}`}
-//                         alt={item.name}
-//                         className="w-full h-[600px] object-cover"
-//                       />
-//                     )}
-//                   </SwiperSlide>
-//                 );
-//               })}
-//               <SwiperSlide>
-//                 <img
-//                   src="/image3.jpg"
-//                   className="w-full h-[600px] object-cover"
-//                   alt=""
-//                 />
-//               </SwiperSlide>
-
-//               <SwiperSlide>
-//                 <video
-//                   className="w-full h-[600px] object-cover"
-//                   autoPlay
-//                   muted
-//                   loop
-//                   playsInline
-//                 >
-//                   <source src="/videos/workshop.mp4" type="video/mp4" />
-//                 </video>
-//               </SwiperSlide>
-//             </Swiper> */}
-
-//             {/* <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 py-4 text-white">
-//               <h3 className="font-semibold text-lg">Authentic Narmadeshwar</h3>
-
-//               <p className="text-gray-300">Handcrafted by skilled artisans</p>
-//             </div> */}
-//           </motion.div>
-//         </div>
-//       </Container>
-//     </section>
-//   );
-// }
-
 import { Button, Skeleton } from "antd";
 import { motion } from "framer-motion";
 import { ArrowRightOutlined, WhatsAppOutlined } from "@ant-design/icons";
@@ -182,115 +11,151 @@ import Container from "./Container";
 import { useRandomProducts } from "../../hooks/useProducts";
 import { FILE_BASE_URL } from "../../config/api";
 import { SITE } from "../../config/constants";
+import { HERO_CONTENT } from "../../config/content";
+import { useContent } from "../../context/LanguageContext";
 import { ROUTES } from "../../config/routes";
 import bgImage from "/background.png";
-
-const counters = [
-  ["20+", "Years Experience"],
-  ["5000+", "Happy Customers"],
-  ["100+", "Unique Designs"],
-];
+import { FaOm } from "react-icons/fa";
 
 const isVideoFile = (src) => Boolean(src) && /\.(mp4|webm|ogg|mov)$/i.test(src);
 
-export default function Hero() {
+export default function Hero({ staticImage = bgImage }) {
   const { data, isLoading } = useRandomProducts(6);
-  const slides = data?.products || [];
-  const hasSlides = slides.length > 0;
+  // const slides = data?.products || [];
+  const slides = [];
+  const t = useContent(HERO_CONTENT);
 
   return (
-    <section className="relative h-screen min-h-[700px] overflow-hidden pt-24 sm:pt-14">
-      {/* Background */}
-      {/* <div className="absolute inset-0 opacity-40">
-        <div
-          className="h-full w-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgImage})` }}
-        />
-      </div> */}
+    <section className="relative h-screen min-h-[700px] overflow-hidden bg-[#15130F] pt-24 sm:pt-14">
       <div className="absolute inset-0">
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          loop
-          className="h-full w-full"
-        >
-          {slides.map((item) => {
-            const src = `${FILE_BASE_URL}/uploads/${item.image}`;
+        {isLoading ? (
+          <div className="flex h-full w-full items-center justify-center bg-[#15130F]">
+            <Skeleton.Image
+              active
+              className="!h-full !w-full [&_.ant-skeleton-image]:!bg-[#1C1A17]"
+            />
+          </div>
+        ) : slides.length > 0 ? (
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            loop={slides.length > 1}
+            pagination={slides.length > 1 ? { clickable: true } : false}
+            style={{
+              "--swiper-pagination-color": "#D4AF6A",
+              "--swiper-pagination-bullet-inactive-color": "#F2E3C8",
+              "--swiper-pagination-bullet-inactive-opacity": "0.35",
+              "--swiper-pagination-bullet-size": "6px",
+              "--swiper-pagination-bullet-horizontal-gap": "4px",
+              "--swiper-pagination-bottom": "28px",
+            }}
+            className="h-full w-full"
+          >
+            {slides.map((item) => {
+              const src = `${FILE_BASE_URL}/uploads/${item.image}`;
 
-            return (
-              <SwiperSlide key={item.id}>
-                {isVideoFile(item.image) ? (
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="h-full w-full object-cover"
-                  >
-                    <source src={src} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img
-                    src={src}
-                    className="h-full w-full object-fill"
-                    alt={item.name}
-                  />
-                )}
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+              return (
+                <SwiperSlide key={item.id}>
+                  {isVideoFile(item.image) ? (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="h-full w-full object-cover brightness-[0.92] contrast-[1.04] saturate-[0.96]"
+                    >
+                      <source src={src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      src={src}
+                      className="h-full w-full object-cover brightness-[0.92] contrast-[1.04] saturate-[0.96]"
+                      alt={item.name}
+                      loading="eager"
+                    />
+                  )}
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        ) : (
+          /* Static fallback image */
+          <img
+            src={staticImage}
+            alt="Namdev Narmadeshwar Shivling"
+            className="h-full w-full object-cover brightness-[0.92] contrast-[1.04] saturate-[0.96]"
+          />
+        )}
       </div>
-      <div className="absolute inset-0 z-10 bg-black/55" />
 
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+      {/* Cinematic layered overlays — readability + atmosphere, product stays visible */}
+      <div className="absolute inset-0 z-10 bg-black/40" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0E0D0A]/90 via-[#0E0D0A]/45 to-transparent" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0E0D0A]/70 via-transparent to-transparent" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[6%] top-[18%] z-10 h-72 w-72 rounded-full bg-[#D4AF6A]/[0.08] blur-3xl sm:h-96 sm:w-96"
+      />
+
       <div className="relative z-20">
         <Container>
           <div className="flex min-h-[calc(100vh-112px)] items-center py-10">
-            {/* Left */}
             <motion.div
-              className="mx-auto flex max-w-4xl flex-col items-center text-center"
-              initial={{ opacity: 0, y: 40 }}
+              className="mx-auto flex max-w-4xl flex-col items-center text-center lg:mx-0 lg:max-w-xl lg:items-start lg:text-left"
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-100 px-4 py-2 text-xs font-semibold text-orange-700 sm:px-5 sm:text-sm">
-              {/* <span className="inline-flex items-center  rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-800 sm:text-base"> */}
-                
-                🕉 Authentic Narmadeshwar Shivlings
-              </span>
-
-              <h1 className="mt-6 text-4xl font-extrabold leading-tight sm:text-6xl lg:text-7xl">
-                <span className="bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                  Namdev Narmadeshwar
+              <motion.span
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="inline-flex items-center gap-2 rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#F2E3C8] backdrop-blur-md sm:px-5 sm:text-xs"
+              >
+                <span className="text-[#D4AF6A]">
+                  <FaOm />
                 </span>
-                {/* <span className="block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                  
-                </span> */}
-                <span className="block text-white">Shivling Art</span>
-              </h1>
+                {t.badge}
+              </motion.span>
 
-              <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-200 sm:mt-8 sm:text-lg sm:leading-8">
-                Discover handcrafted Narmadeshwar Shivlings made from sacred
-                stones collected from the holy Narmada River. Every Shivling
-                represents devotion, spirituality and traditional craftsmanship.
-              </p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[64px]"
+              >
+                <span className="text-[#D4AF6A]">{t.titleLine1}</span>
+                <span className="block text-[#F8F4EA]">{t.titleLine2}</span>
+              </motion.h1>
 
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="mx-auto mt-7 max-w-[38rem] text-base leading-7 text-[#E5DFD2]/75 sm:mt-8 sm:text-lg sm:leading-8 lg:mx-0"
+              >
+                {t.subtitle}
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-5 lg:justify-start"
+              >
                 <Link
                   to={ROUTES?.products || "/products"}
-                  className="w-full sm:w-auto"
+                  className="group w-full sm:w-auto"
                 >
                   <Button
-                    type="primary"
+                    // type="primary"
                     size="large"
-                    icon={<ArrowRightOutlined />}
-                    className="!h-12 !w-full !rounded-full !border-none !bg-orange-500 !px-8 hover:!bg-orange-600 sm:!w-auto"
+                    className="!flex !h-12 !w-full !items-center !justify-center !rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] !px-8 !font-medium !text-[#F2E3C8] !shadow-[0_10px_30px_rgba(212,175,106,0.18)] transition-all duration-200 hover:!-translate-y-0.5 hover:!bg-[#2A2620] sm:!w-auto"
                   >
-                    Explore Collection
+                    <span className="flex items-center gap-2">
+                      {t.ctaPrimary}
+                      <ArrowRightOutlined className="transition-transform duration-200 group-hover:translate-x-1" />
+                    </span>
                   </Button>
                 </Link>
 
@@ -304,120 +169,41 @@ export default function Hero() {
                     <Button
                       size="large"
                       icon={<WhatsAppOutlined />}
-                      className="!h-12 !w-full !rounded-full !px-8 sm:!w-auto"
+                      className="!flex !h-12 !w-full !items-center !justify-center !gap-1.5 !rounded-full !border !border-white/25 !bg-white/[0.04] !px-8 !font-medium !text-[#F8F4EA] !shadow-none backdrop-blur-md transition-all duration-200 hover:!border-emerald-400/50 hover:!text-emerald-300 sm:!w-auto"
                     >
-                      Contact Us
+                      {t.ctaSecondary}
                     </Button>
                   </a>
                 )}
-              </div>
+              </motion.div>
 
-              {/* Counter */}
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-5 sm:grid-cols-3">
-                {counters.map(([num, label], i) => (
+              {/* Counters */}
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mx-0">
+                {t.counters.map(([num, label], i) => (
                   <motion.div
                     key={label}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl sm:p-5"
+                    transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl sm:p-5"
                   >
-                    <h2 className="text-2xl font-bold text-orange-400 sm:text-4xl">
+                    <h2 className="text-2xl font-bold text-[#D4AF6A] sm:text-4xl">
                       {num}
                     </h2>
-                    <p className="mt-1 text-xs text-gray-300 sm:mt-2 sm:text-base">
+                    <span
+                      className="mt-1.5 mb-1.5 block h-px w-6 bg-[#D4AF6A]/30"
+                      aria-hidden="true"
+                    />
+                    <p className="text-xs text-[#E5DFD2]/70 sm:text-base">
                       {label}
                     </p>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
-
-            {/* Right */}
-            {/* <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="relative"
-          >
-            {isLoading ? (
-              <Skeleton.Image
-                active
-                className="!h-[320px] !w-full !rounded-[24px] sm:!h-[450px] lg:!h-[600px]"
-              />
-            ) : (
-              <Swiper
-                modules={[Autoplay, Pagination]}
-                autoplay={{ delay: 3500, disableOnInteraction: false }}
-                pagination={{ clickable: true }}
-                loop={hasSlides}
-                className="hero-swiper overflow-hidden rounded-[24px] shadow-[0_25px_80px_rgba(0,0,0,0.45)] sm:rounded-[32px]"
-              >
-                {slides.map((item) => {
-                  const src = item?.image
-                    ? `${FILE_BASE_URL}/uploads/${item.image}`
-                    : null;
-                  if (!src) return null;
-
-                  return (
-                    <SwiperSlide key={item.id || item._id || src}>
-                      {isVideoFile(item.image) ? (
-                        <video
-                          className="h-[320px] w-full object-cover sm:h-[450px] lg:h-[600px]"
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                        >
-                          <source src={src} type="video/mp4" />
-                        </video>
-                      ) : (
-                        <img
-                          src={src}
-                          alt={item.name || "Handcrafted Narmadeshwar Shivling"}
-                          loading="lazy"
-                          className="h-[320px] w-full object-fill sm:h-[450px] lg:h-[600px]"
-                        />
-                      )}
-                    </SwiperSlide>
-                  );
-                })}
-
-                {!hasSlides && (
-                  <SwiperSlide>
-                    <img
-                      src="/image3.jpg"
-                      alt="Namdev Narmadeshwar Shivling Art workshop"
-                      className="h-[320px] w-full object-cover sm:h-[450px] lg:h-[600px]"
-                    />
-                  </SwiperSlide>
-                )}
-              </Swiper>
-            )}
-
-            <div className="absolute bottom-4 left-4 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-white backdrop-blur-xl sm:bottom-6 sm:left-6 sm:px-6 sm:py-4">
-              <h3 className="text-sm font-semibold sm:text-lg">
-                Authentic Narmadeshwar
-              </h3>
-              <p className="text-xs text-gray-300 sm:text-base">
-                Handcrafted by skilled artisans
-              </p>
-            </div>
-          </motion.div> */}
           </div>
         </Container>
       </div>
-      {/* Recolor Swiper's default pagination bullets to match the brand
-          palette instead of the library's default black/white. */}
-      <style>{`
-        .hero-swiper .swiper-pagination-bullet {
-          background: rgba(255, 255, 255, 0.5);
-          opacity: 1;
-        }
-        .hero-swiper .swiper-pagination-bullet-active {
-          background: #f97316;
-        }
-      `}</style>
     </section>
   );
 }

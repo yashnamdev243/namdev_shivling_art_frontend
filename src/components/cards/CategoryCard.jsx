@@ -73,6 +73,85 @@
 //   );
 // }
 
+// import { Link } from "react-router-dom";
+// import { motion } from "framer-motion";
+// import { ArrowRightOutlined } from "@ant-design/icons";
+
+// import { ROUTES } from "../../config/routes";
+// import { getFileUrl } from "../../utils/fileUrl";
+
+// export default function CategoryCard({ category }) {
+//   const name = category?.name || "Category";
+
+//   const image = category?.image
+//     ? getFileUrl(category.image)
+//     : `https://placehold.co/800x600?text=${encodeURIComponent(name)}`;
+
+//   return (
+//     <motion.div
+//       whileHover={{ y: -10 }}
+//       transition={{ duration: 0.35 }}
+//       className="h-full"
+//     >
+//       <Link
+//         to={`${ROUTES.products}?category=${encodeURIComponent(name)}`}
+//         className="group relative block overflow-hidden rounded-[22px] shadow-lg transition-all duration-500 hover:shadow-[0_25px_60px_rgba(249,115,22,0.18)] sm:rounded-[28px]"
+//       >
+//         {/* Image */}
+//         <div className="relative h-56 overflow-hidden sm:h-80">
+//           <img
+//             src={image}
+//             alt={name}
+//             loading="lazy"
+//             onError={(e) => {
+//               e.currentTarget.src = `https://placehold.co/800x600?text=${encodeURIComponent(name)}`;
+//             }}
+//             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+//           />
+
+//           {/* Overlay */}
+//           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+//           {/* Product Count */}
+//           {typeof category?.productCount === "number" && (
+//             <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2 sm:text-sm">
+//               {category.productCount} Products
+//             </div>
+//           )}
+
+//           {/* Floating Arrow */}
+//           <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-orange-500 transition-all duration-300 group-hover:rotate-45 group-hover:scale-110 sm:right-5 sm:top-5 sm:h-12 sm:w-12">
+//             <ArrowRightOutlined aria-hidden="true" />
+//           </div>
+
+//           {/* Bottom Content */}
+//           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+//             <h3 className="text-xl font-bold text-white sm:text-3xl">{name}</h3>
+
+//             {category?.description && (
+//               <p className="mt-1.5 line-clamp-2 text-xs text-gray-200 sm:mt-2 sm:text-sm">
+//                 {category.description}
+//               </p>
+//             )}
+//           </div>
+//         </div>
+
+//         {/* Footer */}
+//         <div className="flex items-center justify-between p-4 sm:p-6">
+//           <span className="text-sm font-semibold text-orange-500 transition-all group-hover:translate-x-2 sm:text-base">
+//             Explore Collection
+//           </span>
+
+//           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-100 transition-all group-hover:bg-orange-500 group-hover:text-white sm:h-10 sm:w-10">
+//             <ArrowRightOutlined aria-hidden="true" />
+//           </div>
+//         </div>
+//       </Link>
+//     </motion.div>
+//   );
+// }
+
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRightOutlined } from "@ant-design/icons";
@@ -89,13 +168,13 @@ export default function CategoryCard({ category }) {
 
   return (
     <motion.div
-      whileHover={{ y: -10 }}
-      transition={{ duration: 0.35 }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
       className="h-full"
     >
       <Link
         to={`${ROUTES.products}?category=${encodeURIComponent(name)}`}
-        className="group relative block overflow-hidden rounded-[22px] shadow-lg transition-all duration-500 hover:shadow-[0_25px_60px_rgba(249,115,22,0.18)] sm:rounded-[28px]"
+        className="group relative block overflow-hidden rounded-[4px] border border-[#1C1A17]/[0.06] bg-white shadow-[0_4px_20px_rgba(28,26,23,0.05)] transition-all duration-500 hover:shadow-[0_25px_60px_rgba(28,26,23,0.14)] sm:rounded-[8px]"
       >
         {/* Image */}
         <div className="relative h-56 overflow-hidden sm:h-80">
@@ -106,30 +185,32 @@ export default function CategoryCard({ category }) {
             onError={(e) => {
               e.currentTarget.src = `https://placehold.co/800x600?text=${encodeURIComponent(name)}`;
             }}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0D0A]/85 via-[#0E0D0A]/20 to-transparent" />
 
           {/* Product Count */}
           {typeof category?.productCount === "number" && (
-            <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:py-2 sm:text-sm">
-              {category.productCount} Products
+            <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:text-[11px]">
+              {category.productCount} Pieces
             </div>
           )}
 
           {/* Floating Arrow */}
-          <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-orange-500 transition-all duration-300 group-hover:rotate-45 group-hover:scale-110 sm:right-5 sm:top-5 sm:h-12 sm:w-12">
+          <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:rotate-45 group-hover:bg-[#D4AF6A] group-hover:text-[#1C1A17] sm:right-5 sm:top-5 sm:h-10 sm:w-10">
             <ArrowRightOutlined aria-hidden="true" />
           </div>
 
           {/* Bottom Content */}
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-            <h3 className="text-xl font-bold text-white sm:text-3xl">{name}</h3>
+            <h3 className="text-lg font-bold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-0.5 sm:text-xl">
+              {name}
+            </h3>
 
             {category?.description && (
-              <p className="mt-1.5 line-clamp-2 text-xs text-gray-200 sm:mt-2 sm:text-sm">
+              <p className="mt-1.5 line-clamp-2 text-xs text-[#E5DFD2]/75 sm:mt-2 sm:text-sm">
                 {category.description}
               </p>
             )}
@@ -137,13 +218,13 @@ export default function CategoryCard({ category }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-4 sm:p-6">
-          <span className="text-sm font-semibold text-orange-500 transition-all group-hover:translate-x-2 sm:text-base">
+        <div className="flex items-center justify-between border-t border-[#1C1A17]/[0.06] px-4 py-4 sm:px-6 sm:py-5">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#A8823C] transition-all duration-300 group-hover:tracking-[0.22em] sm:text-xs">
             Explore Collection
           </span>
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-100 transition-all group-hover:bg-orange-500 group-hover:text-white sm:h-10 sm:w-10">
-            <ArrowRightOutlined aria-hidden="true" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#1C1A17]/10 text-[#1C1A17] transition-all duration-300 group-hover:border-[#A8823C]/40 group-hover:bg-[#A8823C]/10 group-hover:text-[#A8823C] sm:h-9 sm:w-9">
+            <ArrowRightOutlined className="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
           </div>
         </div>
       </Link>

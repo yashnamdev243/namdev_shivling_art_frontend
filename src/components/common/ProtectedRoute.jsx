@@ -1,19 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAdminAuth } from "../../context/AdminAuthContext";
 import { ROUTES } from "../../config/routes";
 
-/**
- * Wrap admin-only routes with this in AppRoutes.jsx. Redirects to the
- * admin login page (and remembers where the user was headed) if
- * there's no valid session.
- */
 export default function ProtectedRoute() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, loading } = useAdminAuth();
   const location = useLocation();
 
-  if (!isAuthenticated) {
-    return <Navigate to={ROUTES.adminLogin} state={{ from: location }} replace />;
-  }
-
+  if (loading) return <div className="flex min-h-screen items-center justify-center">Checking admin session…</div>;
+  if (!isAuthenticated) return <Navigate to={ROUTES.adminLogin} state={{ from: location }} replace />;
   return <Outlet />;
 }
