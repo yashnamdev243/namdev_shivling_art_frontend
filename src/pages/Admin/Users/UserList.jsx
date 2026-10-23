@@ -67,13 +67,13 @@
 //   );
 // }
 
-
-
 import { useMemo, useState } from "react";
-import { Avatar } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
-import AdminDataTable, { StatusTag } from "../../../components/admin/AdminDataTable";
+import { Avatar, Button, Popconfirm, Space, Tooltip } from "antd";
+import { LockOutlined, StopOutlined, UserOutlined } from "@ant-design/icons";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import AdminDataTable, {
+  StatusTag,
+} from "../../../components/admin/AdminDataTable";
 import adminUserService from "../../../services/adminUserService";
 
 export default function UserList() {
@@ -85,6 +85,17 @@ export default function UserList() {
   });
 
   const users = data?.users || [];
+  const statusMutation = useMutation({
+    mutationFn: ({ userId, status }) =>
+      adminUserService.updateUserStatus(userId, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+    },
+  });
+
+  const handleStatusChange = (user, status) => {
+    statusMutation.mutate({ userId: user.id, status });
+  };
 
   const columns = useMemo(
     () => [
@@ -93,10 +104,18 @@ export default function UserList() {
         key: "customer",
         render: (_, user) => (
           <div className="flex items-center gap-3">
-            <Avatar src={user.avatar || undefined} icon={<UserOutlined />} className="!border !border-[#1C1A17]/[0.08]" />
+            <Avatar
+              src={user.avatar || undefined}
+              icon={<UserOutlined />}
+              className="!border !border-[#1C1A17]/[0.08]"
+            />
             <div className="min-w-0">
-              <p className="truncate font-semibold text-[#1C1A17]">{user.name || "Unknown"}</p>
-              <p className="truncate text-xs text-[#8A8377]">{user.email || "-"}</p>
+              <p className="truncate font-semibold text-[#1C1A17]">
+                {user.name || "Unknown"}
+              </p>
+              <p className="truncate text-xs text-[#8A8377]">
+                {user.email || "-"}
+              </p>
             </div>
           </div>
         ),
@@ -104,7 +123,9 @@ export default function UserList() {
       {
         title: "City",
         dataIndex: "city",
-        render: (value) => <span className="text-[#6B6459]">{value || "-"}</span>,
+        render: (value) => (
+          <span className="text-[#6B6459]">{value || "-"}</span>
+        ),
       },
       {
         title: "Status",
@@ -116,12 +137,88 @@ export default function UserList() {
         dataIndex: "createdAt",
         render: (value) => (
           <span className="text-[#6B6459]">
-            {value ? new Date(value).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "-"}
+            {value
+              ? new Date(value).toLocaleDateString("en-IN", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })
+              : "-"}
           </span>
         ),
       },
+      {
+        title: "Actions",
+        key: "actions",
+        width: 180,
+        render: (_, user) => {
+          const status = user.status?.toLowerCase();
+          return (
+            <Space size="small">
+              {" "}
+              {status === "active" ? (
+                <>
+                  {" "}
+                  <Popconfirm
+                    title="Disable this user?"
+                    description="This user will no longer be able to log in."
+                    okText="Disable"
+                    cancelText="Cancel"
+                    onConfirm={() => handleStatusChange(user, "disabled")}
+                  >
+                    {" "}
+                    <Tooltip title="Disable user">
+                      {" "}
+                      <Button
+                        size="small"
+                        icon={<StopOutlined />}
+                        danger
+                      />{" "}
+                    </Tooltip>{" "}
+                  </Popconfirm>{" "}
+                  <Popconfirm
+                    title="Block this user?"
+                    description="This account will be blocked and cannot log in."
+                    okText="Block"
+                    cancelText="Cancel"
+                    onConfirm={() => handleStatusChange(user, "blocked")}
+                  >
+                    {" "}
+                    <Tooltip title="Block account">
+                      {" "}
+                      <Button
+                        size="small"
+                        danger
+                        icon={<LockOutlined />}
+                      />{" "}
+                    </Tooltip>{" "}
+                  </Popconfirm>{" "}
+                </>
+              ) : (
+                <Popconfirm
+                  title="Enable this user?"
+                  description="This user will be allowed to log in again."
+                  okText="Enable"
+                  cancelText="Cancel"
+                  onConfirm={() => handleStatusChange(user, "active")}
+                >
+                  {" "}
+                  <Tooltip title="Enable user">
+                    {" "}
+                    <Button
+                      size="small"
+                      type="primary"
+                      icon={<CheckCircleOutlined />}
+                    />{" "}
+                  </Tooltip>{" "}
+                </Popconfirm>
+              )}{" "}
+            </Space>
+          );
+        },
+      },
     ],
-    []
+    [],
   );
 
   return (
