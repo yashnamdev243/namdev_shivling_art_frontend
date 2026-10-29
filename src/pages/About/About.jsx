@@ -139,7 +139,7 @@ export default function About() {
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-[#D4AF6A]/25 bg-[#A8823C]/[0.05] px-4 py-2.5 sm:px-6 sm:py-3">
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#A8823C]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A8823C] sm:text-sm sm:tracking-[0.25em]">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#A8823C] sm:text-sm sm:tracking-[0.25em]">
                 {t.heroBadge}
               </span>
             </div>

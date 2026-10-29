@@ -110,7 +110,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative -mt-8 inline-flex max-w-full items-center gap-2 rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F2E3C8] backdrop-blur-md sm:mt-0 sm:px-5 sm:text-xs sm:tracking-[0.16em]"
+                className="relative -mt-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F2E3C8] backdrop-blur-md sm:mt-0 sm:px-5 sm:text-xs sm:tracking-[0.16em]"
               >
                 <span className="text-[#D4AF6A]">
                   <FaOm />
@@ -122,7 +122,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-5 text-[34px] font-bold leading-[1.08] tracking-tight sm:mt-6 sm:text-6xl lg:text-[64px]"
+                className="mt-16 text-[34px] font-bold leading-[1.08] tracking-tight sm:mt-6 sm:text-6xl lg:text-[64px]"
               >
                 <span className="text-[#D4AF6A]">{t.titleLine1}</span>
                 <span className="block text-[#F8F4EA]">{t.titleLine2}</span>
@@ -132,7 +132,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mx-auto mt-5 max-w-[38rem] text-[14px] leading-6 text-[#E5DFD2]/75 sm:mt-8 sm:text-lg sm:leading-8 lg:mx-0"
+                className="mx-auto mt-8 max-w-[38rem] text-[14px] leading-6 text-[#E5DFD2]/75 sm:mt-8 sm:text-lg sm:leading-8 lg:mx-0"
               >
                 {t.subtitle}
               </motion.p>
@@ -141,18 +141,18 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-5 lg:justify-start"
+                className="mt-16 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:justify-start"
               >
                 <Link
                   to={ROUTES?.products || "/products"}
-                  className="group w-full sm:w-auto"
+                  className="group flex w-full justify-center sm:w-auto"
                 >
                   <Button
                     // type="primary"
-                    size="large"
-                    className="!flex !h-12 !w-full !items-center !justify-center !rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] !px-8 !font-medium !text-[#F2E3C8] !shadow-[0_10px_30px_rgba(212,175,106,0.18)] transition-all duration-200 hover:!-translate-y-0.5 hover:!bg-[#2A2620] sm:!w-auto"
+                    size="small"
+                    className="!flex !h-10 sm:!h-12 !w-[60%] sm:!w-auto !items-center !justify-center !rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] !px-5 sm:!px-8 !text-sm sm:!text-base !font-medium !text-[#F2E3C8] !shadow-[0_10px_30px_rgba(212,175,106,0.18)] transition-all duration-200 hover:!-translate-y-0.5 hover:!bg-[#2A2620]"
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-1.5 sm:gap-2">
                       {t.ctaPrimary}
                       <ArrowRightOutlined className="transition-transform duration-200 group-hover:translate-x-1" />
                     </span>
@@ -164,12 +164,12 @@ export default function Hero({ staticImage = bgImage }) {
                     href={SITE.social.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto"
+                    className="flex w-full justify-center sm:w-auto"
                   >
                     <Button
-                      size="large"
+                      size="small"
                       icon={<WhatsAppOutlined />}
-                      className="!flex !h-12 !w-full !items-center !justify-center !gap-1.5 !rounded-full !border !border-white/25 !bg-white/[0.04] !px-8 !font-medium !text-[#F8F4EA] !shadow-none backdrop-blur-md transition-all duration-200 hover:!border-emerald-400/50 hover:!text-emerald-300 sm:!w-auto"
+                      className="!flex !h-10 sm:!h-12 !w-[60%] sm:!w-auto !items-center !justify-center !gap-1.5 !rounded-full !border !border-white/25 !bg-white/[0.04] !px-5 sm:!px-8 !text-sm sm:!text-base !font-medium !text-[#F8F4EA] !shadow-none !backdrop-blur-md transition-all duration-200 hover:!border-emerald-400/50 hover:!text-emerald-300"
                     >
                       {t.ctaSecondary}
                     </Button>
@@ -178,7 +178,7 @@ export default function Hero({ staticImage = bgImage }) {
               </motion.div>
 
               {/* Counters */}
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mx-0">
+              <div className="mx-auto mt-16 sm:mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mx-0">
                 {t.counters.map(([num, label], i) => (
                   <motion.div
                     key={label}
