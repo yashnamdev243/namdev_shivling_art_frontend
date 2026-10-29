@@ -26,7 +26,7 @@ export default function Hero({ staticImage = bgImage }) {
   const t = useContent(HERO_CONTENT);
 
   return (
-    <section className="relative h-screen min-h-[700px] overflow-hidden bg-[#15130F] pt-24 sm:pt-14">
+    <section className="relative min-h-screen sm:h-screen sm:min-h-[700px] overflow-hidden bg-[#15130F] pt-24 sm:pt-14">
       <div className="absolute inset-0">
         {isLoading ? (
           <div className="flex h-full w-full items-center justify-center bg-[#15130F]">
@@ -83,7 +83,7 @@ export default function Hero({ staticImage = bgImage }) {
           <img
             src={staticImage}
             alt="Namdev Narmadeshwar Shivling"
-            className="h-full w-full object-cover brightness-[0.92] contrast-[1.04] saturate-[0.96]"
+            className="h-full w-full object-cover object-[58%_center] brightness-[0.92] contrast-[1.04] saturate-[0.96] sm:object-center"
           />
         )}
       </div>
@@ -99,7 +99,7 @@ export default function Hero({ staticImage = bgImage }) {
 
       <div className="relative z-20">
         <Container>
-          <div className="flex min-h-[calc(100vh-112px)] items-center py-10">
+          <div className="flex min-h-[calc(100svh-96px)] items-start py-6 sm:min-h-[calc(100vh-112px)] sm:items-center sm:py-10">
             <motion.div
               className="mx-auto flex max-w-4xl flex-col items-center text-center lg:mx-0 lg:max-w-xl lg:items-start lg:text-left"
               initial={{ opacity: 0, y: 24 }}
@@ -110,7 +110,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="inline-flex items-center gap-2 rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#F2E3C8] backdrop-blur-md sm:px-5 sm:text-xs"
+                className="relative -mt-8 inline-flex max-w-full items-center gap-2 rounded-full border border-[#D4AF6A]/30 bg-white/[0.06] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F2E3C8] backdrop-blur-md sm:mt-0 sm:px-5 sm:text-xs sm:tracking-[0.16em]"
               >
                 <span className="text-[#D4AF6A]">
                   <FaOm />
@@ -122,7 +122,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[64px]"
+                className="mt-5 text-[34px] font-bold leading-[1.08] tracking-tight sm:mt-6 sm:text-6xl lg:text-[64px]"
               >
                 <span className="text-[#D4AF6A]">{t.titleLine1}</span>
                 <span className="block text-[#F8F4EA]">{t.titleLine2}</span>
@@ -132,7 +132,7 @@ export default function Hero({ staticImage = bgImage }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mx-auto mt-7 max-w-[38rem] text-base leading-7 text-[#E5DFD2]/75 sm:mt-8 sm:text-lg sm:leading-8 lg:mx-0"
+                className="mx-auto mt-5 max-w-[38rem] text-[14px] leading-6 text-[#E5DFD2]/75 sm:mt-8 sm:text-lg sm:leading-8 lg:mx-0"
               >
                 {t.subtitle}
               </motion.p>

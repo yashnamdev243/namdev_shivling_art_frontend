@@ -34,13 +34,13 @@ export default function ProductCard({ product }) {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group h-full"
+      className="group h-full min-w-0 w-full"
     >
       <div className="flex h-full flex-col overflow-hidden rounded-md border border-[#1C1A17]/[0.06] bg-white shadow-[0_4px_20px_rgba(28,26,23,0.05)] transition-all duration-300 hover:shadow-[0_20px_48px_rgba(28,26,23,0.12)]">
         {/* =====================================================
             IMAGE
         ====================================================== */}
-        <div className="relative overflow-hidden bg-[#F7F2E7]">
+        <div className="relative w-full overflow-hidden bg-[#F7F2E7]">
           <Link to={detailsUrl} className="block">
             <img
               src={image}
@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
                   "https://placehold.co/800x800?text=No+Image";
               }}
               loading="lazy"
-              className="aspect-square h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]"
+              className="aspect-square w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]"
             />
           </Link>
 
@@ -126,7 +126,7 @@ export default function ProductCard({ product }) {
         {/* =====================================================
             CONTENT
         ====================================================== */}
-        <div className="flex flex-1 flex-col justify-between p-4 sm:p-6">
+        <div className="flex min-w-0 flex-1 flex-col justify-between p-3 sm:p-6">
           <div>
             {/* =================================================
                 CATEGORY
@@ -155,8 +155,12 @@ export default function ProductCard({ product }) {
               to={detailsUrl}
               className="block min-h-[24px] sm:min-h-[32px] md:min-h-[42px] lg:min-h-[42px] "
             >
-              <Tooltip title={product?.name}>
-                <h3 className="line-clamp-2 min-h-[36px] text-base font-bold leading-6 tracking-tight transition-colors duration-300 text-[#A8823C] sm:min-h-[40px] sm:text-lg">
+              <Tooltip
+                title={product?.name}
+                placement="top"
+                mouseEnterDelay={0.3}
+              >
+                <h3 className="line-clamp-2  min-w-0 break-words text-sm font-bold leading-5 tracking-tight transition-colors duration-300 text-[#A8823C] sm:min-h-[40px] sm:text-lg sm:leading-6">
                   {product?.name}
                 </h3>
               </Tooltip>
@@ -166,9 +170,15 @@ export default function ProductCard({ product }) {
                 DESCRIPTION
             ================================================== */}
             {product?.description && (
-              <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#6B6459] sm:mt-0 sm:leading-7">
-                {product.description}
-              </p>
+              <Tooltip
+                title={product.description}
+                placement="top"
+                mouseEnterDelay={0.3}
+              >
+                <p className="mt-2 line-clamp-2 min-w-0 break-words text-xs leading-5 text-[#6B6459] sm:mt-0   sm:text-sm sm:leading-7">
+                  {product.description}
+                </p>
+              </Tooltip>
             )}
 
             {/* =================================================

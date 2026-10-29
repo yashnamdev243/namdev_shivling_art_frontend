@@ -105,8 +105,8 @@ export default function ProductDetails() {
   const sizeText = isCustomSize
     ? "a custom size (please advise on options up to 24 ft)"
     : selectedSize
-    ? `size ${selectedSize}`
-    : null;
+      ? `size ${selectedSize}`
+      : null;
 
   const whatsappMessage = sizeText
     ? `Namaste, I'm interested in "${product.name}" (${SITE.name}) in ${sizeText}. Please share more details.`
@@ -117,9 +117,12 @@ export default function ProductDetails() {
   const customCraftMessage = `Namaste, I'd like to enquire about a custom-crafted "${product.name}"-style Shivling — a bespoke size or design. Could you please guide me on options?`;
   const customCraftHref = `${SITE.social.whatsapp}?text=${encodeURIComponent(customCraftMessage)}`;
 
-  const related = (relatedData?.products || relatedData?.data || relatedData || []).filter(
-    (p) => (p._id || p.id) !== id
-  );
+  const related = (
+    relatedData?.products ||
+    relatedData?.data ||
+    relatedData ||
+    []
+  ).filter((p) => (p._id || p.id) !== id);
 
   const trustFeatures = [
     "100% Authentic Product",
@@ -130,14 +133,17 @@ export default function ProductDetails() {
 
   return (
     <>
-      <Seo title={product.name} description={product.description || `${product.name} — ${SITE.name}`} />
+      <Seo
+        title={product.name}
+        description={product.description || `${product.name} — ${SITE.name}`}
+      />
 
       <section className="relative overflow-hidden bg-gradient-to-b from-[#FBF7EF] via-white to-white px-4 py-16 sm:px-6 sm:py-20 lg:px-10 lg:py-28">
         {/* Background Glow */}
         <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 rounded-full bg-[#D4AF6A]/[0.07] blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
         <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-[#C9A227]/[0.06] blur-[100px] sm:h-80 sm:w-80 sm:blur-[130px]" />
 
-        <div className="container mx-auto max-w-7xl px-0 sm:px-5">
+        <div className="container mx-auto max-w-7xl px-0 sm:px-5 mt-4 sm:mt-0">
           <Link
             to={ROUTES.products}
             className="mb-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#1C1A17] transition-all hover:-translate-x-1 hover:text-[#A8823C] sm:mb-10 sm:text-sm"
@@ -189,13 +195,14 @@ export default function ProductDetails() {
                   />
                 </div>
               )}
-                 {/* Size selector */}
+              {/* Size selector */}
               <div className="mt-6 rounded-sm border border-[#1C1A17]/[0.06] bg-[#FBF7EF] p-4 sm:mt-8 sm:rounded-md sm:p-5">
                 <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-[#A8823C] sm:text-sm">
                   Available Sizes
                 </h3>
                 <p className="mt-2 text-xs text-[#6B6459] sm:text-sm">
-                  Handcrafted to order from 1 inch home-worship pieces up to 24 ft temple installations.
+                  Handcrafted to order from 1 inch home-worship pieces up to 24
+                  ft temple installations.
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -243,26 +250,28 @@ export default function ProductDetails() {
                     </span>
                     We handcraft bespoke Shivlings to any dimension — from
                     miniature 1-inch pieces to 24 ft temple centerpieces.
-                    Message our artisans below with your exact requirement
-                    and we'll guide you through material, timeline, and
-                    pricing.
+                    Message our artisans below with your exact requirement and
+                    we'll guide you through material, timeline, and pricing.
                   </div>
                 )}
               </div>
 
-              {Array.isArray(product.highlights) && product.highlights.length > 0 && (
-                <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2">
-                  {product.highlights.map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center gap-2.5"
-                    >
-                      <CheckCircleFilled className="text-base text-[#A8823C]" aria-hidden="true" />
-                      <span className="text-sm font-medium text-[#1C1A17] sm:text-base">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {Array.isArray(product.highlights) &&
+                product.highlights.length > 0 && (
+                  <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2">
+                    {product.highlights.map((item) => (
+                      <div key={item} className="flex items-center gap-2.5">
+                        <CheckCircleFilled
+                          className="text-base text-[#A8823C]"
+                          aria-hidden="true"
+                        />
+                        <span className="text-sm font-medium text-[#1C1A17] sm:text-base">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
                 <Button
@@ -273,7 +282,9 @@ export default function ProductDetails() {
                   target="_blank"
                   className="!flex !h-11 !w-full !items-center !justify-center !gap-2 !rounded-2xl !border-none !bg-gradient-to-br !from-[#123524] !to-[#1A4A33] !px-6 !font-medium !text-[#F2E3C8] !shadow-none sm:!h-12 sm:!w-auto"
                 >
-                  {selectedSize || isCustomSize ? "WhatsApp with Selection" : "WhatsApp"}
+                  {selectedSize || isCustomSize
+                    ? "WhatsApp with Selection"
+                    : "WhatsApp"}
                 </Button>
 
                 {SITE.phoneRaw && (
@@ -315,14 +326,17 @@ export default function ProductDetails() {
               <div className="mt-8 grid gap-3 border-t border-[#1C1A17]/[0.06] pt-6 sm:mt-10 sm:grid-cols-2 sm:gap-4">
                 {trustFeatures.map((item) => (
                   <div key={item} className="flex items-center gap-2.5">
-                    <CheckCircleFilled className="text-[#A8823C]" aria-hidden="true" />
-                    <span className="text-sm text-[#4A453D] sm:text-base">{item}</span>
+                    <CheckCircleFilled
+                      className="text-[#A8823C]"
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm text-[#4A453D] sm:text-base">
+                      {item}
+                    </span>
                   </div>
                 ))}
               </div>
-
             </div>
-
 
             {/* Info */}
             <div className="rounded-[4px] border border-[#1C1A17]/[0.06] bg-white p-6 shadow-[0_20px_60px_rgba(28,26,23,0.08)] sm:rounded-[8px] sm:p-10">
@@ -334,14 +348,12 @@ export default function ProductDetails() {
                 )}
 
                 <div className="flex shrink-0 items-center gap-1">
-
-                  <WishlistButton
-                    product={product}
-                    size="middle"
-                  />
+                  <WishlistButton product={product} size="middle" />
 
                   <ShareProduct
-                    url={typeof window !== "undefined" ? window.location.href : ""}
+                    url={
+                      typeof window !== "undefined" ? window.location.href : ""
+                    }
                     title={product.name}
                   />
                 </div>
@@ -359,79 +371,66 @@ export default function ProductDetails() {
                   {formatCurrency(product.price)}
                 </h2>
               </div>
-              <CouponApplyBox
-                product={product}
-                onApplied={setAppliedCoupon}
-              />
+              <CouponApplyBox product={product} onApplied={setAppliedCoupon} />
 
               {product.description && (
                 <div className="mt-6 border-t border-[#1C1A17]/[0.06] pt-6">
-                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#A8823C] sm:text-sm">About This Piece</h3>
+                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#A8823C] sm:text-sm">
+                    About This Piece
+                  </h3>
                   <p className="text-sm leading-7 text-[#4A453D] sm:text-base sm:leading-8">
                     {product.description}
                   </p>
                 </div>
               )}
-
-
             </div>
           </div>
           {/* =========================================================
     REVIEWS
 ========================================================= */}
 
-<div className="mt-14 sm:mt-20">
+          <div className="mt-14 sm:mt-20">
+            <div className="mb-8 flex flex-col gap-4 border-t border-[#1C1A17]/[0.06] pt-10 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#A8823C]">
+                  Customer Journal
+                </span>
 
-  <div className="mb-8 flex flex-col gap-4 border-t border-[#1C1A17]/[0.06] pt-10 sm:flex-row sm:items-end sm:justify-between">
+                <h2 className="mt-2 text-2xl font-bold text-[#1C1A17] sm:text-3xl">
+                  What Collectors Are Saying
+                </h2>
 
-    <div>
-      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#A8823C]">
-        Customer Journal
-      </span>
+                <p className="mt-2 text-sm leading-6 text-[#6B6459] sm:text-base">
+                  Share your experience with this product.
+                </p>
+              </div>
 
-      <h2 className="mt-2 text-2xl font-bold text-[#1C1A17] sm:text-3xl">
-        What Collectors Are Saying
-      </h2>
+              <div className="flex items-center gap-2 text-right">
+                <span className="text-2xl font-bold text-[#A8823C]">
+                  {reviews?.length || 0}
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8A8377]">
+                  Reviews
+                </span>
+              </div>
+            </div>
 
-      <p className="mt-2 text-sm leading-6 text-[#6B6459] sm:text-base">
-        Share your experience with this product.
-      </p>
-    </div>
+            {/* Review Form + Reviews */}
+            <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
+              {/* Review Form */}
+              <div className="h-fit rounded-3xl border border-[#1C1A17]/[0.06] bg-white p-5 shadow-[0_4px_20px_rgba(28,26,23,0.05)] sm:p-7">
+                <ProductReviewForm
+                  onSubmit={addReview}
+                  submitting={submitting}
+                />
+              </div>
 
-    <div className="flex items-center gap-2 text-right">
-      <span className="text-2xl font-bold text-[#A8823C]">
-        {reviews?.length || 0}
-      </span>
-      <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8A8377]">
-        Reviews
-      </span>
-    </div>
-  </div>
-
-  {/* Review Form + Reviews */}
-  <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
-
-    {/* Review Form */}
-    <div className="h-fit rounded-3xl border border-[#1C1A17]/[0.06] bg-white p-5 shadow-[0_4px_20px_rgba(28,26,23,0.05)] sm:p-7">
-
-      <ProductReviewForm
-        onSubmit={addReview}
-        submitting={submitting}
-      />
-
-    </div>
-
-    {/* Review List */}
-    <div>
-      <ProductReviewList
-        reviews={reviews}
-        loading={reviewsLoading}
-      />
-    </div>
-
-  </div>
-
-</div>
+              {/* Review List */}
+              <div>
+                <ProductReviewList reviews={reviews} loading={reviewsLoading} />
+              </div>
+            </div>
+          </div>
 
           {/* Related */}
           {related.length > 0 && (
@@ -442,7 +441,7 @@ export default function ProductDetails() {
               <h2 className="mb-6 mt-2 text-xl font-bold text-[#1C1A17] sm:mb-8 sm:text-2xl">
                 Curated pieces from the same collection
               </h2>
-              <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
                 {related.slice(0, 4).map((p) => (
                   <ProductCard key={p._id || p.id} product={p} />
                 ))}

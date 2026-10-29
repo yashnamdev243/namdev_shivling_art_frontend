@@ -89,9 +89,9 @@ export default function BrandLogo({
       </div>
 
       {/* Text */}
-      <div className="leading-tight">
+      <div className="min-w-0 leading-tight">
         <h2
-          className={`${titleSize} font-extrabold tracking-wide transition-colors ${
+          className={`whitespace-nowrap text-sm sm:text-lg lg:text-xl font-extrabold tracking-wide transition-colors ${
             light ? "text-white" : "text-slate-900"
           }`}
         >
@@ -101,7 +101,7 @@ export default function BrandLogo({
         </h2>
 
         <p
-          className={`text-xs uppercase tracking-[0.35em] ${
+          className={`whitespace-nowrap text-[8px] sm:text-[10px] lg:text-xs uppercase tracking-[0.35em] ${
             light ? "text-gray-300" : "text-gray-500"
           }`}
         >

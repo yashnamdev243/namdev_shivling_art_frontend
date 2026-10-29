@@ -131,7 +131,7 @@ export default function MobileDrawer({ open, onClose, navItems }) {
               return (
                 <>
                   {isActive && (
-                    <span className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-[#A8823C]" />
+                    <span className="absolute left-0 top-1/2 h-40 w-[3px] -translate-y-1/2 rounded-full bg-[#A8823C]" />
                   )}
                   <span className="flex items-center gap-3">
                     <Icon

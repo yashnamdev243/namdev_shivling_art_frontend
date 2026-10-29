@@ -55,7 +55,7 @@ export default function AccountButton({ variant = "icon" }) {
             </>
           ) : (
             <>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#D4AF6A] shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-[#D4AF6A] shadow-sm">
                 <UserOutlined className="text-lg" />
               </div>
               <div>
